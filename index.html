@@ -381,6 +381,7 @@ const countryList = [
 {name:"Yemen",flag:"🇾🇪",capital:"Sana'a",population:"34M",region:"Asia",fact:"One of the oldest inhabited areas."},
 {name:"Zambia",flag:"🇿🇲",capital:"Lusaka",population:"21M",region:"Africa",fact:"Home to Victoria Falls."},
 {name:"Zimbabwe",flag:"🇿🇼",capital:"Harare",population:"16M",region:"Africa",fact:"Home to Great Zimbabwe ruins."}   
+  ];
     const today = new Date().getDate();
 todayCountry = countryList[today % countryList.length];
     todayCountry.fact =
@@ -388,9 +389,9 @@ todayCountry = countryList[today % countryList.length];
 
     document.getElementById("countryOfDay").innerHTML = `
       <div class="flex items-center gap-4 mt-3">
-        <img src="${todayCountry.flags.png}" class="w-16 rounded-lg">
+        <img src="${todayCountry.flag}" class="w-16 rounded-lg">
         <div>
-          <p class="font-bold text-xl">${todayCountry.name.common}</p>
+          <p class="font-bold text-xl">${todayCountry.name.}</p>
         </div>
       </div>
     `;
@@ -412,8 +413,8 @@ function openCountryModal(){
 todayCountry.name;
 
   document.getElementById("countryInfo").innerHTML = `
-    <p><strong>• Capital:</strong> ${todayCountry.capital ? todayCountry.capital[0] : "N/A"}</p>
-    <p><strong>• Population:</strong> ${todayCountry.population.toLocaleString()}</p>
+    <p><strong>• Capital:</strong> ${todayCountry.capital ? todayCountry.capital : "N/A"}</p>
+    <p><strong>• Population:</strong> ${todayCountry.population.()}</p>
     <p><strong>• Region:</strong> ${todayCountry.region}</p>
     <p><strong>• Fact:</strong> ${todayCountry.fact}</p>
   `;
