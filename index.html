@@ -465,19 +465,32 @@ function newFlag(){
   document.getElementById("flagFact").textContent = "";
 }
 
-function checkFlagAnswer(){
+function checkFlagAnswer(showAnswer = false){
   const guess = document.getElementById("flagInput").value.trim().toLowerCase();
+
+  if(showAnswer){
+    document.getElementById("flagResult").textContent =
+      "🌍 " + currentFlag.name.common;
+
+    document.getElementById("flagFact").textContent =
+      currentFlag.capital
+        ? "Capital: " + currentFlag.capital[0]
+        : "No capital";
+
+    return;
+  }
 
   if(guess === currentFlag.name.common.toLowerCase()){
     document.getElementById("flagResult").textContent = "✅ Correct!";
   } else {
-    document.getElementById("flagResult").textContent = "❌ " + currentFlag.name.common;
+    document.getElementById("flagResult").textContent = "❌ Wrong!";
   }
 
   document.getElementById("flagFact").textContent =
-    currentFlag.capital ? "Capital: " + currentFlag.capital[0] : "No capital";
+    currentFlag.capital
+      ? "Capital: " + currentFlag.capital[0]
+      : "No capital";
 }
-
 /* Quiz */
 const allQuizQuestions = {
 easy: [
