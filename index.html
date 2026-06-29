@@ -189,7 +189,7 @@ const answers = {
 };
 let todayCountry = null;
 
-async function loadCountryOfDay(){
+ function loadCountryOfDay(){
   try {
 
 const countryList = [
@@ -269,7 +269,7 @@ const countryList = [
 {name:"Greece",flag:"🇬🇷",capital:"Athens",population:"10M",region:"Europe",fact:"Birthplace of democracy."},
 {name:"Guatemala",flag:"🇬🇹",capital:"Guatemala City",population:"18M",region:"North America",fact:"Heart of the ancient Maya civilization."},
 {name:"Guinea",flag:"🇬🇳",capital:"Conakry",population:"14M",region:"Africa",fact:"Rich in bauxite reserves."},
-{name:"Guyana",flag:"🇬🇾",capital:"Georgetown",population:"800K",region:"South America",fact:"Only English-speaking country in South America."} ,
+{name:"Guyana",flag:"🇬🇾",capital:"Georgetown",population:"800K",region:"South America",fact:"Only English-speaking country in South America."},
 {name:"Haiti",flag:"🇭🇹",capital:"Port-au-Prince",population:"11M",region:"Caribbean",fact:"Shares Hispaniola with the Dominican Republic."},
 {name:"Honduras",flag:"🇭🇳",capital:"Tegucigalpa",population:"10M",region:"North America",fact:"Known for coral reefs."},
 {name:"Hungary",flag:"🇭🇺",capital:"Budapest",population:"9.6M",region:"Europe",fact:"Budapest is split by the Danube."},
@@ -322,7 +322,7 @@ const countryList = [
 {name:"Morocco",flag:"🇲🇦",capital:"Rabat",population:"38M",region:"Africa",fact:"Gateway between Africa and Europe."},
 {name:"Mozambique",flag:"🇲🇿",capital:"Maputo",population:"34M",region:"Africa",fact:"Long Indian Ocean coastline."},
 {name:"Myanmar",flag:"🇲🇲",capital:"Naypyidaw",population:"55M",region:"Asia",fact:"Formerly Burma."},   
- {name:"Namibia",flag:"🇳🇦",capital:"Windhoek",population:"2.6M",region:"Africa",fact:"Home to the Namib Desert."},
+{name:"Namibia",flag:"🇳🇦",capital:"Windhoek",population:"2.6M",region:"Africa",fact:"Home to the Namib Desert."},
 {name:"Nepal",flag:"🇳🇵",capital:"Kathmandu",population:"30M",region:"Asia",fact:"Home to Mount Everest."},
 {name:"Netherlands",flag:"🇳🇱",capital:"Amsterdam",population:"18M",region:"Europe",fact:"Famous for windmills and canals."},
 {name:"New Zealand",flag:"🇳🇿",capital:"Wellington",population:"5.2M",region:"Oceania",fact:"First country to grant women voting rights."},
@@ -384,7 +384,7 @@ const countryList = [
   ];
     const today = new Date().getDate();
 todayCountry = countryList[today % countryList.length];
- todayCountry.fact = todayCountry.fact;
+
 
     document.getElementById("countryOfDay").innerHTML = `
       <div class="flex items-center gap-4 mt-3">
