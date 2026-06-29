@@ -384,25 +384,16 @@ const countryList = [
   ];
     const today = new Date().getDate();
 todayCountry = countryList[today % countryList.length];
-    todayCountry.fact =
-      `${todayCountry.name} covers ${todayCountry.area.toLocaleString()} km².`;
+ todayCountry.fact = todayCountry.fact;
 
     document.getElementById("countryOfDay").innerHTML = `
       <div class="flex items-center gap-4 mt-3">
         <img src="${todayCountry.flag}" class="w-16 rounded-lg">
         <div>
-          <p class="font-bold text-xl">${todayCountry.name.}</p>
+          <p class="font-bold text-xl">${todayCountry.name}</p>
         </div>
       </div>
     `;
-  } catch(error) {
-    console.log("Country API failed:", error);
-
-    document.getElementById("countryOfDay").innerHTML = `
-      <p>Failed to load country.</p>
-    `;
-  }
-}
 
 function openCountryModal(){
   if(!todayCountry) return;
@@ -414,7 +405,7 @@ todayCountry.name;
 
   document.getElementById("countryInfo").innerHTML = `
     <p><strong>• Capital:</strong> ${todayCountry.capital ? todayCountry.capital : "N/A"}</p>
-    <p><strong>• Population:</strong> ${todayCountry.population.()}</p>
+  <p><strong>• Population:</strong> ${todayCountry.population}</p>
     <p><strong>• Region:</strong> ${todayCountry.region}</p>
     <p><strong>• Fact:</strong> ${todayCountry.fact}</p>
   `;
