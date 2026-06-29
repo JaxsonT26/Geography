@@ -394,7 +394,10 @@ todayCountry = countryList[today % countryList.length];
         </div>
       </div>
     `;
-
+  } catch(error) {
+    console.log(error);
+  }
+}
 function openCountryModal(){
   if(!todayCountry) return;
 
