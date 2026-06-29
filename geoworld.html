@@ -1,1 +1,503 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>🌍 ExploreTheGeo</title>
+<script src="https://cdn.tailwindcss.com"></script>
 
+<style>
+body {
+  font-family: system-ui, sans-serif;
+  background: linear-gradient(#0f172a, #1e293b);
+  color: white;
+}
+
+.geo-card {
+  background: #1e293b;
+  border: 1px solid #334155;
+  border-radius: 16px;
+  padding: 24px;
+  width: 360px;
+  min-height: 220px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.geo-card:hover {
+  transform: translateY(-8px);
+  border-color: #60a5fa;
+}
+</style>
+</head>
+<body>
+
+<h1 class="text-center text-5xl mt-8 mb-8">🌍 ExploreTheGeo</h1>
+
+<div class="max-w-6xl mx-auto flex flex-wrap justify-center gap-6">
+
+<div class="geo-card" onclick="alert('🌍 Continents coming soon!')">
+<div class="text-4xl">🌎</div>
+<h2 class="font-bold mt-2">Seven Continents</h2>
+<p>Explore facts about every continent.</p>
+</div>
+
+<div class="text-left text-sm text-slate-300 mr-6 flex flex-col justify-center">
+<h3 class="font-bold text-xl mb-3">🏆 Quiz Progress</h3>
+
+<p id="bestEasy">Easy: 0/10</p>
+<p id="bestMedium" class="mt-2">Medium: 0/10</p>
+<p id="bestHard" class="mt-2">Hard: 0/10</p>
+</div>
+<div class="geo-card" onclick="startQuiz()">
+  <div class="text-4xl">🧠</div>
+  <h2 class="font-bold mt-2">Geography Quiz</h2>
+  <p>Test your knowledge!</p>
+</div>
+
+
+<div class="geo-card" onclick="alert('🌐 Countries coming soon!')">
+<div class="text-4xl">🌐</div>
+<h2 class="font-bold mt-2">Countries of the World</h2>
+<p>Browse all countries.</p>
+</div>
+
+<div class="geo-card" onclick="alert('🗼 Landmarks coming soon!')">
+<div class="text-4xl">🗼</div>
+<h2 class="font-bold mt-2">Famous Landmarks</h2>
+<p>Iconic places around the globe.</p>
+</div>
+
+<div class="geo-card" onclick="alert('🗺️ Interactive map coming soon!')">
+<div class="text-4xl">🗺️</div>
+<h2 class="font-bold mt-2">Interactive World Map</h2>
+<p>Pan and zoom the world.</p>
+</div>
+
+<div class="geo-card" onclick="openFlagModal()">
+<div class="text-4xl">🏳️</div>
+<h2 class="font-bold mt-2">Flag Guesser</h2>
+<p>Guess the country from its flag.</p>
+</div>
+
+</div>
+
+<!-- Question of the Day -->
+<div id="geoBubble" onclick="openQuestionModal()" class="fixed left-5 bottom-5 bg-blue-600 p-8 rounded-3xl cursor-pointer z-50 shadow-xl w-96">
+<strong class="text-3xl">🌍 Question of the Day</strong>
+<p id="dailyQuestion" class="mt-4 text-xl"></p>
+</div>
+<div id="countryBubble" onclick="openCountryModal()" class="fixed top-5 right-5 bg-green-600 p-8 rounded-3xl z-50 shadow-xl w-96 cursor-pointer">
+  <strong class="text-3xl">🌎 Country of the Day</strong>
+  <div id="countryOfDay" class="mt-4 text-xl"></div>
+</div>
+<!-- Question Modal -->
+<div id="questionModal" class="hidden fixed inset-0 bg-black/80 flex items-center justify-center p-4 z-50">
+<div class="bg-slate-900 rounded-3xl max-w-lg w-full p-8">
+<h2 id="questionTitle" class="text-3xl font-bold mb-4"></h2>
+<p id="questionAnswer" class="text-lg mb-6"></p>
+<button onclick="closeModal('questionModal')" class="w-full bg-red-500 py-3 rounded-2xl">Close</button>
+</div>
+</div>
+<!-- Country Modal -->
+<div id="countryModal" class="hidden fixed inset-0 bg-black/80 flex items-center justify-center p-4 z-50">
+<div class="bg-slate-900 rounded-3xl max-w-lg w-full p-8">
+<h2 id="countryTitle" class="text-3xl font-bold mb-4"></h2>
+<div id="countryInfo" class="text-lg mb-6"></div>
+<button onclick="closeModal('countryModal')" class="w-full bg-red-500 py-3 rounded-2xl">
+Close
+</button>
+</div>
+</div>
+<!-- Quiz Modal -->
+<div id="quizModal" class="hidden fixed inset-0 bg-black/80 flex items-center justify-center p-4 z-50">
+<div class="bg-slate-900 rounded-3xl max-w-2xl w-full p-8">
+
+<h2 class="text-3xl mb-6">🧠 Geography Quiz</h2>
+
+<div id="difficultyButtons" class="flex gap-3 mb-6">
+<button onclick="setDifficulty('easy')" class="bg-green-500 px-4 py-2 rounded-xl">Easy</button>
+<button onclick="setDifficulty('medium')" class="bg-yellow-500 px-4 py-2 rounded-xl">Medium</button>
+<button onclick="setDifficulty('hard')" class="bg-red-500 px-4 py-2 rounded-xl">Hard</button>
+</div>
+<div id="quizQuestion" class="text-xl mb-6"></div>
+<div id="quizOptions"></div>
+<div id="quizResult" class="mt-6 text-lg font-bold"></div>
+
+<button onclick="closeModal('quizModal')" class="mt-4 w-full bg-red-500 py-3 rounded-2xl">Close</button>
+
+</div>
+</div>
+
+<!-- Flag Modal -->
+<div id="flagModal" class="hidden fixed inset-0 bg-black/80 flex items-center justify-center p-4 z-50">
+<div class="bg-slate-900 rounded-3xl max-w-lg w-full p-8">
+
+<h2 class="text-3xl mb-6">🏳️ Guess the Flag</h2>
+
+<div id="flagDisplay" class="w-full h-48 bg-slate-800 rounded-2xl mb-6 flex items-center justify-center"></div>
+
+<input id="flagInput" type="text" placeholder="Type country name..." class="w-full p-3 rounded-xl text-black mb-4">
+
+<button onclick="checkFlagAnswer()" class="w-full bg-indigo-500 py-3 rounded-2xl mb-4">Check Answer</button>
+
+<div id="flagResult" class="text-lg font-bold mb-4"></div>
+<div id="flagFact"></div>
+
+<button onclick="newFlag()" class="w-full bg-green-500 py-3 rounded-2xl mb-4">Next Flag →</button>
+<button onclick="closeModal('flagModal')" class="w-full bg-red-500 py-3 rounded-2xl">Close</button>
+
+</div>
+</div>
+<audio id="correctSound" preload="auto">
+  <source src="https://assets.mixkit.co/active_storage/sfx/2000/2000-preview.mp3" type="audio/mpeg">
+</audio>
+
+<audio id="wrongSound" preload="auto">
+  <source src="https://assets.mixkit.co/active_storage/sfx/2955/2955-preview.mp3" type="audio/mpeg">
+</audio>
+<script>
+function closeModal(id){
+  document.getElementById(id).classList.add("hidden");
+}
+
+/* Question of the Day */
+const questions = {
+  0:"🌿 Sunday: What countries does the Amazon run through?",
+  1:"🪨 Monday: Which country owns Gibraltar?",
+  2:"🦘 Tuesday: What is the capital of Australia?",
+  3:"❄️ Wednesday: What countries does the Bering Strait separate?",
+  4:"🏛️ Thursday: Where is Petra located?",
+  5:"🌍 Friday: What country is inside South Africa?",
+  6:"🌮 Saturday: Why does Mexico speak Spanish?"
+};
+
+const answers = {
+  0: "🌿 The Amazon River flows through Brazil, Peru, Colombia, Bolivia, Ecuador, Venezuela, and Guyana. It is the largest river by water volume and produces around 20% of the world’s freshwater entering the oceans.",
+
+  1: "🪨 Gibraltar is a British Overseas Territory at the southern tip of Spain. It controls access between the Atlantic Ocean and the Mediterranean Sea, making it strategically important for trade and military history.",
+
+  2: "🦘 Canberra became Australia’s capital in 1913 as a compromise between Sydney and Melbourne. It was purposely built to be the nation’s political center.",
+
+  3: "❄️ The Bering Strait separates Russia and Alaska by only 82 km (51 miles). During the Ice Age, a land bridge here allowed humans to migrate into North America.",
+
+  4: "🏛️ Petra in Jordan is over 2,000 years old and was carved directly into rose-colored rock. It was once a major trading hub connecting Arabia, Egypt, and the Mediterranean.",
+
+  5: "🌍 Lesotho is completely surrounded by South Africa, making it an enclave. It is called the ‘Kingdom in the Sky’ because its entire land sits over 1,000 meters above sea level.",
+
+  6: "🌮 Mexico speaks Spanish because Spain conquered the Aztec Empire in 1521. Today, Mexico has the largest Spanish-speaking population in the world — over 125 million people."
+};
+let todayCountry = null;
+
+async function loadCountryOfDay(){
+  try {
+    const res = await fetch(
+  "https://restcountries.com/v3.1/all"
+);
+
+    const countries = await res.json();
+
+    const today = new Date().getDate();
+    todayCountry = countries[today % countries.length];
+
+    todayCountry.fact =
+      `${todayCountry.name.common} covers ${todayCountry.area.toLocaleString()} km².`;
+
+    document.getElementById("countryOfDay").innerHTML = `
+      <div class="flex items-center gap-4 mt-3">
+        <img src="${todayCountry.flags.png}" class="w-16 rounded-lg">
+        <div>
+          <p class="font-bold text-xl">${todayCountry.name.common}</p>
+        </div>
+      </div>
+    `;
+  } catch(error) {
+    console.log("Country API failed:", error);
+
+    document.getElementById("countryOfDay").innerHTML = `
+      <p>Failed to load country.</p>
+    `;
+  }
+}
+
+function openCountryModal(){
+  if(!todayCountry) return;
+
+  document.getElementById("countryModal").classList.remove("hidden");
+
+  document.getElementById("countryTitle").textContent =
+    todayCountry.name.common;
+
+  document.getElementById("countryInfo").innerHTML = `
+    <p><strong>• Capital:</strong> ${todayCountry.capital ? todayCountry.capital[0] : "N/A"}</p>
+    <p><strong>• Population:</strong> ${todayCountry.population.toLocaleString()}</p>
+    <p><strong>• Region:</strong> ${todayCountry.region}</p>
+    <p><strong>• Fact:</strong> ${todayCountry.fact}</p>
+  `;
+}
+window.onload = function(){
+  loadCountryOfDay();
+
+  const today = new Date().getDay();
+
+  document.getElementById("dailyQuestion").textContent = questions[today];
+
+  document.getElementById("bestEasy").textContent =
+    "Easy: " + bestScores.easy + "/10";
+
+  document.getElementById("bestMedium").textContent =
+    "Medium: " + bestScores.medium + "/10";
+
+  document.getElementById("bestHard").textContent =
+    "Hard: " + bestScores.hard + "/10";
+};
+
+function openQuestionModal(){
+  const today = new Date().getDay();
+
+  document.getElementById("questionModal").classList.remove("hidden");
+  document.getElementById("questionTitle").textContent = questions[today];
+  document.getElementById("questionAnswer").textContent = answers[today];
+}
+
+/* Flag */
+let allCountries = [];
+let currentFlag = null;
+
+async function openFlagModal(){
+  document.getElementById("flagModal").classList.remove("hidden");
+
+  if(allCountries.length === 0){
+    const res = await fetch("https://restcountries.com/v3.1/all?fields=name,capital,flags");
+    allCountries = await res.json();
+  }
+
+  newFlag();
+}
+
+function newFlag(){
+  const rand = Math.floor(Math.random()*allCountries.length);
+  currentFlag = allCountries[rand];
+
+  document.getElementById("flagDisplay").innerHTML =
+    `<img src="${currentFlag.flags.png}" class="w-full h-full object-contain">`;
+
+  document.getElementById("flagInput").value = "";
+  document.getElementById("flagResult").textContent = "";
+  document.getElementById("flagFact").textContent = "";
+}
+
+function checkFlagAnswer(){
+  const guess = document.getElementById("flagInput").value.trim().toLowerCase();
+
+  if(guess === currentFlag.name.common.toLowerCase()){
+    document.getElementById("flagResult").textContent = "✅ Correct!";
+  } else {
+    document.getElementById("flagResult").textContent = "❌ " + currentFlag.name.common;
+  }
+
+  document.getElementById("flagFact").textContent =
+    currentFlag.capital ? "Capital: " + currentFlag.capital[0] : "No capital";
+}
+
+/* Quiz */
+const allQuizQuestions = {
+easy: [
+{question:"Capital of Australia?",options:["Sydney","Melbourne","Canberra","Brisbane"],answer:"Canberra"},
+{question:"How many continents?",options:["5","6","7","8"],answer:"7"},
+{question:"Largest ocean?",options:["Atlantic","Indian","Pacific","Arctic"],answer:"Pacific"},
+{question:"Capital of Canada?",options:["Toronto","Ottawa","Vancouver","Montreal"],answer:"Ottawa"},
+{question:"Capital of Japan?",options:["Tokyo","Kyoto","Osaka","Nagoya"],answer:"Tokyo"},
+{question:"Eiffel Tower country?",options:["Italy","Germany","France","Spain"],answer:"France"},
+{question:"Egypt is in?",options:["Africa","Asia","Europe","South America"],answer:"Africa"},
+{question:"Biggest desert?",options:["Sahara","Gobi","Kalahari","Arabian"],answer:"Sahara"},
+{question:"Capital of Brazil?",options:["Rio","Brasilia","Salvador","Manaus"],answer:"Brasilia"},
+{question:"How many oceans?",options:["3","4","5","6"],answer:"5"}
+],
+
+medium: [
+{question:"Longest river?",options:["Amazon","Nile","Yangtze","Mississippi"],answer:"Nile"},
+{question:"Petra is in?",options:["Egypt","Jordan","Turkey","Greece"],answer:"Jordan"},
+{question:"Tallest mountain?",options:["Everest","K2","Denali","Fuji"],answer:"Everest"},
+{question:"Greenland belongs to?",options:["Canada","Denmark","USA","Norway"],answer:"Denmark"},
+{question:"Capital of Argentina?",options:["Cordoba","Buenos Aires","Rosario","Mendoza"],answer:"Buenos Aires"},
+{question:"Country inside South Africa?",options:["Lesotho","Botswana","Namibia","Eswatini"],answer:"Lesotho"},
+{question:"Sea between Europe and Africa?",options:["Mediterranean","Red Sea","Baltic","Black Sea"],answer:"Mediterranean"},
+{question:"Russia and Alaska separated by?",options:["Bering","Hormuz","Bosporus","Malacca"],answer:"Bering"},
+{question:"Amazon mainly in?",options:["Brazil","Peru","Colombia","Bolivia"],answer:"Brazil"},
+{question:"Capital of Iceland?",options:["Oslo","Reykjavik","Stockholm","Helsinki"],answer:"Reykjavik"}
+],
+
+hard: [
+{question:"Largest tectonic plate?",options:["Pacific","African","Eurasian","Antarctic"],answer:"Pacific"},
+{question:"Most time zones?",options:["USA","Russia","France","China"],answer:"France"},
+{question:"Owns Gibraltar?",options:["Spain","UK","Portugal","France"],answer:"UK"},
+{question:"Smallest country?",options:["Monaco","Vatican City","San Marino","Liechtenstein"],answer:"Vatican City"},
+{question:"Deepest trench?",options:["Mariana","Java","Tonga","Puerto Rico"],answer:"Mariana"},
+{question:"Largest African lake?",options:["Victoria","Tanganyika","Malawi","Turkana"],answer:"Victoria"},
+{question:"Borders most countries?",options:["China","Russia","Brazil","Germany"],answer:"China"},
+{question:"Capital of Kazakhstan?",options:["Astana","Almaty","Tashkent","Bishkek"],answer:"Astana"},
+{question:"River through Baghdad?",options:["Tigris","Euphrates","Nile","Danube"],answer:"Tigris"},
+{question:"Asia/North America strait?",options:["Bering Strait","Gibraltar","Hormuz","Bosporus"],answer:"Bering Strait"}
+]
+};
+
+let currentQuestion = 0;
+let quizQuestions = allQuizQuestions.easy;
+let score = 0;
+let currentDifficulty = "easy";
+let savedScores = localStorage.getItem("geoScores");
+
+let bestScores = savedScores ? JSON.parse(savedScores) : {
+  easy: 0,
+  medium: 0,
+  hard: 0
+};
+
+function startQuiz(){
+  document.getElementById("quizModal").classList.remove("hidden");
+
+  // show difficulty buttons again
+  document.getElementById("difficultyButtons").style.display = "flex";
+
+  // reset quiz screen
+  document.getElementById("quizQuestion").textContent =
+    "Choose your difficulty";
+
+  document.getElementById("quizOptions").innerHTML = "";
+  document.getElementById("quizResult").textContent = "";
+
+  currentQuestion = 0;
+}
+
+function setDifficulty(level) {
+  currentDifficulty = level;
+  quizQuestions = allQuizQuestions[level];
+  currentQuestion = 0;
+score = 0;
+  // hide difficulty buttons
+  document.getElementById("difficultyButtons").style.display = "none";
+
+  loadQuestion();
+}
+
+function loadQuestion(){
+  const q = quizQuestions[currentQuestion];
+  document.getElementById("quizQuestion").textContent = q.question;
+
+  let html = "";
+  q.options.forEach(option=>{
+    html += `<button onclick="checkAnswer('${option}')" class="w-full bg-slate-800 p-3 rounded-xl hover:bg-indigo-500 mb-2">${option}</button>`;
+  });
+
+  document.getElementById("quizOptions").innerHTML = html;
+  document.getElementById("quizResult").textContent = "";
+}
+
+function checkAnswer(selected){
+  const correct = quizQuestions[currentQuestion].answer;
+  const buttons = document.querySelectorAll("#quizOptions button");
+
+  // lock buttons
+  buttons.forEach(btn => btn.disabled = true);
+
+  if(selected === correct){
+    score++;
+
+    // save high score instantly
+    if(score > bestScores[currentDifficulty]){
+      bestScores[currentDifficulty] = score;
+
+      localStorage.setItem(
+        "geoScores",
+        JSON.stringify(bestScores)
+      );
+
+      document.getElementById("bestEasy").textContent =
+        "Easy: " + bestScores.easy + "/10";
+
+      document.getElementById("bestMedium").textContent =
+        "Medium: " + bestScores.medium + "/10";
+
+      document.getElementById("bestHard").textContent =
+        "Hard: " + bestScores.hard + "/10";
+    }
+
+    document.getElementById("quizResult").textContent = "✅ Correct!";
+
+    // force sound replay
+    const correctSound = document.getElementById("correctSound");
+    correctSound.currentTime = 0;
+    correctSound.play().catch(() => {});
+
+  } else {
+    document.getElementById("quizResult").textContent =
+      "❌ Wrong! Correct: " + correct;
+
+    // force sound replay
+    const wrongSound = document.getElementById("wrongSound");
+    wrongSound.currentTime = 0;
+    wrongSound.play().catch(() => {});
+  }
+
+  // auto next
+  setTimeout(() => {
+    nextQuestion();
+  }, 1500);
+}
+
+function nextQuestion(){
+  currentQuestion++;
+
+  if(currentQuestion >= quizQuestions.length){
+
+    // update best score
+    if(score > bestScores[currentDifficulty]){
+      bestScores[currentDifficulty] = score;
+    }
+
+    // save scores permanently
+    localStorage.setItem("geoScores", JSON.stringify(bestScores));
+
+    // update score display
+    document.getElementById("bestEasy").textContent =
+      "Easy: " + bestScores.easy + "/10";
+
+    document.getElementById("bestMedium").textContent =
+      "Medium: " + bestScores.medium + "/10";
+
+    document.getElementById("bestHard").textContent =
+      "Hard: " + bestScores.hard + "/10";
+
+    // clear old question + options
+    document.getElementById("quizQuestion").textContent =
+      "🏆 Quiz Complete!";
+
+    document.getElementById("quizOptions").innerHTML = "";
+
+    // show score
+    document.getElementById("quizResult").textContent =
+      "Your score: " + score + "/" + quizQuestions.length;
+
+    // reset after 2 seconds
+    setTimeout(function(){
+      document.getElementById("difficultyButtons").style.display = "flex";
+      document.getElementById("quizQuestion").textContent =
+        "Choose your difficulty";
+      document.getElementById("quizResult").textContent = "";
+
+      currentQuestion = 0;
+      score = 0;
+    }, 2000);
+
+    return;
+  }
+
+  
+
+  loadQuestion();
+}
+</script>
+
+</body>
+</html>
