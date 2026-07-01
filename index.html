@@ -505,24 +505,45 @@ function checkFlagAnswer(showAnswer = false){
     .toLowerCase();
 
   if(showAnswer){
-    document.getElementById("flagResult").textContent =
-      "🌍 " + currentFlag.name;
-
-    document.getElementById("flagFact").textContent =
-      "Capital: " + currentFlag.capital + " • " + currentFlag.fact;
-
+    document.getElementById("flagResult").innerHTML = `
+      <div class="flex items-center gap-3 mt-4 bg-slate-800 p-4 rounded-2xl">
+        <div class="text-4xl">${currentFlag.flag}</div>
+        <div>
+          <p class="text-xl font-bold">${currentFlag.name}</p>
+          <p class="text-sm text-gray-300">
+            Capital: ${currentFlag.capital} • ${currentFlag.fact}
+          </p>
+        </div>
+      </div>
+    `;
     return;
   }
 
   if(guess === currentFlag.name.toLowerCase()){
-    document.getElementById("flagResult").textContent = "✅ Correct!";
+    document.getElementById("flagResult").innerHTML = `
+      <div class="flex items-center gap-3 mt-4 bg-green-900 p-4 rounded-2xl">
+        <div class="text-4xl">${currentFlag.flag}</div>
+        <div>
+          <p class="text-xl font-bold">✅ ${currentFlag.name}</p>
+          <p class="text-sm text-gray-300">
+            Capital: ${currentFlag.capital} • ${currentFlag.fact}
+          </p>
+        </div>
+      </div>
+    `;
   } else {
-    document.getElementById("flagResult").textContent =
-      "❌ Wrong! It was " + currentFlag.name;
+    document.getElementById("flagResult").innerHTML = `
+      <div class="flex items-center gap-3 mt-4 bg-red-900 p-4 rounded-2xl">
+        <div class="text-4xl">${currentFlag.flag}</div>
+        <div>
+          <p class="text-xl font-bold">❌ ${currentFlag.name}</p>
+          <p class="text-sm text-gray-300">
+            Capital: ${currentFlag.capital} • ${currentFlag.fact}
+          </p>
+        </div>
+      </div>
+    `;
   }
-
-  document.getElementById("flagFact").textContent =
-    "Capital: " + currentFlag.capital + " • " + currentFlag.fact;
 }
 /* Quiz */
 const allQuizQuestions = {
