@@ -446,7 +446,7 @@ async function openFlagModal(){
   document.getElementById("flagModal").classList.remove("hidden");
 
   if(allCountries.length === 0){
-    const res = await fetch("https://restcountries.com/v3.1/all?fields=name,capital,flags");
+  const res = await fetch("https://restcountries.com/v3.1/all?fields=name,capital,flags,region");
     allCountries = await res.json();
   }
 
@@ -457,9 +457,8 @@ function newFlag(){
   const rand = Math.floor(Math.random()*allCountries.length);
   currentFlag = allCountries[rand];
 
-  document.getElementById("flagDisplay").innerHTML =
-    `<img src="${currentFlag.flags.png}" class="w-full h-full object-contain">`;
-
+document.getElementById("flagDisplay").innerHTML =
+  `<img src="${currentFlag.flags.svg}" class="w-full h-full object-contain">`;
   document.getElementById("flagInput").value = "";
   document.getElementById("flagResult").textContent = "";
   document.getElementById("flagFact").textContent = "";
