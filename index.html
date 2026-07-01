@@ -445,26 +445,42 @@ let currentFlag = null;
 async function openFlagModal(){
   document.getElementById("flagModal").classList.remove("hidden");
 
-  if(allCountries.length === 0){
-const res = await fetch("https://restcountries.com/v3.1/all?fields=name,capital,flags,region");
-    allCountries = await res.json();
-  }
+  try {
+    if(allCountries.length === 0){
+      const res = await fetch("https://restcountries.com/v3.1/all?fields=name,capital,flags,region");
 
-  newFlag();
+      if(!res.ok){
+        throw new Error("API failed");
+      }
+
+      allCountries = await res.json();
+    }
+
+    if(allCountries.length > 0){
+      newFlag();
+    }
+
+  } catch(error){
+    document.getElementById("flagDisplay").innerHTML =
+      "<p class='text-red-400'>Failed to load flags</p>";
+
+    console.log(error);
+  }
 }
 
 function newFlag(){
-  const rand = Math.floor(Math.random()*allCountries.length);
+  if(allCountries.length === 0) return;
+
+  const rand = Math.floor(Math.random() * allCountries.length);
   currentFlag = allCountries[rand];
-  
-document.getElementById("flagDisplay").innerHTML =
-  `<img src="${currentFlag.flags.svg}" class="w-full h-full object-contain">`;
-  
+
+  document.getElementById("flagDisplay").innerHTML =
+    `<img src="${currentFlag.flags.svg}" class="w-full h-full object-contain">`;
+
   document.getElementById("flagInput").value = "";
   document.getElementById("flagResult").textContent = "";
   document.getElementById("flagFact").textContent = "";
 }
-
 function checkFlagAnswer(showAnswer = false){
   const guess = document.getElementById("flagInput").value.trim().toLowerCase();
 
