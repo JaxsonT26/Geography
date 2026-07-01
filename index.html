@@ -467,15 +467,20 @@ async function openFlagModal(){
     console.log(error);
   }
 }
-
 function newFlag(){
-  if(allCountries.length === 0) return;
+  if(!allCountries.length) return;
 
-  const rand = Math.floor(Math.random() * allCountries.length);
-  currentFlag = allCountries[rand];
+  const validCountries = allCountries.filter(
+    c => c.flags && (c.flags.png || c.flags.svg)
+  );
+
+  const rand = Math.floor(Math.random() * validCountries.length);
+  currentFlag = validCountries[rand];
+
+  const flagUrl = currentFlag.flags.png || currentFlag.flags.svg;
 
   document.getElementById("flagDisplay").innerHTML =
-    `<img src="${currentFlag.flags.svg}" class="w-full h-full object-contain">`;
+    `<img src="${flagUrl}" class="w-full h-full object-contain rounded-xl">`;
 
   document.getElementById("flagInput").value = "";
   document.getElementById("flagResult").textContent = "";
