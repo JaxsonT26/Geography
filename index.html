@@ -388,7 +388,7 @@ todayCountry = countryList[today % countryList.length];
 
     document.getElementById("countryOfDay").innerHTML = `
       <div class="flex items-center gap-4 mt-3">
-        <img src="${todayCountry.flag}" class="w-16 rounded-lg">
+      <div class="text-4xl">${todayCountry.flag}</div>
         <div>
           <p class="font-bold text-xl">${todayCountry.name}</p>
         </div>
