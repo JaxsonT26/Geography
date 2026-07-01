@@ -469,7 +469,7 @@ function openQuestionModal(){
 let allCountries = [];
 let currentFlag = null;
 
-async function openFlagModal(){
+ function openFlagModal(){
   document.getElementById("flagModal").classList.remove("hidden");
 
   allCountries = countryList;
@@ -484,11 +484,13 @@ function newFlag(){
 
   const rand = Math.floor(Math.random() * allCountries.length);
   currentFlag = allCountries[rand];
-
+if (!currentFlag.flag) {
+  newFlag();
+  return;
+}
   console.log("Loaded:", currentFlag);
-
-  document.getElementById("flagDisplay").innerHTML =
-    `<span>${currentFlag.flag}</span>`;
+document.getElementById("flagDisplay").textContent =
+  currentFlag.flag;
 
   document.getElementById("flagInput").value = "";
   document.getElementById("flagResult").textContent = "";
