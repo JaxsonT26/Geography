@@ -141,8 +141,7 @@ Close
 <button onclick="checkFlagAnswer()" class="w-full bg-indigo-500 py-3 rounded-2xl mb-4">Check Answer</button>
 
 <button onclick="checkFlagAnswer(true)" class="w-full bg-yellow-500 py-3 rounded-2xl mb-4">Reveal Answer</button>
-<div id="flagResult" class="text-lg font-bold mb-4"></div>
-<div id="flagFact"></div>
+<div id="flagResult" class="mb-4"></div>
 
 <button onclick="newFlag()" class="w-full bg-green-500 py-3 rounded-2xl mb-4">Next Flag →</button>
 <button onclick="closeModal('flagModal')" class="w-full bg-red-500 py-3 rounded-2xl">Close</button>
@@ -494,7 +493,7 @@ document.getElementById("flagDisplay").textContent =
 
   document.getElementById("flagInput").value = "";
   document.getElementById("flagResult").textContent = "";
-  document.getElementById("flagFact").textContent = "";
+
 }
   
 function checkFlagAnswer(showAnswer = false){
