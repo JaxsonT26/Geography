@@ -135,7 +135,7 @@ Close
 
 <h2 class="text-3xl mb-6">🏳️ Guess the Flag</h2>
 
-<div id="flagDisplay" class="w-full h-48 bg-slate-800 rounded-2xl mb-6 flex items-center justify-center"></div>
+<div id="flagDisplay" class="w-full min-h-[220px] bg-slate-800 rounded-2xl mb-6 flex items-center justify-center text-8xl overflow-visible"></div>
 
 <input id="flagInput" type="text" placeholder="Type country name..." class="w-full p-3 rounded-xl text-black mb-4">
 <button onclick="checkFlagAnswer()" class="w-full bg-indigo-500 py-3 rounded-2xl mb-4">Check Answer</button>
@@ -477,18 +477,24 @@ async function openFlagModal(){
   newFlag();
 }
 function newFlag(){
-  if(!allCountries.length) return;
+  if (!allCountries || allCountries.length === 0) {
+    document.getElementById("flagDisplay").innerHTML = "No countries loaded";
+    return;
+  }
 
   const rand = Math.floor(Math.random() * allCountries.length);
   currentFlag = allCountries[rand];
 
+  console.log("Loaded:", currentFlag);
+
   document.getElementById("flagDisplay").innerHTML =
-    `<div class="text-8xl">${currentFlag.flag}</div>`;
+    `<span>${currentFlag.flag}</span>`;
 
   document.getElementById("flagInput").value = "";
   document.getElementById("flagResult").textContent = "";
   document.getElementById("flagFact").textContent = "";
 }
+  
 function checkFlagAnswer(showAnswer = false){
   if(!currentFlag) return;
 
