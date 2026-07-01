@@ -188,10 +188,6 @@ const answers = {
   6: "🌮 Mexico speaks Spanish because Spain conquered the Aztec Empire in 1521. Today, Mexico has the largest Spanish-speaking population in the world — over 125 million people."
 };
 let todayCountry = null;
-
- function loadCountryOfDay(){
-  try {
-
 const countryList = [
 {name:"Afghanistan",flag:"🇦🇫",capital:"Kabul",population:"41M",region:"Asia",fact:"Known for the Hindu Kush mountains."},
 {name:"Albania",flag:"🇦🇱",capital:"Tirana",population:"2.8M",region:"Europe",fact:"Has over 450 km of coastline."},
@@ -410,22 +406,24 @@ const countryList = [
 {name:"Zambia",flag:"🇿🇲",capital:"Lusaka",population:"21M",region:"Africa",fact:"Home to Victoria Falls."},
 {name:"Zimbabwe",flag:"🇿🇼",capital:"Harare",population:"16M",region:"Africa",fact:"Home to Great Zimbabwe ruins."}
 ];
+    function loadCountryOfDay(){
+  try {
     const today = new Date().getDate();
-todayCountry = countryList[today % countryList.length];
-
+    todayCountry = countryList[today % countryList.length];
 
     document.getElementById("countryOfDay").innerHTML = `
       <div class="flex items-center gap-4 mt-3">
-      <div class="text-4xl">${todayCountry.flag}</div>
+        <div class="text-4xl">${todayCountry.flag}</div>
         <div>
           <p class="font-bold text-xl">${todayCountry.name}</p>
         </div>
       </div>
     `;
-  } catch(error) {
+  } catch(error){
     console.log(error);
   }
 }
+
 function openCountryModal(){
   if(!todayCountry) return;
 
@@ -437,6 +435,7 @@ todayCountry.name;
   document.getElementById("countryInfo").innerHTML = `
     <p><strong>• Capital:</strong> ${todayCountry.capital ? todayCountry.capital : "N/A"}</p>
   <p><strong>• Population:</strong> ${todayCountry.population}</p>
+  
     <p><strong>• Region:</strong> ${todayCountry.region}</p>
     <p><strong>• Fact:</strong> ${todayCountry.fact}</p>
   `;
@@ -491,14 +490,18 @@ function newFlag(){
   document.getElementById("flagFact").textContent = "";
 }
 function checkFlagAnswer(showAnswer = false){
-  const guess = document.getElementById("flagInput").value.trim().toLowerCase();
+  if(!currentFlag) return;
+
+  const guess = document.getElementById("flagInput").value
+    .trim()
+    .toLowerCase();
 
   if(showAnswer){
     document.getElementById("flagResult").textContent =
       "🌍 " + currentFlag.name;
 
     document.getElementById("flagFact").textContent =
-      "Capital: " + currentFlag.capital;
+      "Capital: " + currentFlag.capital + " • " + currentFlag.fact;
 
     return;
   }
@@ -506,11 +509,12 @@ function checkFlagAnswer(showAnswer = false){
   if(guess === currentFlag.name.toLowerCase()){
     document.getElementById("flagResult").textContent = "✅ Correct!";
   } else {
-    document.getElementById("flagResult").textContent = "❌ Wrong!";
+    document.getElementById("flagResult").textContent =
+      "❌ Wrong! It was " + currentFlag.name;
   }
 
   document.getElementById("flagFact").textContent =
-    "Capital: " + currentFlag.capital;
+    "Capital: " + currentFlag.capital + " • " + currentFlag.fact;
 }
 /* Quiz */
 const allQuizQuestions = {
