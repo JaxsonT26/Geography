@@ -445,42 +445,18 @@ let currentFlag = null;
 async function openFlagModal(){
   document.getElementById("flagModal").classList.remove("hidden");
 
-  try {
-    if(allCountries.length === 0){
-      const res = await fetch("https://restcountries.com/v3.1/all?fields=name,capital,flags,region");
+  allCountries = countryList;
 
-      if(!res.ok){
-        throw new Error("API failed");
-      }
-
-      allCountries = await res.json();
-    }
-
-    if(allCountries.length > 0){
-      newFlag();
-    }
-
-  } catch(error){
-    document.getElementById("flagDisplay").innerHTML =
-      "<p class='text-red-400'>Failed to load flags</p>";
-
-    console.log(error);
-  }
+  newFlag();
 }
 function newFlag(){
   if(!allCountries.length) return;
 
-  const validCountries = allCountries.filter(
-    c => c.flags && (c.flags.png || c.flags.svg)
-  );
-
-  const rand = Math.floor(Math.random() * validCountries.length);
-  currentFlag = validCountries[rand];
-
-  const flagUrl = currentFlag.flags.png || currentFlag.flags.svg;
+  const rand = Math.floor(Math.random() * allCountries.length);
+  currentFlag = allCountries[rand];
 
   document.getElementById("flagDisplay").innerHTML =
-    `<img src="${flagUrl}" class="w-full h-full object-contain rounded-xl">`;
+    `<div class="text-8xl">${currentFlag.flag}</div>`;
 
   document.getElementById("flagInput").value = "";
   document.getElementById("flagResult").textContent = "";
@@ -491,26 +467,22 @@ function checkFlagAnswer(showAnswer = false){
 
   if(showAnswer){
     document.getElementById("flagResult").textContent =
-      "🌍 " + currentFlag.name.common;
+      "🌍 " + currentFlag.name;
 
     document.getElementById("flagFact").textContent =
-      currentFlag.capital
-        ? "Capital: " + currentFlag.capital[0]
-        : "No capital";
+      "Capital: " + currentFlag.capital;
 
     return;
   }
 
-  if(guess === currentFlag.name.common.toLowerCase()){
+  if(guess === currentFlag.name.toLowerCase()){
     document.getElementById("flagResult").textContent = "✅ Correct!";
   } else {
     document.getElementById("flagResult").textContent = "❌ Wrong!";
   }
 
   document.getElementById("flagFact").textContent =
-    currentFlag.capital
-      ? "Capital: " + currentFlag.capital[0]
-      : "No capital";
+    "Capital: " + currentFlag.capital;
 }
 /* Quiz */
 const allQuizQuestions = {
