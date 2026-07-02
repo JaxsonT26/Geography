@@ -997,6 +997,14 @@ function nextQuestion(){
   loadQuestion();
 }
 </script>
+<script>
+function closeModal(id){
+  document.getElementById(id).classList.add("hidden");
+}
 
+function startQuiz(){
+  document.getElementById("quizModal").classList.remove("hidden");
+}
+</script>
 </body>
 </html>
