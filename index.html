@@ -346,10 +346,10 @@ continentCurrentQuestion = 0;
   closeModal("continentPageModal");
   document.getElementById("continentQuizModal").classList.remove("hidden");
 
-  loadQuestion(name);
+loadContinentQuestion(name);
 }
 
-function loadQuestion(name){
+function loadContinentQuestion(name){
 const q = currentQuiz[continentCurrentQuestion];
 
   document.getElementById("quizTitle").textContent = `${name} Quiz`;
@@ -372,7 +372,7 @@ continentCurrentQuestion++;
   if(continentCurrentQuestion < currentQuiz.length){
     setTimeout(() => {
       document.getElementById("quizResult").textContent = "";
-      loadQuestion(name);
+loadContinentQuestion(name);
     }, 1200);
   } else {
     setTimeout(() => {
