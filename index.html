@@ -18,7 +18,8 @@ body {
   border: 1px solid #334155;
   border-radius: 16px;
   padding: 24px;
-  width: 360px;
+  width: 100%;
+  max-width: 360px;
   min-height: 220px;
   cursor: pointer;
   transition: 0.3s;
@@ -32,28 +33,31 @@ body {
 </head>
 <body>
 
-<h1 class="text-center text-5xl mt-8 mb-8">🌍 GeoQuestKids</h1>
+<h1 class="text-center text-3xl sm:text-5xl mt-8 mb-8 px-4">
+  🌍 GeoQuestKids
+</h1>
 
-<div class="max-w-6xl mx-auto flex flex-wrap justify-center gap-6">
+<div class="max-w-6xl mx-auto px-4 sm:px-6 flex flex-wrap justify-center gap-6">
+
 <div class="geo-card" onclick="openContinentsModal()">
 <div class="text-4xl">🌎</div>
 <h2 class="font-bold mt-2">Seven Continents</h2>
 <p>Explore facts about every continent.</p>
 </div>
 
-<div class="text-left text-sm text-slate-300 mr-6 flex flex-col justify-center">
+<div class="text-left text-sm text-slate-300 flex flex-col justify-center w-full sm:w-auto">
 <h3 class="font-bold text-xl mb-3">🏆 Quiz Progress</h3>
 
 <p id="bestEasy">Easy: 0/10</p>
 <p id="bestMedium" class="mt-2">Medium: 0/10</p>
 <p id="bestHard" class="mt-2">Hard: 0/10</p>
 </div>
-<div class="geo-card" onclick="startQuiz()">
-  <div class="text-4xl">🧠</div>
-  <h2 class="font-bold mt-2">Geography Quiz</h2>
-  <p>Test your knowledge!</p>
-</div>
 
+<div class="geo-card" onclick="startQuiz()">
+<div class="text-4xl">🧠</div>
+<h2 class="font-bold mt-2">Geography Quiz</h2>
+<p>Test your knowledge!</p>
+</div>
 
 <div class="geo-card" onclick="alert('🌐 Countries coming soon!')">
 <div class="text-4xl">🌐</div>
@@ -82,106 +86,101 @@ body {
 </div>
 
 <!-- Question of the Day -->
-<div id="geoBubble" onclick="openQuestionModal()" class="fixed left-5 bottom-5 bg-blue-600 p-8 rounded-3xl cursor-pointer z-50 shadow-xl w-96">
-<strong class="text-3xl">🌍 Question of the Day</strong>
-<p id="dailyQuestion" class="mt-4 text-xl"></p>
+<div id="geoBubble"
+onclick="openQuestionModal()"
+class="fixed left-3 right-3 sm:left-5 sm:right-auto bottom-5 bg-blue-600 p-4 sm:p-8 rounded-3xl cursor-pointer z-50 shadow-xl w-auto sm:w-96">
+
+<strong class="text-2xl sm:text-3xl">🌍 Question of the Day</strong>
+<p id="dailyQuestion" class="mt-4 text-base sm:text-xl"></p>
+
 </div>
-<div id="countryBubble" onclick="openCountryModal()" class="fixed top-5 right-5 bg-green-600 p-8 rounded-3xl z-50 shadow-xl w-96 cursor-pointer">
-  <strong class="text-3xl">🌎 Country of the Day</strong>
-  <div id="countryOfDay" class="mt-4 text-xl"></div>
+
+<!-- Country of the Day -->
+<div id="countryBubble"
+onclick="openCountryModal()"
+class="fixed top-3 left-3 right-3 sm:left-auto sm:right-5 bg-green-600 p-4 sm:p-8 rounded-3xl z-50 shadow-xl w-auto sm:w-96 cursor-pointer">
+
+<strong class="text-2xl sm:text-3xl">🌎 Country of the Day</strong>
+<div id="countryOfDay" class="mt-4 text-base sm:text-xl"></div>
+
 </div>
+
 <!-- Question Modal -->
 <div id="questionModal" class="hidden fixed inset-0 bg-black/80 flex items-center justify-center p-4 z-50">
-<div class="bg-slate-900 rounded-3xl max-w-lg w-full p-8">
-<h2 id="questionTitle" class="text-3xl font-bold mb-4"></h2>
-<p id="questionAnswer" class="text-lg mb-6"></p>
-<button onclick="closeModal('questionModal')" class="w-full bg-red-500 py-3 rounded-2xl">Close</button>
+<div class="bg-slate-900 rounded-3xl max-w-lg w-full p-4 sm:p-8">
+
+<h2 id="questionTitle" class="text-2xl sm:text-3xl font-bold mb-4"></h2>
+<p id="questionAnswer" class="text-base sm:text-lg mb-6"></p>
+
+<button onclick="closeModal('questionModal')" class="w-full bg-red-500 py-3 rounded-2xl">
+Close
+</button>
+
 </div>
 </div>
+
 <!-- Country Modal -->
 <div id="countryModal" class="hidden fixed inset-0 bg-black/80 flex items-center justify-center p-4 z-50">
-<div class="bg-slate-900 rounded-3xl max-w-lg w-full p-8">
-<h2 id="countryTitle" class="text-3xl font-bold mb-4"></h2>
-<div id="countryInfo" class="text-lg mb-6"></div>
+<div class="bg-slate-900 rounded-3xl max-w-lg w-full p-4 sm:p-8">
+
+<h2 id="countryTitle" class="text-2xl sm:text-3xl font-bold mb-4"></h2>
+<div id="countryInfo" class="text-base sm:text-lg mb-6"></div>
+
 <button onclick="closeModal('countryModal')" class="w-full bg-red-500 py-3 rounded-2xl">
 Close
 </button>
-</div>
-</div>
-<!-- Quiz Modal -->
-<div id="quizModal" class="hidden fixed inset-0 bg-black/80 flex items-center justify-center p-4 z-50">
-<div class="bg-slate-900 rounded-3xl max-w-2xl w-full p-8">
-
-<h2 class="text-3xl mb-6">🧠 Geography Quiz</h2>
-
-<div id="difficultyButtons" class="flex gap-3 mb-6">
-<button onclick="setDifficulty('easy')" class="bg-green-500 px-4 py-2 rounded-xl">Easy</button>
-<button onclick="setDifficulty('medium')" class="bg-yellow-500 px-4 py-2 rounded-xl">Medium</button>
-<button onclick="setDifficulty('hard')" class="bg-red-500 px-4 py-2 rounded-xl">Hard</button>
-</div>
-<div id="quizQuestion" class="text-xl mb-6"></div>
-<div id="quizOptions"></div>
-<div id="quizResult" class="mt-6 text-lg font-bold"></div>
-
-<button onclick="closeModal('quizModal')" class="mt-4 w-full bg-red-500 py-3 rounded-2xl">Close</button>
 
 </div>
 </div>
-<div id="continentPageModal" class="hidden fixed inset-0 bg-black/80 flex items-center justify-center p-4 z-50">
-  <div class="bg-slate-900 rounded-3xl max-w-2xl w-full p-8">
+  
+<!-- Flag Modal -->
+<div id="flagModal" class="hidden fixed inset-0 bg-black/80 flex items-center justify-center p-4 z-50">
+  <div class="bg-slate-900 rounded-3xl max-w-lg w-full p-4 sm:p-8">
 
-    <h2 id="continentPageTitle" class="text-4xl font-bold mb-6"></h2>
+    <h2 class="text-2xl sm:text-3xl mb-6">🏳️ Guess the Flag</h2>
 
-    <div id="continentPageContent" class="space-y-3 text-xl"></div>
+    <div id="flagDisplay"
+    class="w-full min-h-[180px] sm:min-h-[220px] bg-slate-800 rounded-2xl mb-6 flex items-center justify-center text-6xl sm:text-8xl overflow-visible">
+    </div>
 
-    <button onclick="closeModal('continentPageModal')" class="mt-6 w-full bg-red-500 py-3 rounded-2xl">
-      Back
+    <input id="flagInput" type="text" placeholder="Type country name..." class="w-full p-3 rounded-xl text-black mb-4">
+
+    <button onclick="checkFlagAnswer()" class="w-full bg-indigo-500 py-3 rounded-2xl mb-4">
+      Check Answer
+    </button>
+
+    <button onclick="checkFlagAnswer(true)" class="w-full bg-yellow-500 py-3 rounded-2xl mb-4">
+      Reveal Answer
+    </button>
+
+    <div id="flagResult" class="mb-4"></div>
+
+    <button onclick="newFlag()" class="w-full bg-green-500 py-3 rounded-2xl mb-4">
+      Next Flag →
+    </button>
+
+    <button onclick="closeModal('flagModal')" class="w-full bg-red-500 py-3 rounded-2xl">
+      Close
     </button>
 
   </div>
 </div>
-<!-- Flag Modal -->
-<div id="flagModal" class="hidden fixed inset-0 bg-black/80 flex items-center justify-center p-4 z-50">
-<div class="bg-slate-900 rounded-3xl max-w-lg w-full p-8">
 
-<h2 class="text-3xl mb-6">🏳️ Guess the Flag</h2>
+<!-- Continents Modal -->
+<div id="continentsModal" class="hidden fixed inset-0 bg-black/80 flex items-center justify-center p-4 z-50">
+  <div class="bg-slate-900 rounded-3xl max-w-2xl w-full p-4 sm:p-8">
 
-<div id="flagDisplay" class="w-full min-h-[220px] bg-slate-800 rounded-2xl mb-6 flex items-center justify-center text-8xl overflow-visible"></div>
+    <h2 class="text-2xl sm:text-3xl mb-6">🌍 Seven Continents</h2>
 
-<input id="flagInput" type="text" placeholder="Type country name..." class="w-full p-3 rounded-xl text-black mb-4">
-<button onclick="checkFlagAnswer()" class="w-full bg-indigo-500 py-3 rounded-2xl mb-4">Check Answer</button>
-
-<button onclick="checkFlagAnswer(true)" class="w-full bg-yellow-500 py-3 rounded-2xl mb-4">Reveal Answer</button>
-<div id="flagResult" class="mb-4"></div>
-
-<button onclick="newFlag()" class="w-full bg-green-500 py-3 rounded-2xl mb-4">Next Flag →</button>
-<button onclick="closeModal('flagModal')" class="w-full bg-red-500 py-3 rounded-2xl">Close</button>
-
-</div>
-</div>
-  <div id="continentsModal" class="hidden fixed inset-0 bg-black/80 flex items-center justify-center p-4 z-50">
-  <div class="bg-slate-900 rounded-3xl max-w-2xl w-full p-8">
-
-<h2 class="text-3xl mb-6">🌍 Seven Continents</h2>
-
-<div class="grid grid-cols-2 gap-4">
-
-  <div onclick="showContinent('Asia')" class="bg-slate-800 p-4 rounded-xl text-xl cursor-pointer">🌏 Asia</div>
-
-  <div onclick="showContinent('Africa')" class="bg-slate-800 p-4 rounded-xl text-xl cursor-pointer">🌍 Africa</div>
-
-  <div onclick="showContinent('North America')" class="bg-slate-800 p-4 rounded-xl text-xl cursor-pointer">🌎 North America</div>
-
-  <div onclick="showContinent('South America')" class="bg-slate-800 p-4 rounded-xl text-xl cursor-pointer">🌎 South America</div>
-
-  <div onclick="showContinent('Europe')" class="bg-slate-800 p-4 rounded-xl text-xl cursor-pointer">🌍 Europe</div>
-
-  <div onclick="showContinent('Australia')" class="bg-slate-800 p-4 rounded-xl text-xl cursor-pointer">🌏 Australia</div>
-
-  <div onclick="showContinent('Antarctica')" class="bg-slate-800 p-4 rounded-xl text-xl cursor-pointer">🧊 Antarctica</div>
-
-</div>
-
+    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+      <div onclick="showContinent('Asia')" class="bg-slate-800 p-4 rounded-xl text-lg sm:text-xl cursor-pointer">🌏 Asia</div>
+      <div onclick="showContinent('Africa')" class="bg-slate-800 p-4 rounded-xl text-lg sm:text-xl cursor-pointer">🌍 Africa</div>
+      <div onclick="showContinent('North America')" class="bg-slate-800 p-4 rounded-xl text-lg sm:text-xl cursor-pointer">🌎 North America</div>
+      <div onclick="showContinent('South America')" class="bg-slate-800 p-4 rounded-xl text-lg sm:text-xl cursor-pointer">🌎 South America</div>
+      <div onclick="showContinent('Europe')" class="bg-slate-800 p-4 rounded-xl text-lg sm:text-xl cursor-pointer">🌍 Europe</div>
+      <div onclick="showContinent('Australia')" class="bg-slate-800 p-4 rounded-xl text-lg sm:text-xl cursor-pointer">🌏 Australia</div>
+      <div onclick="showContinent('Antarctica')" class="bg-slate-800 p-4 rounded-xl text-lg sm:text-xl cursor-pointer">🧊 Antarctica</div>
+    </div>
 
     <button onclick="closeModal('continentsModal')" class="mt-6 w-full bg-red-500 py-3 rounded-2xl">
       Close
@@ -189,12 +188,29 @@ Close
 
   </div>
 </div>
-    <div id="continentQuizModal" class="hidden fixed inset-0 bg-black/80 flex items-center justify-center p-4 z-50">
-  <div class="bg-slate-900 rounded-3xl max-w-2xl w-full p-8">
 
-    <h2 id="quizTitle" class="text-3xl font-bold mb-6"></h2>
+<!-- Continent Page Modal -->
+<div id="continentPageModal" class="hidden fixed inset-0 bg-black/80 flex items-center justify-center p-4 z-50">
+  <div class="bg-slate-900 rounded-3xl max-w-2xl w-full p-4 sm:p-8">
 
-  <div id="continentQuizQuestion" class="text-xl mb-6"></div>
+    <h2 id="continentPageTitle" class="text-3xl sm:text-4xl font-bold mb-6"></h2>
+
+    <div id="continentPageContent" class="space-y-3 text-base sm:text-xl"></div>
+
+    <button onclick="closeModal('continentPageModal')" class="mt-6 w-full bg-red-500 py-3 rounded-2xl">
+      Back
+    </button>
+
+  </div>
+</div>
+
+<!-- Continent Quiz Modal -->
+<div id="continentQuizModal" class="hidden fixed inset-0 bg-black/80 flex items-center justify-center p-4 z-50">
+  <div class="bg-slate-900 rounded-3xl max-w-2xl w-full p-4 sm:p-8">
+
+    <h2 id="quizTitle" class="text-2xl sm:text-3xl font-bold mb-6"></h2>
+
+    <div id="continentQuizQuestion" class="text-lg sm:text-xl mb-6"></div>
 
     <div id="continentQuizOptions" class="space-y-3"></div>
 
@@ -636,7 +652,7 @@ const countryList = [
       <div class="flex items-center gap-4 mt-3">
         <div class="text-4xl">${todayCountry.flag}</div>
         <div>
-          <p class="font-bold text-xl">${todayCountry.name}</p>
+ <p class="font-bold text-lg sm:text-xl break-words">${todayCountry.name}</p>
         </div>
       </div>
     `;
@@ -727,7 +743,7 @@ function checkFlagAnswer(showAnswer = false){
 
   if(showAnswer){
     document.getElementById("flagResult").innerHTML = `
-      <div class="flex items-center gap-3 mt-4 bg-slate-800 p-4 rounded-2xl">
+    <div class="flex flex-col sm:flex-row items-center gap-3 mt-4 bg-slate-800 p-4 rounded-2xl">
         <div class="text-4xl">${currentFlag.flag}</div>
         <div>
           <p class="text-xl font-bold">${currentFlag.name}</p>
