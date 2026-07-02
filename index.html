@@ -371,46 +371,85 @@ function showContinent(name){
 };
 let currentQuiz = [];
 let continentCurrentQuestion = 0;
-  
+
+let continentScores = {
+  Asia: 0,
+  Africa: 0,
+  Europe: 0,
+  "North America": 0,
+  "South America": 0,
+  Australia: 0,
+  Antarctica: 0
+};
+
+let continentScore = 0;
+
 function startContinentQuiz(name){
   currentQuiz = continentQuizzes[name];
-continentCurrentQuestion = 0;
-  
+  continentCurrentQuestion = 0;
+  continentScore = 0;
+
   closeModal("continentPageModal");
   document.getElementById("continentQuizModal").classList.remove("hidden");
 
-loadContinentQuestion(name);
+  loadContinentQuestion(name);
 }
 
 function loadContinentQuestion(name){
-const q = currentQuiz[continentCurrentQuestion];
+  const q = currentQuiz[continentCurrentQuestion];
 
   document.getElementById("quizTitle").textContent = `${name} Quiz`;
-document.getElementById("continentQuizQuestion").textContent = q.q;
+  document.getElementById("continentQuizQuestion").textContent = q.q;
 
-document.getElementById("continentQuizOptions").innerHTML =
+  document.getElementById("continentQuizOptions").innerHTML =
     q.options.map(option =>
       `<button onclick="checkQuizAnswer('${option}','${name}')" class="w-full bg-slate-700 py-3 rounded-xl">${option}</button>`
     ).join("");
 }
 
 function checkQuizAnswer(answer,name){
-const correct = currentQuiz[continentCurrentQuestion].answer;
-document.getElementById("continentQuizResult").textContent =
+  const correct = currentQuiz[continentCurrentQuestion].answer;
+
+  if(answer === correct){
+    continentScore++;
+  }
+
+  document.getElementById("continentQuizResult").textContent =
     answer === correct ? "✅ Correct!" : `❌ Wrong! Correct: ${correct}`;
 
-continentCurrentQuestion++;
+  continentCurrentQuestion++;
 
   if(continentCurrentQuestion < currentQuiz.length){
     setTimeout(() => {
-document.getElementById("continentQuizResult").textContent = "";
-loadContinentQuestion(name);
+      document.getElementById("continentQuizResult").textContent = "";
+      loadContinentQuestion(name);
     }, 1200);
+
   } else {
+
+    if(continentScore > continentScores[name]){
+      continentScores[name] = continentScore;
+    }
+
+    if(name === "North America"){
+      document.getElementById("northAmericaScore").textContent =
+        `North America: ${continentScores[name]}/10`;
+
+    } else if(name === "South America"){
+      document.getElementById("southAmericaScore").textContent =
+        `South America: ${continentScores[name]}/10`;
+
+    } else {
+      document.getElementById(name.toLowerCase() + "Score").textContent =
+        `${name}: ${continentScores[name]}/10`;
+    }
+
     setTimeout(() => {
-document.getElementById("continentQuizQuestion").textContent = "🎉 Quiz Complete!";
-document.getElementById("continentQuizOptions").innerHTML = "";
-document.getElementById("continentQuizResult").textContent = "";
+      document.getElementById("continentQuizQuestion").textContent =
+        "🎉 Quiz Complete!";
+      document.getElementById("continentQuizOptions").innerHTML = "";
+      document.getElementById("continentQuizResult").textContent =
+        `Score: ${continentScore}/10`;
     }, 1200);
   }
 }
