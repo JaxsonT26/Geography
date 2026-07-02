@@ -20,7 +20,7 @@ body {
   padding: 24px;
   width: 100%;
   max-width: 360px;
-  min-height: 220px;
+  min-height: auto;
   cursor: pointer;
   transition: 0.3s;
 }
@@ -36,9 +36,8 @@ body {
 <h1 class="text-center text-3xl sm:text-5xl mt-8 mb-8 px-4">
   🌍 GeoQuestKids
 </h1>
-
-<div class="max-w-6xl mx-auto px-4 sm:px-6 flex flex-wrap justify-center gap-6">
-
+<div class="max-w-6xl mx-auto px-4 sm:px-6 grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
+  
 <div class="geo-card" onclick="openContinentsModal()">
 <div class="text-4xl">🌎</div>
 <h2 class="font-bold mt-2">Seven Continents</h2>
@@ -88,7 +87,7 @@ body {
 <!-- Question of the Day -->
 <div id="geoBubble"
 onclick="openQuestionModal()"
-class="fixed left-3 right-3 sm:left-5 sm:right-auto bottom-5 bg-blue-600 p-4 sm:p-8 rounded-3xl cursor-pointer z-50 shadow-xl w-auto sm:w-96">
+class="relative mx-4 mb-6 bg-green-600 p-4 sm:p-8 rounded-3xl shadow-xl w-auto"
 
 <strong class="text-2xl sm:text-3xl">🌍 Question of the Day</strong>
 <p id="dailyQuestion" class="mt-4 text-base sm:text-xl"></p>
@@ -98,7 +97,7 @@ class="fixed left-3 right-3 sm:left-5 sm:right-auto bottom-5 bg-blue-600 p-4 sm:
 <!-- Country of the Day -->
 <div id="countryBubble"
 onclick="openCountryModal()"
-class="fixed top-3 left-3 right-3 sm:left-auto sm:right-5 bg-green-600 p-4 sm:p-8 rounded-3xl z-50 shadow-xl w-auto sm:w-96 cursor-pointer">
+class="relative mx-4 mb-6 bg-green-600 p-4 sm:p-8 rounded-3xl shadow-xl w-auto"
 
 <strong class="text-2xl sm:text-3xl">🌎 Country of the Day</strong>
 <div id="countryOfDay" class="mt-4 text-base sm:text-xl"></div>
@@ -107,8 +106,7 @@ class="fixed top-3 left-3 right-3 sm:left-auto sm:right-5 bg-green-600 p-4 sm:p-
 
 <!-- Question Modal -->
 <div id="questionModal" class="hidden fixed inset-0 bg-black/80 flex items-center justify-center p-4 z-50">
-<div class="bg-slate-900 rounded-3xl max-w-lg w-full p-4 sm:p-8">
-
+<div class="bg-slate-900 rounded-3xl max-w-2xl w-full max-h-[90vh] overflow-y-auto p-4 sm:p-8">
 <h2 id="questionTitle" class="text-2xl sm:text-3xl font-bold mb-4"></h2>
 <p id="questionAnswer" class="text-base sm:text-lg mb-6"></p>
 
@@ -121,8 +119,7 @@ Close
 
 <!-- Country Modal -->
 <div id="countryModal" class="hidden fixed inset-0 bg-black/80 flex items-center justify-center p-4 z-50">
-<div class="bg-slate-900 rounded-3xl max-w-lg w-full p-4 sm:p-8">
-
+<div class="bg-slate-900 rounded-3xl max-w-2xl w-full max-h-[90vh] overflow-y-auto p-4 sm:p-8">
 <h2 id="countryTitle" class="text-2xl sm:text-3xl font-bold mb-4"></h2>
 <div id="countryInfo" class="text-base sm:text-lg mb-6"></div>
 
@@ -135,8 +132,7 @@ Close
   
 <!-- Flag Modal -->
 <div id="flagModal" class="hidden fixed inset-0 bg-black/80 flex items-center justify-center p-4 z-50">
-  <div class="bg-slate-900 rounded-3xl max-w-lg w-full p-4 sm:p-8">
-
+<div class="bg-slate-900 rounded-3xl max-w-2xl w-full max-h-[90vh] overflow-y-auto p-4 sm:p-8">
     <h2 class="text-2xl sm:text-3xl mb-6">🏳️ Guess the Flag</h2>
 
     <div id="flagDisplay"
@@ -168,7 +164,7 @@ Close
 
 <!-- Continents Modal -->
 <div id="continentsModal" class="hidden fixed inset-0 bg-black/80 flex items-center justify-center p-4 z-50">
-  <div class="bg-slate-900 rounded-3xl max-w-2xl w-full p-4 sm:p-8">
+<div class="bg-slate-900 rounded-3xl max-w-2xl w-full max-h-[90vh] overflow-y-auto p-4 sm:p-8">
 
     <h2 class="text-2xl sm:text-3xl mb-6">🌍 Seven Continents</h2>
 
@@ -191,7 +187,7 @@ Close
 
 <!-- Continent Page Modal -->
 <div id="continentPageModal" class="hidden fixed inset-0 bg-black/80 flex items-center justify-center p-4 z-50">
-  <div class="bg-slate-900 rounded-3xl max-w-2xl w-full p-4 sm:p-8">
+<div class="bg-slate-900 rounded-3xl max-w-2xl w-full max-h-[90vh] overflow-y-auto p-4 sm:p-8">
 
     <h2 id="continentPageTitle" class="text-3xl sm:text-4xl font-bold mb-6"></h2>
 
@@ -206,7 +202,7 @@ Close
 
 <!-- Continent Quiz Modal -->
 <div id="continentQuizModal" class="hidden fixed inset-0 bg-black/80 flex items-center justify-center p-4 z-50">
-  <div class="bg-slate-900 rounded-3xl max-w-2xl w-full p-4 sm:p-8">
+<div class="bg-slate-900 rounded-3xl max-w-2xl w-full max-h-[90vh] overflow-y-auto p-4 sm:p-8">
 
     <h2 id="quizTitle" class="text-2xl sm:text-3xl font-bold mb-6"></h2>
 
