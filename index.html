@@ -189,6 +189,23 @@ Close
 
   </div>
 </div>
+    <div id="continentQuizModal" class="hidden fixed inset-0 bg-black/80 flex items-center justify-center p-4 z-50">
+  <div class="bg-slate-900 rounded-3xl max-w-2xl w-full p-8">
+
+    <h2 id="quizTitle" class="text-3xl font-bold mb-6"></h2>
+
+    <div id="quizQuestion" class="text-xl mb-6"></div>
+
+    <div id="quizOptions" class="space-y-3"></div>
+
+    <div id="quizResult" class="mt-4 font-bold"></div>
+
+    <button onclick="closeModal('continentQuizModal')" class="mt-6 w-full bg-red-500 py-3 rounded-2xl">
+      Close Quiz
+    </button>
+
+  </div>
+</div>
 <audio id="correctSound" preload="auto">
   <source src="https://assets.mixkit.co/active_storage/sfx/2000/2000-preview.mp3" type="audio/mpeg">
 </audio>
@@ -225,11 +242,147 @@ function showContinent(name){
     <p>🏔 Landmark: ${data.landmark}</p>
     <p>🦁 Animals: ${data.animals}</p>
     <p>🍜 Foods: ${data.foods}</p>
+    <button onclick="startContinentQuiz('${name}')" class="mt-4 w-full bg-indigo-500 py-3 rounded-2xl">
+  🎯 Start Quiz
+</button>
   `;
 
   closeModal("continentsModal");
   document.getElementById("continentPageModal").classList.remove("hidden");
 }
+  const continentQuizzes = {
+  Asia: [
+    {q:"What is the largest country in Asia?", options:["China","India","Russia","Japan"], answer:"Russia"},
+    {q:"Capital of Japan?", options:["Tokyo","Kyoto","Osaka","Seoul"], answer:"Tokyo"},
+    {q:"Where is Mount Fuji?", options:["Japan","China","Nepal","India"], answer:"Japan"},
+    {q:"Which desert is in Asia?", options:["Gobi","Sahara","Mojave","Kalahari"], answer:"Gobi"},
+    {q:"Which country has the Taj Mahal?", options:["India","Pakistan","Nepal","Iran"], answer:"India"},
+    {q:"Largest population?", options:["India","China","Indonesia","Japan"], answer:"India"},
+    {q:"What sea borders China?", options:["South China Sea","Black Sea","Red Sea","Baltic"], answer:"South China Sea"},
+    {q:"Which animal lives in Asia?", options:["Panda","Tiger","Snow Leopard","All"], answer:"All"},
+    {q:"Longest river in Asia?", options:["Yangtze","Amazon","Nile","Danube"], answer:"Yangtze"},
+    {q:"Which country has Mount Everest?", options:["Nepal","India","China","Bhutan"], answer:"Nepal"}
+  ],
+    Africa: [
+  {q:"How many countries are in Africa?", options:["54","44","34","24"], answer:"54"},
+  {q:"Which river is the longest?", options:["Nile","Amazon","Congo","Niger"], answer:"Nile"},
+  {q:"Where are the pyramids?", options:["Egypt","Morocco","Sudan","Kenya"], answer:"Egypt"},
+  {q:"Largest desert?", options:["Sahara","Kalahari","Namib","Gobi"], answer:"Sahara"},
+  {q:"Which animal is native?", options:["Lion","Tiger","Panda","Polar Bear"], answer:"Lion"},
+  {q:"Most populous country?", options:["Nigeria","Egypt","Ethiopia","Kenya"], answer:"Nigeria"},
+  {q:"Mount Kilimanjaro is in?", options:["Tanzania","Kenya","Uganda","South Africa"], answer:"Tanzania"},
+  {q:"South Africa has how many capitals?", options:["1","2","3","4"], answer:"3"},
+  {q:"Madagascar is famous for?", options:["Lemurs","Penguins","Bears","Wolves"], answer:"Lemurs"},
+  {q:"Victoria Falls is in?", options:["Zambia","Egypt","Nigeria","Libya"], answer:"Zambia"}
+],
+    Europe: [
+  {q:"Capital of France?", options:["Paris","Rome","Berlin","Madrid"], answer:"Paris"},
+  {q:"Eiffel Tower is in?", options:["France","Italy","Germany","Spain"], answer:"France"},
+  {q:"Largest country in Europe?", options:["Russia","Germany","France","Ukraine"], answer:"Russia"},
+  {q:"Which mountain range?", options:["Alps","Andes","Rockies","Himalayas"], answer:"Alps"},
+  {q:"Capital of Italy?", options:["Rome","Milan","Venice","Naples"], answer:"Rome"},
+  {q:"River through Budapest?", options:["Danube","Nile","Seine","Rhine"], answer:"Danube"},
+  {q:"Big Ben is in?", options:["UK","France","Germany","Belgium"], answer:"UK"},
+  {q:"Which country has fjords?", options:["Norway","Spain","Italy","Poland"], answer:"Norway"},
+  {q:"Smallest country?", options:["Vatican City","Monaco","Luxembourg","Malta"], answer:"Vatican City"},
+  {q:"Capital of Greece?", options:["Athens","Sparta","Crete","Thessaloniki"], answer:"Athens"}
+],
+    "North America": [
+  {q:"Capital of Canada?", options:["Ottawa","Toronto","Vancouver","Montreal"], answer:"Ottawa"},
+  {q:"Largest country?", options:["Canada","USA","Mexico","Greenland"], answer:"Canada"},
+  {q:"Grand Canyon is in?", options:["USA","Canada","Mexico","Cuba"], answer:"USA"},
+  {q:"Mexico speaks?", options:["Spanish","English","French","Portuguese"], answer:"Spanish"},
+  {q:"Panama Canal connects?", options:["Atlantic and Pacific","Indian and Atlantic","Pacific and Arctic","Arctic and Atlantic"], answer:"Atlantic and Pacific"},
+  {q:"Greenland belongs to?", options:["Denmark","Canada","USA","Iceland"], answer:"Denmark"},
+  {q:"Largest US state?", options:["Alaska","Texas","California","Florida"], answer:"Alaska"},
+  {q:"Mount Denali is in?", options:["USA","Canada","Mexico","Greenland"], answer:"USA"},
+  {q:"Capital of USA?", options:["Washington D.C.","New York","Los Angeles","Chicago"], answer:"Washington D.C."},
+  {q:"Poutine is from?", options:["Canada","USA","Mexico","Jamaica"], answer:"Canada"}
+],
+    "South America": [
+  {q:"Largest country?", options:["Brazil","Argentina","Peru","Chile"], answer:"Brazil"},
+  {q:"Amazon rainforest mainly in?", options:["Brazil","Peru","Colombia","Bolivia"], answer:"Brazil"},
+  {q:"Machu Picchu is in?", options:["Peru","Chile","Brazil","Argentina"], answer:"Peru"},
+  {q:"Capital of Argentina?", options:["Buenos Aires","Cordoba","Rosario","Mendoza"], answer:"Buenos Aires"},
+  {q:"Longest mountain range?", options:["Andes","Rockies","Alps","Himalayas"], answer:"Andes"},
+  {q:"Angel Falls is in?", options:["Venezuela","Brazil","Chile","Peru"], answer:"Venezuela"},
+  {q:"Smallest country?", options:["Suriname","Uruguay","Paraguay","Guyana"], answer:"Suriname"},
+  {q:"Capital of Chile?", options:["Santiago","Lima","Bogota","Quito"], answer:"Santiago"},
+  {q:"Galápagos belong to?", options:["Ecuador","Peru","Chile","Brazil"], answer:"Ecuador"},
+  {q:"Largest river?", options:["Amazon","Paraná","Orinoco","Magdalena"], answer:"Amazon"}
+],
+    Australia: [
+  {q:"Capital of Australia?", options:["Canberra","Sydney","Melbourne","Perth"], answer:"Canberra"},
+  {q:"Largest reef?", options:["Great Barrier Reef","Coral Sea Reef","Ningaloo Reef","Barrier Bay"], answer:"Great Barrier Reef"},
+  {q:"Native animal?", options:["Kangaroo","Lion","Tiger","Panda"], answer:"Kangaroo"},
+  {q:"Which bird cannot fly?", options:["Kiwi","Eagle","Crow","Parrot"], answer:"Kiwi"},
+  {q:"New Zealand capital?", options:["Wellington","Auckland","Christchurch","Hamilton"], answer:"Wellington"},
+  {q:"Largest desert?", options:["Great Victoria Desert","Sahara","Gobi","Kalahari"], answer:"Great Victoria Desert"},
+  {q:"Tasmania belongs to?", options:["Australia","New Zealand","Fiji","Papua"], answer:"Australia"},
+  {q:"Sydney Opera House is in?", options:["Sydney","Melbourne","Perth","Adelaide"], answer:"Sydney"},
+  {q:"How many countries in Oceania?", options:["14","24","34","44"], answer:"14"},
+  {q:"Famous rock landmark?", options:["Uluru","Everest","K2","Table Mountain"], answer:"Uluru"}
+],
+    Antarctica: [
+  {q:"Coldest place on Earth?", options:["Antarctica","Arctic","Siberia","Greenland"], answer:"Antarctica"},
+  {q:"Permanent population?", options:["0","100","1000","5000"], answer:"0"},
+  {q:"Main animal?", options:["Penguin","Tiger","Lion","Elephant"], answer:"Penguin"},
+  {q:"Largest ice sheet?", options:["Antarctica","Greenland","Arctic","Siberia"], answer:"Antarctica"},
+  {q:"South Pole is here?", options:["Yes","No"], answer:"Yes"},
+  {q:"Warmest season?", options:["Summer","Winter","Spring","Fall"], answer:"Summer"},
+  {q:"Surrounded by?", options:["Southern Ocean","Atlantic","Pacific","Indian"], answer:"Southern Ocean"},
+  {q:"Any countries own it?", options:["No","Yes"], answer:"No"},
+  {q:"Largest land predator?", options:["None","Polar Bear","Wolf","Seal"], answer:"None"},
+  {q:"Main job of visitors?", options:["Research","Farming","Tourism","Mining"], answer:"Research"}
+]
+};
+let currentQuiz = [];
+let continentCurrentQuestion = 0;
+  
+function startContinentQuiz(name){
+  currentQuiz = continentQuizzes[name];
+continentCurrentQuestion = 0;
+  
+  closeModal("continentPageModal");
+  document.getElementById("continentQuizModal").classList.remove("hidden");
+
+  loadQuestion(name);
+}
+
+function loadQuestion(name){
+const q = currentQuiz[continentCurrentQuestion];
+
+  document.getElementById("quizTitle").textContent = `${name} Quiz`;
+  document.getElementById("quizQuestion").textContent = q.q;
+
+  document.getElementById("quizOptions").innerHTML =
+    q.options.map(option =>
+      `<button onclick="checkQuizAnswer('${option}','${name}')" class="w-full bg-slate-700 py-3 rounded-xl">${option}</button>`
+    ).join("");
+}
+
+function checkQuizAnswer(answer,name){
+const correct = currentQuiz[continentCurrentQuestion].answer;
+
+  document.getElementById("quizResult").textContent =
+    answer === correct ? "✅ Correct!" : `❌ Wrong! Correct: ${correct}`;
+
+continentCurrentQuestion++;
+
+  if(continentCurrentQuestion < currentQuiz.length){
+    setTimeout(() => {
+      document.getElementById("quizResult").textContent = "";
+      loadQuestion(name);
+    }, 1200);
+  } else {
+    setTimeout(() => {
+      document.getElementById("quizQuestion").textContent = "🎉 Quiz Complete!";
+      document.getElementById("quizOptions").innerHTML = "";
+      document.getElementById("quizResult").textContent = "";
+    }, 1200);
+  }
+}
+
 /* Question of the Day */
 const questions = {
   0:"🌿 Sunday: What countries does the Amazon run through?",
