@@ -194,11 +194,11 @@ Close
 
     <h2 id="quizTitle" class="text-3xl font-bold mb-6"></h2>
 
-    <div id="quizQuestion" class="text-xl mb-6"></div>
+  <div id="continentQuizQuestion" class="text-xl mb-6"></div>
 
-    <div id="quizOptions" class="space-y-3"></div>
+    <div id="continentQuizOptions" class="space-y-3"></div>
 
-    <div id="quizResult" class="mt-4 font-bold"></div>
+    <div id="continentQuizResult" class="mt-4 font-bold"></div>
 
     <button onclick="closeModal('continentQuizModal')" class="mt-6 w-full bg-red-500 py-3 rounded-2xl">
       Close Quiz
@@ -353,9 +353,9 @@ function loadContinentQuestion(name){
 const q = currentQuiz[continentCurrentQuestion];
 
   document.getElementById("quizTitle").textContent = `${name} Quiz`;
-  document.getElementById("quizQuestion").textContent = q.q;
+document.getElementById("continentQuizQuestion").textContent = q.q;
 
-  document.getElementById("quizOptions").innerHTML =
+document.getElementById("continentQuizOptions").innerHTML =
     q.options.map(option =>
       `<button onclick="checkQuizAnswer('${option}','${name}')" class="w-full bg-slate-700 py-3 rounded-xl">${option}</button>`
     ).join("");
@@ -363,22 +363,21 @@ const q = currentQuiz[continentCurrentQuestion];
 
 function checkQuizAnswer(answer,name){
 const correct = currentQuiz[continentCurrentQuestion].answer;
-
-  document.getElementById("quizResult").textContent =
+document.getElementById("continentQuizResult").textContent =
     answer === correct ? "✅ Correct!" : `❌ Wrong! Correct: ${correct}`;
 
 continentCurrentQuestion++;
 
   if(continentCurrentQuestion < currentQuiz.length){
     setTimeout(() => {
-      document.getElementById("quizResult").textContent = "";
+document.getElementById("continentQuizResult").textContent = "";
 loadContinentQuestion(name);
     }, 1200);
   } else {
     setTimeout(() => {
-      document.getElementById("quizQuestion").textContent = "🎉 Quiz Complete!";
-      document.getElementById("quizOptions").innerHTML = "";
-      document.getElementById("quizResult").textContent = "";
+document.getElementById("continentQuizQuestion").textContent = "🎉 Quiz Complete!";
+document.getElementById("continentQuizOptions").innerHTML = "";
+document.getElementById("continentQuizResult").textContent = "";
     }, 1200);
   }
 }
