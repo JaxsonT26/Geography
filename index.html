@@ -116,7 +116,28 @@ Close
 
 </div>
 </div>
+<!-- Quiz Modal -->
+<div id="quizModal" class="hidden fixed inset-0 bg-black/80 flex items-center justify-center p-4 z-50">
+<div class="bg-slate-900 rounded-3xl max-w-2xl w-full max-h-[90vh] overflow-y-auto p-4 sm:p-8">
 
+<h2 class="text-2xl sm:text-3xl mb-6">🧠 Geography Quiz</h2>
+
+<div id="difficultyButtons" class="flex flex-wrap gap-3 mb-6">
+<button onclick="setDifficulty('easy')" class="bg-green-500 px-4 py-2 rounded-xl w-full sm:w-auto">Easy</button>
+<button onclick="setDifficulty('medium')" class="bg-yellow-500 px-4 py-2 rounded-xl w-full sm:w-auto">Medium</button>
+<button onclick="setDifficulty('hard')" class="bg-red-500 px-4 py-2 rounded-xl w-full sm:w-auto">Hard</button>
+</div>
+
+<div id="quizQuestion" class="text-lg sm:text-xl mb-6"></div>
+<div id="quizOptions"></div>
+<div id="quizResult" class="mt-6 text-base sm:text-lg font-bold"></div>
+
+<button onclick="closeModal('quizModal')" class="mt-4 w-full bg-red-500 py-3 rounded-2xl">
+Close
+</button>
+
+</div>
+</div>
 <!-- Country Modal -->
 <div id="countryModal" class="hidden fixed inset-0 bg-black/80 flex items-center justify-center p-4 z-50">
 <div class="bg-slate-900 rounded-3xl max-w-2xl w-full max-h-[90vh] overflow-y-auto p-4 sm:p-8">
