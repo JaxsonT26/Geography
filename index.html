@@ -127,7 +127,19 @@ Close
 
 </div>
 </div>
+<div id="continentPageModal" class="hidden fixed inset-0 bg-black/80 flex items-center justify-center p-4 z-50">
+  <div class="bg-slate-900 rounded-3xl max-w-2xl w-full p-8">
 
+    <h2 id="continentPageTitle" class="text-4xl font-bold mb-6"></h2>
+
+    <div id="continentPageContent" class="space-y-3 text-xl"></div>
+
+    <button onclick="closeModal('continentPageModal')" class="mt-6 w-full bg-red-500 py-3 rounded-2xl">
+      Back
+    </button>
+
+  </div>
+</div>
 <!-- Flag Modal -->
 <div id="flagModal" class="hidden fixed inset-0 bg-black/80 flex items-center justify-center p-4 z-50">
 <div class="bg-slate-900 rounded-3xl max-w-lg w-full p-8">
@@ -170,7 +182,6 @@ Close
 
 </div>
 
-<div id="continentInfo" class="mt-6 bg-slate-800 p-4 rounded-2xl hidden"></div>
 
     <button onclick="closeModal('continentsModal')" class="mt-6 w-full bg-red-500 py-3 rounded-2xl">
       Close
@@ -203,21 +214,21 @@ const continentData = {
   Australia:{countries:14,population:"45 million",landmark:"Sydney Opera House",animals:"Kangaroos, Koalas, Wombats",foods:"Meat Pies, Lamingtons, Vegemite"},
   Antarctica:{countries:0,population:"0 permanent residents",landmark:"South Pole",animals:"Penguins, Seals, Whales",foods:"No native foods"}
 };
-
 function showContinent(name){
   const data = continentData[name];
-  const box = document.getElementById("continentInfo");
 
-  box.classList.remove("hidden");
+  document.getElementById("continentPageTitle").textContent = name;
 
-  box.innerHTML = `
-    <h3 class="text-3xl font-bold mb-4">${name}</h3>
+  document.getElementById("continentPageContent").innerHTML = `
     <p>🗺 Countries: ${data.countries}</p>
     <p>👥 Population: ${data.population}</p>
     <p>🏔 Landmark: ${data.landmark}</p>
     <p>🦁 Animals: ${data.animals}</p>
     <p>🍜 Foods: ${data.foods}</p>
   `;
+
+  closeModal("continentsModal");
+  document.getElementById("continentPageModal").classList.remove("hidden");
 }
 /* Question of the Day */
 const questions = {
