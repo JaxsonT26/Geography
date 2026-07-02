@@ -150,17 +150,27 @@ Close
   <div id="continentsModal" class="hidden fixed inset-0 bg-black/80 flex items-center justify-center p-4 z-50">
   <div class="bg-slate-900 rounded-3xl max-w-2xl w-full p-8">
 
-    <h2 class="text-3xl mb-6">🌍 Seven Continents</h2>
+<h2 class="text-3xl mb-6">🌍 Seven Continents</h2>
 
-    <div class="grid grid-cols-2 gap-4">
-      <div class="bg-slate-800 p-4 rounded-xl text-xl">🌏 Asia</div>
-      <div class="bg-slate-800 p-4 rounded-xl text-xl">🌍 Africa</div>
-      <div class="bg-slate-800 p-4 rounded-xl text-xl">🌎 North America</div>
-      <div class="bg-slate-800 p-4 rounded-xl text-xl">🌎 South America</div>
-      <div class="bg-slate-800 p-4 rounded-xl text-xl">🌍 Europe</div>
-      <div class="bg-slate-800 p-4 rounded-xl text-xl">🌏 Australia</div>
-      <div class="bg-slate-800 p-4 rounded-xl text-xl">🧊 Antarctica</div>
-    </div>
+<div class="grid grid-cols-2 gap-4">
+
+  <div onclick="showContinent('Asia')" class="bg-slate-800 p-4 rounded-xl text-xl cursor-pointer">🌏 Asia</div>
+
+  <div onclick="showContinent('Africa')" class="bg-slate-800 p-4 rounded-xl text-xl cursor-pointer">🌍 Africa</div>
+
+  <div onclick="showContinent('North America')" class="bg-slate-800 p-4 rounded-xl text-xl cursor-pointer">🌎 North America</div>
+
+  <div onclick="showContinent('South America')" class="bg-slate-800 p-4 rounded-xl text-xl cursor-pointer">🌎 South America</div>
+
+  <div onclick="showContinent('Europe')" class="bg-slate-800 p-4 rounded-xl text-xl cursor-pointer">🌍 Europe</div>
+
+  <div onclick="showContinent('Australia')" class="bg-slate-800 p-4 rounded-xl text-xl cursor-pointer">🌏 Australia</div>
+
+  <div onclick="showContinent('Antarctica')" class="bg-slate-800 p-4 rounded-xl text-xl cursor-pointer">🧊 Antarctica</div>
+
+</div>
+
+<div id="continentInfo" class="mt-6 bg-slate-800 p-4 rounded-2xl hidden"></div>
 
     <button onclick="closeModal('continentsModal')" class="mt-6 w-full bg-red-500 py-3 rounded-2xl">
       Close
@@ -184,7 +194,31 @@ function openContinentsModal(){
 function closeModal(id){
   document.getElementById(id).classList.add("hidden");
 }
+const continentData = {
+  Asia:{countries:49,population:"4.7 billion",landmark:"Great Wall of China",animals:"Pandas, Tigers, Elephants",foods:"Sushi, Curry, Dumplings"},
+  Africa:{countries:54,population:"1.4 billion",landmark:"Pyramids of Giza",animals:"Lions, Elephants, Giraffes",foods:"Jollof Rice, Couscous, Injera"},
+  "North America":{countries:23,population:"600 million",landmark:"Grand Canyon",animals:"Bears, Bison, Eagles",foods:"Tacos, Burgers, Poutine"},
+  "South America":{countries:12,population:"430 million",landmark:"Machu Picchu",animals:"Llamas, Jaguars, Capybaras",foods:"Empanadas, Arepas, Feijoada"},
+  Europe:{countries:44,population:"750 million",landmark:"Eiffel Tower",animals:"Wolves, Bears, Lynx",foods:"Pizza, Pasta, Croissants"},
+  Australia:{countries:14,population:"45 million",landmark:"Sydney Opera House",animals:"Kangaroos, Koalas, Wombats",foods:"Meat Pies, Lamingtons, Vegemite"},
+  Antarctica:{countries:0,population:"0 permanent residents",landmark:"South Pole",animals:"Penguins, Seals, Whales",foods:"No native foods"}
+};
 
+function showContinent(name){
+  const data = continentData[name];
+  const box = document.getElementById("continentInfo");
+
+  box.classList.remove("hidden");
+
+  box.innerHTML = `
+    <h3 class="text-3xl font-bold mb-4">${name}</h3>
+    <p>🗺 Countries: ${data.countries}</p>
+    <p>👥 Population: ${data.population}</p>
+    <p>🏔 Landmark: ${data.landmark}</p>
+    <p>🦁 Animals: ${data.animals}</p>
+    <p>🍜 Foods: ${data.foods}</p>
+  `;
+}
 /* Question of the Day */
 const questions = {
   0:"🌿 Sunday: What countries does the Amazon run through?",
