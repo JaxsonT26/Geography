@@ -35,8 +35,7 @@ body {
 <h1 class="text-center text-5xl mt-8 mb-8">🌍 ExploreTheGeo</h1>
 
 <div class="max-w-6xl mx-auto flex flex-wrap justify-center gap-6">
-
-<div class="geo-card" onclick="alert('🌍 Continents coming soon!')">
+<div class="geo-card" onclick="openContinentsModal()">
 <div class="text-4xl">🌎</div>
 <h2 class="font-bold mt-2">Seven Continents</h2>
 <p>Explore facts about every continent.</p>
@@ -148,6 +147,27 @@ Close
 
 </div>
 </div>
+  <div id="continentsModal" class="hidden fixed inset-0 bg-black/80 flex items-center justify-center p-4 z-50">
+  <div class="bg-slate-900 rounded-3xl max-w-2xl w-full p-8">
+
+    <h2 class="text-3xl mb-6">🌍 Seven Continents</h2>
+
+    <div class="grid grid-cols-2 gap-4">
+      <div class="bg-slate-800 p-4 rounded-xl text-xl">🌏 Asia</div>
+      <div class="bg-slate-800 p-4 rounded-xl text-xl">🌍 Africa</div>
+      <div class="bg-slate-800 p-4 rounded-xl text-xl">🌎 North America</div>
+      <div class="bg-slate-800 p-4 rounded-xl text-xl">🌎 South America</div>
+      <div class="bg-slate-800 p-4 rounded-xl text-xl">🌍 Europe</div>
+      <div class="bg-slate-800 p-4 rounded-xl text-xl">🌏 Australia</div>
+      <div class="bg-slate-800 p-4 rounded-xl text-xl">🧊 Antarctica</div>
+    </div>
+
+    <button onclick="closeModal('continentsModal')" class="mt-6 w-full bg-red-500 py-3 rounded-2xl">
+      Close
+    </button>
+
+  </div>
+</div>
 <audio id="correctSound" preload="auto">
   <source src="https://assets.mixkit.co/active_storage/sfx/2000/2000-preview.mp3" type="audio/mpeg">
 </audio>
@@ -156,6 +176,11 @@ Close
   <source src="https://assets.mixkit.co/active_storage/sfx/2955/2955-preview.mp3" type="audio/mpeg">
 </audio>
 <script>
+
+function openContinentsModal(){
+  document.getElementById("continentsModal").classList.remove("hidden");
+}
+
 function closeModal(id){
   document.getElementById(id).classList.add("hidden");
 }
