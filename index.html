@@ -407,9 +407,7 @@ let continentQuizzesProgress = {
 
 function startContinentQuiz(name){
 
-  const key = name.toLowerCase().replace(" ","");
-
-  currentQuiz = continentQuizzes[key];
+  currentQuiz = continentQuizzes[name];   // ← changed this line
   continentCurrentQuestion = 0;
   continentScore = 0;
 
