@@ -407,18 +407,44 @@ let continentQuizzesProgress = {
 };
 
 function startContinentQuiz(name){
+  // Safety check - make sure we have quiz data for this continent
+  if (!continentQuizzes[name] || continentQuizzes[name].length === 0) {
+    console.error("No quiz data found for continent:", name);
+    alert("Sorry, quiz for " + name + " is not available right now.");
+    closeModal("continentPageModal");
+    return;
+  }
 
-  currentQuiz = continentQuizzes[name];   // ← changed this line
+  currentQuiz = continentQuizzes[name];
   continentCurrentQuestion = 0;
   continentScore = 0;
 
   closeModal("continentPageModal");
   document.getElementById("continentQuizModal").classList.remove("hidden");
 
+  // Set a nice title in the quiz modal
+  const quizTitleEl = document.getElementById("quizTitle");
+  if (quizTitleEl) quizTitleEl.textContent = name + " Quiz";
+
+  // Clear any old result text
+  const resultEl = document.getElementById("continentQuizResult");
+  if (resultEl) resultEl.innerHTML = "";
+
   loadContinentQuestion(name);
 }
+
 function loadContinentQuestion(name){
+  // Defensive check
+  if (!currentQuiz || continentCurrentQuestion >= currentQuiz.length) {
+    console.error("Invalid quiz state in loadContinentQuestion");
+    return;
+  }
+
   const q = currentQuiz[continentCurrentQuestion];
+  if (!q) {
+    console.error("Question not found at index", continentCurrentQuestion);
+    return;
+  }
 
   document.getElementById("continentQuizQuestion").textContent = q.q;
 
@@ -430,11 +456,15 @@ function loadContinentQuestion(name){
       </button>`
     ).join("");
 
+  // Update the main page progress bar (visual only during this quiz)
   let progress = Math.round(((continentCurrentQuestion) / currentQuiz.length) * 100);
   const progressBar = document.getElementById("continentProgressBar");
   if(progressBar) progressBar.style.width = progress + "%";
 }
+
 function checkQuizAnswer(answer, name){
+  if (!currentQuiz || continentCurrentQuestion >= currentQuiz.length) return;
+
   const correct = currentQuiz[continentCurrentQuestion].answer;
 
   if(answer === correct){
