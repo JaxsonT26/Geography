@@ -16,13 +16,12 @@ body {
 .geo-card {
   background: #1e293b;
   border: 1px solid #334155;
-  border-radius: 16px;
-  padding: 24px;
+  border-radius: 20px;
+  padding: 20px;
   width: 100%;
-  max-width: 360px;
-  min-height: auto;
   cursor: pointer;
   transition: 0.3s;
+  height: 100%;           
 }
 
 .geo-card:hover {
@@ -37,68 +36,78 @@ body {
   🌍 GeoQuestKids
 </h1>
 <div class="max-w-6xl mx-auto px-4 sm:px-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-  
+
   <!-- Seven Continents -->
   <div class="geo-card" onclick="openContinentsModal()">
-    <div class="text-4xl">🌎</div>
-    <h2 class="font-bold mt-2">Seven Continents</h2>
-    <p>Explore facts about every continent.</p>
+    <div class="text-4xl mb-3">🌎</div>
+    <h2 class="font-bold">Seven Continents</h2>
+    <p class="text-slate-400 text-sm">Explore facts about every continent.</p>
   </div>
 
-  <!-- Progress Cards -->
+  <!-- Quiz Progress Card -->
   <div class="geo-card bg-[#1e293b] border border-[#334155] rounded-3xl p-6">
-    <div class="flex flex-wrap gap-8">
-      <div class="text-left text-sm text-slate-300 flex-1">
-        <h3 class="font-bold text-xl mb-3">🏆 Quiz Progress</h3>
-        <p id="bestEasy">Easy: 0/10</p>
-        <p id="bestMedium" class="mt-2">Medium: 0/10</p>
-        <p id="bestHard" class="mt-2">Hard: 0/10</p>
+    <div class="flex items-start gap-6">
+      <div class="flex-1">
+        <h3 class="font-bold text-lg mb-3 flex items-center gap-2">
+          🏆 Quiz Progress
+        </h3>
+        <p id="bestEasy" class="text-sm text-slate-300">Easy: 0/10</p>
+        <p id="bestMedium" class="mt-1 text-sm text-slate-300">Medium: 0/10</p>
+        <p id="bestHard" class="mt-1 text-sm text-slate-300">Hard: 0/10</p>
       </div>
-
-      <div class="text-left text-sm text-slate-300 flex-1">
-        <h3 class="font-bold text-xl mb-3">🌍 Continent Progress</h3>
-        <p id="asiaScore">Asia: 0/10</p>
-        <p id="africaScore" class="mt-2">Africa: 0/10</p>
-        <p id="europeScore" class="mt-2">Europe: 0/10</p>
-        <p id="northAmericaScore" class="mt-2">North America: 0/10</p>
-        <p id="southAmericaScore" class="mt-2">South America: 0/10</p>
-        <p id="australiaScore" class="mt-2">Australia: 0/10</p>
-        <p id="antarcticaScore" class="mt-2">Antarctica: 0/10</p>
+      <div class="flex-1">
+        <h3 class="font-bold text-lg mb-3 flex items-center gap-2">
+          🌍 Continent Progress
+        </h3>
+        <p id="asiaScore" class="text-sm text-slate-300">Asia: 0/10</p>
+        <p id="africaScore" class="mt-1 text-sm text-slate-300">Africa: 0/10</p>
+        <p id="europeScore" class="mt-1 text-sm text-slate-300">Europe: 0/10</p>
+        <p id="northAmericaScore" class="mt-1 text-sm text-slate-300">North America: 0/10</p>
+        <p id="southAmericaScore" class="mt-1 text-sm text-slate-300">South America: 0/10</p>
+        <p id="australiaScore" class="mt-1 text-sm text-slate-300">Australia: 0/10</p>
+        <p id="antarcticaScore" class="mt-1 text-sm text-slate-300">Antarctica: 0/10</p>
       </div>
     </div>
     
-    <div class="mt-6 w-full bg-slate-800 rounded-2xl h-4 overflow-hidden">
-      <div id="continentProgressBar" class="h-4 bg-green-500 w-0 transition-all duration-500"></div>
+    <div class="mt-6 w-full bg-slate-800 rounded-2xl h-3 overflow-hidden">
+      <div id="continentProgressBar" class="h-3 bg-green-500 w-0 transition-all duration-500"></div>
     </div>
   </div>
 
   <!-- Geography Quiz -->
   <div class="geo-card" onclick="startQuiz()">
-    <div class="text-4xl">🧠</div>
-    <h2 class="font-bold mt-2">Geography Quiz</h2>
-    <p>Test your knowledge!</p>
+    <div class="text-4xl mb-3">🧠</div>
+    <h2 class="font-bold">Geography Quiz</h2>
+    <p class="text-slate-400 text-sm">Test your knowledge!</p>
   </div>
 
-  <!-- Countries -->
+  <!-- Row 2 -->
   <div class="geo-card" onclick="alert('🌐 Countries coming soon!')">
-    <div class="text-4xl">🌐</div>
-    <h2 class="font-bold mt-2">Countries of the World</h2>
-    <p>Browse all countries.</p>
+    <div class="text-4xl mb-3">🌐</div>
+    <h2 class="font-bold">Countries of the World</h2>
+    <p class="text-slate-400 text-sm">Browse all countries.</p>
   </div>
 
-  <!-- Landmarks -->
   <div class="geo-card" onclick="alert('🗼 Landmarks coming soon!')">
-    <div class="text-4xl">🗼</div>
-    <h2 class="font-bold mt-2">Famous Landmarks</h2>
-    <p>Iconic places around the globe.</p>
+    <div class="text-4xl mb-3">🗼</div>
+    <h2 class="font-bold">Famous Landmarks</h2>
+    <p class="text-slate-400 text-sm">Iconic places around the globe.</p>
   </div>
 
-  <!-- Interactive Map -->
   <div class="geo-card" onclick="alert('🗺️ Interactive map coming soon!')">
-    <div class="text-4xl">🗺️</div>
-    <h2 class="font-bold mt-2">Interactive World Map</h2>
-    <p>Pan and zoom the world.</p>
+    <div class="text-4xl mb-3">🗺️</div>
+    <h2 class="font-bold">Interactive World Map</h2>
+    <p class="text-slate-400 text-sm">Pan and zoom the world.</p>
   </div>
+
+  <!-- Flag Guesser (spans or sits below) -->
+  <div class="geo-card col-span-1 md:col-span-2 lg:col-span-1" onclick="openFlagModal()">
+    <div class="text-4xl mb-3">🏳️</div>
+    <h2 class="font-bold">Flag Guesser</h2>
+    <p class="text-slate-400 text-sm">Guess the country from its flag.</p>
+  </div>
+
+</div>
 
   <!-- Flag Guesser -->
   <div class="geo-card" onclick="openFlagModal()">
