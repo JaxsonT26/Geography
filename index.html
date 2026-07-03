@@ -420,58 +420,55 @@ function startContinentQuiz(name){
 
   loadContinentQuestion(name);
 }
-
 function loadContinentQuestion(name){
-
   const q = currentQuiz[continentCurrentQuestion];
 
   document.getElementById("continentQuizQuestion").textContent = q.q;
 
-  document.getElementById("continentQuizOptions").innerHTML =
-    q.options.map(option =>
-      `<button onclick="checkQuizAnswer('${option}','${name}')" class="w-full bg-slate-700 py-3 rounded-xl mb-2 hover:bg-slate-600 transition">
+  document.getElementById("continentQuizOptions").innerHTML = 
+    q.options.map(option => 
+      `<button onclick="checkQuizAnswer('${option}','${name}')" 
+         class="w-full bg-slate-700 py-3 rounded-xl mb-2 hover:bg-slate-600 transition">
         ${option}
       </button>`
     ).join("");
 
-  let progress = ((continentCurrentQuestion) / currentQuiz.length) * 100;
-  document.getElementById("continentProgressBar").style.width = progress + "%";
+  let progress = Math.round(((continentCurrentQuestion) / currentQuiz.length) * 100);
+  const progressBar = document.getElementById("continentProgressBar");
+  if(progressBar) progressBar.style.width = progress + "%";
 }
-
-function checkQuizAnswer(answer,name){
-
+function checkQuizAnswer(answer, name){
   const correct = currentQuiz[continentCurrentQuestion].answer;
 
   if(answer === correct){
     continentScore++;
   }
 
-  document.getElementById("continentQuizResult").textContent =
-    answer === correct ? "✅ Correct!" : `❌ Wrong! Correct: ${correct}`;
+  document.getElementById("continentQuizResult").innerHTML = 
+    answer === correct ? 
+    `<span class="text-green-400 text-xl">✅ Correct!</span>` : 
+    `<span class="text-red-400 text-xl">❌ Wrong! Correct: ${correct}</span>`;
 
   continentCurrentQuestion++;
 
   if(continentCurrentQuestion < currentQuiz.length){
-
     setTimeout(() => {
-      document.getElementById("continentQuizResult").textContent = "";
+      document.getElementById("continentQuizResult").innerHTML = "";
       loadContinentQuestion(name);
-    }, 900);
-
+    }, 1100);
   } else {
-
-    let key = name.toLowerCase().replace(" ","");
-
-    if(continentScore > continentQuizzesProgress[key]){
+    let key = name.toLowerCase().replace(" ", "");
+    if(continentScore > (continentQuizzesProgress[key] || 0)){
       continentQuizzesProgress[key] = continentScore;
     }
 
-    document.getElementById("continentQuizQuestion").innerHTML =
-      `🎉 Quiz Complete!<br><br>Your Score: ${continentScore}/10`;
+    document.getElementById("continentQuizQuestion").innerHTML = 
+      `🎉 Quiz Complete!<br><br>Your Score: <span class="text-3xl font-bold text-yellow-400">${continentScore}/10</span>`;
 
     document.getElementById("continentQuizOptions").innerHTML = "";
-
-    document.getElementById("continentProgressBar").style.width = "100%";
+    
+    const progressBar = document.getElementById("continentProgressBar");
+    if(progressBar) progressBar.style.width = "100%";
   }
 }
 /* Question of the Day */
