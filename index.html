@@ -65,7 +65,9 @@ body {
 <p id="australiaScore" class="mt-2">Australia: 0/10</p>
 <p id="antarcticaScore" class="mt-2">Antarctica: 0/10</p>
 </div>
-
+<div class="mt-6 w-full bg-slate-800 rounded-2xl h-4 overflow-hidden">
+  <div id="continentProgressBar" class="h-4 bg-green-500 w-0 transition-all duration-500"></div>
+</div>
 </div>
 
 <div class="geo-card" onclick="startQuiz()">
@@ -387,21 +389,23 @@ function showContinent(name){
 };
 let currentQuiz = [];
 let continentCurrentQuestion = 0;
-
-let continentScores = {
-  Asia: 0,
-  Africa: 0,
-  Europe: 0,
-  "North America": 0,
-  "South America": 0,
-  Australia: 0,
-  Antarctica: 0
-};
-
 let continentScore = 0;
 
+let continentQuizzesProgress = {
+  asia:0,
+  africa:0,
+  europe:0,
+  northamerica:0,
+  southamerica:0,
+  australia:0,
+  antarctica:0
+};
+
 function startContinentQuiz(name){
-  currentQuiz = continentQuizzes[name];
+
+  const key = name.toLowerCase().replace(" ","");
+
+  currentQuiz = continentQuizzes[key];
   continentCurrentQuestion = 0;
   continentScore = 0;
 
@@ -412,18 +416,24 @@ function startContinentQuiz(name){
 }
 
 function loadContinentQuestion(name){
+
   const q = currentQuiz[continentCurrentQuestion];
 
-  document.getElementById("quizTitle").textContent = `${name} Quiz`;
   document.getElementById("continentQuizQuestion").textContent = q.q;
 
   document.getElementById("continentQuizOptions").innerHTML =
     q.options.map(option =>
-      `<button onclick="checkQuizAnswer('${option}','${name}')" class="w-full bg-slate-700 py-3 rounded-xl">${option}</button>`
+      `<button onclick="checkQuizAnswer('${option}','${name}')" class="w-full bg-slate-700 py-3 rounded-xl mb-2 hover:bg-slate-600 transition">
+        ${option}
+      </button>`
     ).join("");
+
+  let progress = ((continentCurrentQuestion) / currentQuiz.length) * 100;
+  document.getElementById("continentProgressBar").style.width = progress + "%";
 }
 
 function checkQuizAnswer(answer,name){
+
   const correct = currentQuiz[continentCurrentQuestion].answer;
 
   if(answer === correct){
@@ -436,44 +446,28 @@ function checkQuizAnswer(answer,name){
   continentCurrentQuestion++;
 
   if(continentCurrentQuestion < currentQuiz.length){
+
     setTimeout(() => {
       document.getElementById("continentQuizResult").textContent = "";
       loadContinentQuestion(name);
-    }, 1200);
+    }, 900);
 
   } else {
 
-    if(continentScore > continentScores[name]){
-      continentScores[name] = continentScore;
+    let key = name.toLowerCase().replace(" ","");
+
+    if(continentScore > continentQuizzesProgress[key]){
+      continentQuizzesProgress[key] = continentScore;
     }
 
-    if(name === "North America"){
-      document.getElementById("northAmericaScore").textContent =
-        `North America: ${continentScores[name]}/10`;
+    document.getElementById("continentQuizQuestion").innerHTML =
+      `🎉 Quiz Complete!<br><br>Your Score: ${continentScore}/10`;
 
-    } else if(name === "South America"){
-      document.getElementById("southAmericaScore").textContent =
-        `South America: ${continentScores[name]}/10`;
+    document.getElementById("continentQuizOptions").innerHTML = "";
 
-    } else {
-      document.getElementById(name.toLowerCase() + "Score").textContent =
-        `${name}: ${continentScores[name]}/10`;
-    }
-
-setTimeout(() => {
-  if(continentScore > continentScores[name]){
-    continentScores[name] = continentScore;
-  }
-
-  document.getElementById("continentQuizQuestion").innerHTML =
-    `🎉 Quiz Complete!<br><br>Your Score: ${continentScore}/10`;
-
-  document.getElementById("continentQuizOptions").innerHTML = "";
-  document.getElementById("continentQuizResult").textContent = "";
-}, 1200);
+    document.getElementById("continentProgressBar").style.width = "100%";
   }
 }
-
 /* Question of the Day */
 const questions = {
   0:"🌿 Sunday: What countries does the Amazon run through?",
