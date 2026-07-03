@@ -44,12 +44,28 @@ body {
 <p>Explore facts about every continent.</p>
 </div>
 
-<div class="text-left text-sm text-slate-300 flex flex-col justify-center w-full sm:w-auto">
+<div class="flex flex-wrap gap-8">
+
+<div class="text-left text-sm text-slate-300 flex flex-col justify-center">
 <h3 class="font-bold text-xl mb-3">🏆 Quiz Progress</h3>
 
 <p id="bestEasy">Easy: 0/10</p>
 <p id="bestMedium" class="mt-2">Medium: 0/10</p>
 <p id="bestHard" class="mt-2">Hard: 0/10</p>
+</div>
+
+<div class="text-left text-sm text-slate-300 flex flex-col justify-center">
+<h3 class="font-bold text-xl mb-3">🌍 Continent Progress</h3>
+
+<p id="asiaScore">Asia: 0/10</p>
+<p id="africaScore" class="mt-2">Africa: 0/10</p>
+<p id="europeScore" class="mt-2">Europe: 0/10</p>
+<p id="northAmericaScore" class="mt-2">North America: 0/10</p>
+<p id="southAmericaScore" class="mt-2">South America: 0/10</p>
+<p id="australiaScore" class="mt-2">Australia: 0/10</p>
+<p id="antarcticaScore" class="mt-2">Antarctica: 0/10</p>
+</div>
+
 </div>
 
 <div class="geo-card" onclick="startQuiz()">
@@ -444,13 +460,17 @@ function checkQuizAnswer(answer,name){
         `${name}: ${continentScores[name]}/10`;
     }
 
-    setTimeout(() => {
-      document.getElementById("continentQuizQuestion").textContent =
-        "🎉 Quiz Complete!";
-      document.getElementById("continentQuizOptions").innerHTML = "";
-      document.getElementById("continentQuizResult").textContent =
-        `Score: ${continentScore}/10`;
-    }, 1200);
+setTimeout(() => {
+  if(continentScore > continentScores[name]){
+    continentScores[name] = continentScore;
+  }
+
+  document.getElementById("continentQuizQuestion").innerHTML =
+    `🎉 Quiz Complete!<br><br>Your Score: ${continentScore}/10`;
+
+  document.getElementById("continentQuizOptions").innerHTML = "";
+  document.getElementById("continentQuizResult").textContent = "";
+}, 1200);
   }
 }
 
