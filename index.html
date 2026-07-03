@@ -298,13 +298,21 @@ function showContinent(name){
     <p>🏔 Landmark: ${data.landmark}</p>
     <p>🦁 Animals: ${data.animals}</p>
     <p>🍜 Foods: ${data.foods}</p>
-    <button onclick="startContinentQuiz('${name}')" class="mt-4 w-full bg-indigo-500 py-3 rounded-2xl">
-  🎯 Start Quiz
-</button>
+    <button id="start-continent-quiz-btn" class="mt-4 w-full bg-indigo-500 py-3 rounded-2xl">
+      🎯 Start Quiz
+    </button>
   `;
 
   closeModal("continentsModal");
   document.getElementById("continentPageModal").classList.remove("hidden");
+
+  // Attach click handler reliably (avoids inline onclick issues with names containing spaces)
+  const startBtn = document.getElementById("start-continent-quiz-btn");
+  if (startBtn) {
+    startBtn.onclick = () => {
+      startContinentQuiz(name);
+    };
+  }
 }
   const continentQuizzes = {
   Asia: [
@@ -407,19 +415,15 @@ let continentQuizzesProgress = {
 };
 
 function startContinentQuiz(name){
-  console.log("🚀 startContinentQuiz called with:", name);
-
   // Safety check - make sure we have quiz data for this continent
   if (!continentQuizzes[name] || continentQuizzes[name].length === 0) {
-    console.error("❌ No quiz data found for continent:", name);
+    console.error("No quiz data found for continent:", name);
     alert("Sorry, quiz for " + name + " is not available right now.");
     closeModal("continentPageModal");
     return;
   }
 
   currentQuiz = continentQuizzes[name];
-  console.log("✅ currentQuiz set, length =", currentQuiz.length);
-
   continentCurrentQuestion = 0;
   continentScore = 0;
 
@@ -434,26 +438,21 @@ function startContinentQuiz(name){
   const resultEl = document.getElementById("continentQuizResult");
   if (resultEl) resultEl.innerHTML = "";
 
-  console.log("📍 Calling loadContinentQuestion...");
   loadContinentQuestion(name);
 }
 
 function loadContinentQuestion(name){
-  console.log("📍 loadContinentQuestion called for", name, "at question #", continentCurrentQuestion);
-
   // Defensive check
   if (!currentQuiz || continentCurrentQuestion >= currentQuiz.length) {
-    console.error("❌ Invalid quiz state in loadContinentQuestion - currentQuiz length:", currentQuiz ? currentQuiz.length : 'undefined');
+    console.error("Invalid quiz state in loadContinentQuestion");
     return;
   }
 
   const q = currentQuiz[continentCurrentQuestion];
   if (!q) {
-    console.error("❌ Question not found at index", continentCurrentQuestion);
+    console.error("Question not found at index", continentCurrentQuestion);
     return;
   }
-
-  console.log("✅ Setting question:", q.q);
 
   document.getElementById("continentQuizQuestion").textContent = q.q;
 
