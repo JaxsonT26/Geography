@@ -1,1102 +1,1140 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>🌍 GeoQuestKids</title>
-<script src="https://cdn.tailwindcss.com"></script>
-
-<style>
-body {
-  font-family: system-ui, sans-serif;
-  background: linear-gradient(#0f172a, #1e293b);
-  color: white;
-}
-
-.geo-card {
-  background: #1e293b;
-  border: 1px solid #334155;
-  border-radius: 20px;
-  padding: 20px;
-  width: 100%;
-  cursor: pointer;
-  transition: 0.3s;
-  height: 100%;           
-}
-
-.geo-card:hover {
-  transform: translateY(-8px);
-  border-color: #60a5fa;
-}
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🌍 GeoQuestKids</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body { font-family: system-ui, sans-serif; background: linear-gradient(#0f172a, #1e293b); color: white; }
+        .geo-card { background: #1e293b; border: 1px solid #334155; border-radius: 20px; padding: 20px; transition: 0.3s; height: 100%; cursor: pointer; }
+        .geo-card:hover { transform: translateY(-6px); border-color: #60a5fa; }
+    </style>
 </head>
 <body>
+    <h1 class="text-center text-4xl sm:text-5xl mt-8 mb-8">🌍 GeoQuestKids</h1>
 
-<h1 class="text-center text-4xl sm:text-5xl mt-8 mb-10 px-4 flex items-center justify-center gap-3">
-  🌍 GeoQuestKids
-</h1>
+    <div class="max-w-6xl mx-auto px-4 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+        
+        <!-- Seven Continents -->
+        <div class="geo-card" onclick="openContinentsModal()">
+            <div class="text-4xl mb-2">🌎</div>
+            <h2 class="font-bold text-xl">Seven Continents</h2>
+            <p class="text-slate-400 text-sm">Facts + 10-question quizzes for every continent.</p>
+        </div>
 
-<div class="max-w-6xl mx-auto px-4 sm:px-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+        <!-- Progress -->
+        <div class="geo-card">
+            <h3 class="font-bold mb-4">🏆 Your Progress</h3>
 
-  <!-- Seven Continents -->
-  <div class="geo-card" onclick="openContinentsModal()">
-    <div class="text-4xl mb-3">🌎</div>
-    <h2 class="font-bold">Seven Continents</h2>
-    <p class="text-slate-400 text-sm">Explore facts about every continent.</p>
-  </div>
+            <!-- Main Quiz Progress -->
+            <div class="mb-5">
+                <p class="font-semibold text-sm text-blue-300 mb-2">📝 Your Quiz Progress</p>
+                <div class="grid grid-cols-3 gap-x-3 text-sm">
+                    <p id="bestEasy">Easy: 0/10</p>
+                    <p id="bestMedium">Medium: 0/10</p>
+                    <p id="bestHard">Hard: 0/10</p>
+                </div>
+            </div>
 
-  <!-- Progress Card (one card with two columns inside) -->
-  <div class="geo-card bg-[#1e293b] border border-[#334155] rounded-3xl p-6">
-    <div class="flex items-start gap-6">
-      <div class="flex-1">
-        <h3 class="font-bold text-lg mb-3">🏆 Quiz Progress</h3>
-        <p id="bestEasy" class="text-sm text-slate-300">Easy: 0/10</p>
-        <p id="bestMedium" class="mt-1 text-sm text-slate-300">Medium: 0/10</p>
-        <p id="bestHard" class="mt-1 text-sm text-slate-300">Hard: 0/10</p>
-      </div>
-      <div class="flex-1">
-        <h3 class="font-bold text-lg mb-3">🌍 Continent Progress</h3>
-        <p id="asiaScore" class="text-sm text-slate-300">Asia: 0/10</p>
-        <p id="africaScore" class="mt-1 text-sm text-slate-300">Africa: 0/10</p>
-        <p id="europeScore" class="mt-1 text-sm text-slate-300">Europe: 0/10</p>
-        <p id="northAmericaScore" class="mt-1 text-sm text-slate-300">North America: 0/10</p>
-        <p id="southAmericaScore" class="mt-1 text-sm text-slate-300">South America: 0/10</p>
-        <p id="australiaScore" class="mt-1 text-sm text-slate-300">Australia: 0/10</p>
-        <p id="antarcticaScore" class="mt-1 text-sm text-slate-300">Antarctica: 0/10</p>
-      </div>
-    </div>
-    
-    <div class="mt-6 w-full bg-slate-800 rounded-2xl h-3 overflow-hidden">
-      <div id="continentProgressBar" class="h-3 bg-green-500 w-0 transition-all duration-500"></div>
-    </div>
-  </div>
+            <!-- Continent Quiz Progress -->
+            <div>
+                <p class="font-semibold text-sm text-green-300 mb-2">🌍 Your Continent Quiz Progress</p>
+                <div class="grid grid-cols-2 gap-x-3 text-sm mb-3">
+                    <p id="asiaScore">Asia: 0/10</p>
+                    <p id="africaScore">Africa: 0/10</p>
+                    <p id="europeScore">Europe: 0/10</p>
+                    <p id="northAmericaScore">North America: 0/10</p>
+                    <p id="southAmericaScore">South America: 0/10</p>
+                    <p id="australiaScore">Australia: 0/10</p>
+                    <p id="antarcticaScore">Antarctica: 0/10</p>
+                </div>
 
-  <!-- Geography Quiz -->
-  <div class="geo-card" onclick="startQuiz()">
-    <div class="text-4xl mb-3">🧠</div>
-    <h2 class="font-bold">Geography Quiz</h2>
-    <p class="text-slate-400 text-sm">Test your knowledge!</p>
-  </div>
+                <div class="mt-2">
+                    <div class="flex justify-between text-xs mb-1">
+                        <span class="text-slate-400">Overall Continent Progress</span>
+                        <span id="continentPercent">0%</span>
+                    </div>
+                    <div class="w-full bg-slate-800 rounded-2xl h-3 overflow-hidden">
+                        <div id="continentProgressBar" class="h-3 bg-green-500 w-0 transition-all duration-500"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
 
-  <!-- Countries -->
-  <div class="geo-card" onclick="alert('🌐 Countries coming soon!')">
-    <div class="text-4xl mb-3">🌐</div>
-    <h2 class="font-bold">Countries of the World</h2>
-    <p class="text-slate-400 text-sm">Browse all countries.</p>
-  </div>
+        <!-- Question of the Day -->
+        <div onclick="openQuestionModal()" class="geo-card bg-blue-600">
+            <div class="flex items-center gap-3 mb-2">
+                <span class="text-3xl">🌍</span>
+                <strong class="text-2xl">Question of the Day</strong>
+            </div>
+            <p id="dailyQuestion" class="text-lg"></p>
+        </div>
 
-  <!-- Landmarks -->
-  <div class="geo-card" onclick="alert('🗼 Landmarks coming soon!')">
-    <div class="text-4xl mb-3">🗼</div>
-    <h2 class="font-bold">Famous Landmarks</h2>
-    <p class="text-slate-400 text-sm">Iconic places around the globe.</p>
-  </div>
+        <!-- Country of the Day -->
+        <div onclick="openCountryModal()" class="geo-card bg-green-600">
+            <div class="flex items-center gap-3 mb-2">
+                <span class="text-3xl">🌎</span>
+                <strong class="text-2xl">Country of the Day</strong>
+            </div>
+            <div id="countryOfDay"></div>
+        </div>
 
-  <!-- Map -->
-  <div class="geo-card" onclick="alert('🗺️ Interactive map coming soon!')">
-    <div class="text-4xl mb-3">🗺️</div>
-    <h2 class="font-bold">Interactive World Map</h2>
-    <p class="text-slate-400 text-sm">Pan and zoom the world.</p>
-  </div>
+        <!-- Geography Quiz -->
+        <div class="geo-card" onclick="startQuiz()">
+            <div class="text-4xl mb-2">🧠</div>
+            <h2 class="font-bold text-xl">Geography Quiz</h2>
+            <p class="text-slate-400 text-sm">Choose difficulty and test yourself!</p>
+        </div>
 
-  <!-- Flag Guesser -->
-  <div class="geo-card col-span-1 md:col-span-2 lg:col-span-1" onclick="openFlagModal()">
-    <div class="text-4xl mb-3">🏳️</div>
-    <h2 class="font-bold">Flag Guesser</h2>
-    <p class="text-slate-400 text-sm">Guess the country from its flag.</p>
-  </div>
+        <!-- Countries of the World -->
+        <div class="geo-card" onclick="openCountriesModal()">
+            <div class="text-4xl mb-2">🌐</div>
+            <h2 class="font-bold text-xl">Countries of the World</h2>
+            <p class="text-slate-400 text-sm">Search all 195+ countries.</p>
+        </div>
 
-</div>
-<!-- Question of the Day -->
-<div id="geoBubble"
-onclick="openQuestionModal()"
-class="relative mx-4 mb-6 bg-blue-600 p-4 sm:p-8 rounded-3xl shadow-xl w-auto">
+        <!-- Famous Landmarks -->
+        <div class="geo-card" onclick="openLandmarksModal()">
+            <div class="text-4xl mb-2">🗼</div>
+            <h2 class="font-bold text-xl">Famous Landmarks</h2>
+            <p class="text-slate-400 text-sm">Iconic places with teaching notes.</p>
+        </div>
 
-<strong class="text-2xl sm:text-3xl">🌍 Question of the Day</strong>
-<p id="dailyQuestion" class="mt-4 text-base sm:text-xl"></p>
+        <!-- World Map Explorer -->
+        <div class="geo-card" onclick="openWorldExplorerModal()">
+            <div class="text-4xl mb-2">🗺️</div>
+            <h2 class="font-bold text-xl">World Map Explorer</h2>
+            <p class="text-slate-400 text-sm">Discover places • Track your visits</p>
+        </div>
 
-</div>
-
-<!-- Country of the Day -->
-<div id="countryBubble"
-onclick="openCountryModal()"
-class="relative mx-4 mb-6 bg-green-600 p-4 sm:p-8 rounded-3xl shadow-xl w-auto">
-
-<strong class="text-2xl sm:text-3xl">🌎 Country of the Day</strong>
-<div id="countryOfDay" class="mt-4 text-base sm:text-xl"></div>
-
-</div>
-
-<!-- Question Modal -->
-<div id="questionModal" class="hidden fixed inset-0 bg-black/80 flex items-center justify-center p-4 z-50">
-<div class="bg-slate-900 rounded-3xl max-w-2xl w-full max-h-[90vh] overflow-y-auto p-4 sm:p-8">
-<h2 id="questionTitle" class="text-2xl sm:text-3xl font-bold mb-4"></h2>
-<p id="questionAnswer" class="text-base sm:text-lg mb-6"></p>
-
-<button onclick="closeModal('questionModal')" class="w-full bg-red-500 py-3 rounded-2xl">
-Close
-</button>
-
-</div>
-</div>
-<!-- Quiz Modal -->
-<div id="quizModal" class="hidden fixed inset-0 bg-black/80 flex items-center justify-center p-4 z-50">
-<div class="bg-slate-900 rounded-3xl max-w-2xl w-full max-h-[90vh] overflow-y-auto p-4 sm:p-8">
-
-<h2 class="text-2xl sm:text-3xl mb-6">🧠 Geography Quiz</h2>
-
-<div id="difficultyButtons" class="flex flex-wrap gap-3 mb-6">
-<button onclick="setDifficulty('easy')" class="bg-green-500 px-4 py-2 rounded-xl w-full sm:w-auto">Easy</button>
-<button onclick="setDifficulty('medium')" class="bg-yellow-500 px-4 py-2 rounded-xl w-full sm:w-auto">Medium</button>
-<button onclick="setDifficulty('hard')" class="bg-red-500 px-4 py-2 rounded-xl w-full sm:w-auto">Hard</button>
-</div>
-
-<div id="quizQuestion" class="text-lg sm:text-xl mb-6"></div>
-<div id="quizOptions"></div>
-<div id="quizResult" class="mt-6 text-base sm:text-lg font-bold"></div>
-
-<button onclick="closeModal('quizModal')" class="mt-4 w-full bg-red-500 py-3 rounded-2xl">
-Close
-</button>
-
-</div>
-</div>
-<!-- Country Modal -->
-<div id="countryModal" class="hidden fixed inset-0 bg-black/80 flex items-center justify-center p-4 z-50">
-<div class="bg-slate-900 rounded-3xl max-w-2xl w-full max-h-[90vh] overflow-y-auto p-4 sm:p-8">
-<h2 id="countryTitle" class="text-2xl sm:text-3xl font-bold mb-4"></h2>
-<div id="countryInfo" class="text-base sm:text-lg mb-6"></div>
-
-<button onclick="closeModal('countryModal')" class="w-full bg-red-500 py-3 rounded-2xl">
-Close
-</button>
-
-</div>
-</div>
-  
-<!-- Flag Modal -->
-<div id="flagModal" class="hidden fixed inset-0 bg-black/80 flex items-center justify-center p-4 z-50">
-<div class="bg-slate-900 rounded-3xl max-w-2xl w-full max-h-[90vh] overflow-y-auto p-4 sm:p-8">
-    <h2 class="text-2xl sm:text-3xl mb-6">🏳️ Guess the Flag</h2>
-
-    <div id="flagDisplay"
-    class="w-full min-h-[180px] sm:min-h-[220px] bg-slate-800 rounded-2xl mb-6 flex items-center justify-center text-6xl sm:text-8xl overflow-visible">
+        <!-- Flag Guesser -->
+        <div class="geo-card" onclick="openFlagModal()">
+            <div class="text-4xl mb-2">🏳️</div>
+            <h2 class="font-bold text-xl">Flag Guesser</h2>
+            <p class="text-slate-400 text-sm">Guess the country from its flag.</p>
+        </div>
     </div>
 
-    <input id="flagInput" type="text" placeholder="Type country name..." class="w-full p-3 rounded-xl text-black mb-4">
+    <!-- Modals -->
 
-    <button onclick="checkFlagAnswer()" class="w-full bg-indigo-500 py-3 rounded-2xl mb-4">
-      Check Answer
-    </button>
-
-    <button onclick="checkFlagAnswer(true)" class="w-full bg-yellow-500 py-3 rounded-2xl mb-4">
-      Reveal Answer
-    </button>
-
-    <div id="flagResult" class="mb-4"></div>
-
-    <button onclick="newFlag()" class="w-full bg-green-500 py-3 rounded-2xl mb-4">
-      Next Flag →
-    </button>
-
-    <button onclick="closeModal('flagModal')" class="w-full bg-red-500 py-3 rounded-2xl">
-      Close
-    </button>
-
-  </div>
-</div>
-
-<!-- Continents Modal -->
-<div id="continentsModal" class="hidden fixed inset-0 bg-black/80 flex items-center justify-center p-4 z-50">
-<div class="bg-slate-900 rounded-3xl max-w-2xl w-full max-h-[90vh] overflow-y-auto p-4 sm:p-8">
-
-    <h2 class="text-2xl sm:text-3xl mb-6">🌍 Seven Continents</h2>
-
-    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-      <div onclick="showContinent('Asia')" class="bg-slate-800 p-4 rounded-xl text-lg sm:text-xl cursor-pointer">🌏 Asia</div>
-      <div onclick="showContinent('Africa')" class="bg-slate-800 p-4 rounded-xl text-lg sm:text-xl cursor-pointer">🌍 Africa</div>
-      <div onclick="showContinent('North America')" class="bg-slate-800 p-4 rounded-xl text-lg sm:text-xl cursor-pointer">🌎 North America</div>
-      <div onclick="showContinent('South America')" class="bg-slate-800 p-4 rounded-xl text-lg sm:text-xl cursor-pointer">🌎 South America</div>
-      <div onclick="showContinent('Europe')" class="bg-slate-800 p-4 rounded-xl text-lg sm:text-xl cursor-pointer">🌍 Europe</div>
-      <div onclick="showContinent('Australia')" class="bg-slate-800 p-4 rounded-xl text-lg sm:text-xl cursor-pointer">🌏 Australia</div>
-      <div onclick="showContinent('Antarctica')" class="bg-slate-800 p-4 rounded-xl text-lg sm:text-xl cursor-pointer">🧊 Antarctica</div>
+    <!-- Seven Continents Modal -->
+    <div id="continentsModal" class="hidden fixed inset-0 bg-black/80 flex items-center justify-center p-4 z-50">
+        <div class="bg-slate-900 rounded-3xl max-w-2xl w-full p-6">
+            <h2 class="text-3xl font-bold mb-6">🌍 Seven Continents</h2>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3" id="continentsList"></div>
+            <button onclick="closeModal('continentsModal')" class="mt-6 w-full bg-red-500 py-3 rounded-2xl">Close</button>
+        </div>
     </div>
 
-    <button onclick="closeModal('continentsModal')" class="mt-6 w-full bg-red-500 py-3 rounded-2xl">
-      Close
-    </button>
-
-  </div>
-</div>
-
-<!-- Continent Page Modal -->
-<div id="continentPageModal" class="hidden fixed inset-0 bg-black/80 flex items-center justify-center p-4 z-50">
-<div class="bg-slate-900 rounded-3xl max-w-2xl w-full max-h-[90vh] overflow-y-auto p-4 sm:p-8">
-
-    <h2 id="continentPageTitle" class="text-3xl sm:text-4xl font-bold mb-6"></h2>
-
-    <div id="continentPageContent" class="space-y-3 text-base sm:text-xl"></div>
-
-    <button onclick="closeModal('continentPageModal')" class="mt-6 w-full bg-red-500 py-3 rounded-2xl">
-      Back
-    </button>
-
-  </div>
-</div>
-
-<!-- Continent Quiz Modal -->
-<div id="continentQuizModal" class="hidden fixed inset-0 bg-black/80 flex items-center justify-center p-4 z-50">
-<div class="bg-slate-900 rounded-3xl max-w-2xl w-full max-h-[90vh] overflow-y-auto p-4 sm:p-8">
-
-    <h2 id="quizTitle" class="text-2xl sm:text-3xl font-bold mb-6"></h2>
-
-    <div id="continentQuizQuestion" class="text-lg sm:text-xl mb-6"></div>
-
-    <div id="continentQuizOptions" class="space-y-3"></div>
-
-    <div id="continentQuizResult" class="mt-4 font-bold"></div>
-
-    <button onclick="closeModal('continentQuizModal')" class="mt-6 w-full bg-red-500 py-3 rounded-2xl">
-      Close Quiz
-    </button>
-
-  </div>
-</div>
-<audio id="correctSound" preload="auto">
-  <source src="https://assets.mixkit.co/active_storage/sfx/2000/2000-preview.mp3" type="audio/mpeg">
-</audio>
-
-<audio id="wrongSound" preload="auto">
-  <source src="https://assets.mixkit.co/active_storage/sfx/2955/2955-preview.mp3" type="audio/mpeg">
-</audio>
-<script>
-
-function openContinentsModal(){
-  document.getElementById("continentsModal").classList.remove("hidden");
-}
-
-function closeModal(id){
-  document.getElementById(id).classList.add("hidden");
-}
-const continentData = {
-  Asia:{countries:49,population:"4.7 billion",landmark:"Great Wall of China",animals:"Pandas, Tigers, Elephants",foods:"Sushi, Curry, Dumplings"},
-  Africa:{countries:54,population:"1.4 billion",landmark:"Pyramids of Giza",animals:"Lions, Elephants, Giraffes",foods:"Jollof Rice, Couscous, Injera"},
-  "North America":{countries:23,population:"600 million",landmark:"Grand Canyon",animals:"Bears, Bison, Eagles",foods:"Tacos, Burgers, Poutine"},
-  "South America":{countries:12,population:"430 million",landmark:"Machu Picchu",animals:"Llamas, Jaguars, Capybaras",foods:"Empanadas, Arepas, Feijoada"},
-  Europe:{countries:44,population:"750 million",landmark:"Eiffel Tower",animals:"Wolves, Bears, Lynx",foods:"Pizza, Pasta, Croissants"},
-  Australia:{countries:14,population:"45 million",landmark:"Sydney Opera House",animals:"Kangaroos, Koalas, Wombats",foods:"Meat Pies, Lamingtons, Vegemite"},
-  Antarctica:{countries:0,population:"0 permanent residents",landmark:"South Pole",animals:"Penguins, Seals, Whales",foods:"No native foods"}
-};
-function showContinent(name){
-  const data = continentData[name];
-
-  document.getElementById("continentPageTitle").textContent = name;
-
-  document.getElementById("continentPageContent").innerHTML = `
-    <p>🗺 Countries: ${data.countries}</p>
-    <p>👥 Population: ${data.population}</p>
-    <p>🏔 Landmark: ${data.landmark}</p>
-    <p>🦁 Animals: ${data.animals}</p>
-    <p>🍜 Foods: ${data.foods}</p>
-    <button id="start-continent-quiz-btn" class="mt-4 w-full bg-indigo-500 py-3 rounded-2xl">
-      🎯 Start Quiz
-    </button>
-  `;
-
-  closeModal("continentsModal");
-  document.getElementById("continentPageModal").classList.remove("hidden");
-
-  // Attach click handler reliably (avoids inline onclick issues with names containing spaces)
-  const startBtn = document.getElementById("start-continent-quiz-btn");
-  if (startBtn) {
-    startBtn.onclick = () => {
-      startContinentQuiz(name);
-    };
-  }
-}
-  const continentQuizzes = {
-  Asia: [
-    {q:"What is the largest country in Asia?", options:["China","India","Russia","Japan"], answer:"Russia"},
-    {q:"Capital of Japan?", options:["Tokyo","Kyoto","Osaka","Seoul"], answer:"Tokyo"},
-    {q:"Where is Mount Fuji?", options:["Japan","China","Nepal","India"], answer:"Japan"},
-    {q:"Which desert is in Asia?", options:["Gobi","Sahara","Mojave","Kalahari"], answer:"Gobi"},
-    {q:"Which country has the Taj Mahal?", options:["India","Pakistan","Nepal","Iran"], answer:"India"},
-    {q:"Largest population?", options:["India","China","Indonesia","Japan"], answer:"India"},
-    {q:"What sea borders China?", options:["South China Sea","Black Sea","Red Sea","Baltic"], answer:"South China Sea"},
-    {q:"Which animal lives in Asia?", options:["Panda","Tiger","Snow Leopard","All"], answer:"All"},
-    {q:"Longest river in Asia?", options:["Yangtze","Amazon","Nile","Danube"], answer:"Yangtze"},
-    {q:"Which country has Mount Everest?", options:["Nepal","India","China","Bhutan"], answer:"Nepal"}
-  ],
-    Africa: [
-  {q:"How many countries are in Africa?", options:["54","44","34","24"], answer:"54"},
-  {q:"Which river is the longest?", options:["Nile","Amazon","Congo","Niger"], answer:"Nile"},
-  {q:"Where are the pyramids?", options:["Egypt","Morocco","Sudan","Kenya"], answer:"Egypt"},
-  {q:"Largest desert?", options:["Sahara","Kalahari","Namib","Gobi"], answer:"Sahara"},
-  {q:"Which animal is native?", options:["Lion","Tiger","Panda","Polar Bear"], answer:"Lion"},
-  {q:"Most populous country?", options:["Nigeria","Egypt","Ethiopia","Kenya"], answer:"Nigeria"},
-  {q:"Mount Kilimanjaro is in?", options:["Tanzania","Kenya","Uganda","South Africa"], answer:"Tanzania"},
-  {q:"South Africa has how many capitals?", options:["1","2","3","4"], answer:"3"},
-  {q:"Madagascar is famous for?", options:["Lemurs","Penguins","Bears","Wolves"], answer:"Lemurs"},
-  {q:"Victoria Falls is in?", options:["Zambia","Egypt","Nigeria","Libya"], answer:"Zambia"}
-],
-    Europe: [
-  {q:"Capital of France?", options:["Paris","Rome","Berlin","Madrid"], answer:"Paris"},
-  {q:"Eiffel Tower is in?", options:["France","Italy","Germany","Spain"], answer:"France"},
-  {q:"Largest country in Europe?", options:["Russia","Germany","France","Ukraine"], answer:"Russia"},
-  {q:"Which mountain range?", options:["Alps","Andes","Rockies","Himalayas"], answer:"Alps"},
-  {q:"Capital of Italy?", options:["Rome","Milan","Venice","Naples"], answer:"Rome"},
-  {q:"River through Budapest?", options:["Danube","Nile","Seine","Rhine"], answer:"Danube"},
-  {q:"Big Ben is in?", options:["UK","France","Germany","Belgium"], answer:"UK"},
-  {q:"Which country has fjords?", options:["Norway","Spain","Italy","Poland"], answer:"Norway"},
-  {q:"Smallest country?", options:["Vatican City","Monaco","Luxembourg","Malta"], answer:"Vatican City"},
-  {q:"Capital of Greece?", options:["Athens","Sparta","Crete","Thessaloniki"], answer:"Athens"}
-],
-    "North America": [
-  {q:"Capital of Canada?", options:["Ottawa","Toronto","Vancouver","Montreal"], answer:"Ottawa"},
-  {q:"Largest country?", options:["Canada","USA","Mexico","Greenland"], answer:"Canada"},
-  {q:"Grand Canyon is in?", options:["USA","Canada","Mexico","Cuba"], answer:"USA"},
-  {q:"Mexico speaks?", options:["Spanish","English","French","Portuguese"], answer:"Spanish"},
-  {q:"Panama Canal connects?", options:["Atlantic and Pacific","Indian and Atlantic","Pacific and Arctic","Arctic and Atlantic"], answer:"Atlantic and Pacific"},
-  {q:"Greenland belongs to?", options:["Denmark","Canada","USA","Iceland"], answer:"Denmark"},
-  {q:"Largest US state?", options:["Alaska","Texas","California","Florida"], answer:"Alaska"},
-  {q:"Mount Denali is in?", options:["USA","Canada","Mexico","Greenland"], answer:"USA"},
-  {q:"Capital of USA?", options:["Washington D.C.","New York","Los Angeles","Chicago"], answer:"Washington D.C."},
-  {q:"Poutine is from?", options:["Canada","USA","Mexico","Jamaica"], answer:"Canada"}
-],
-    "South America": [
-  {q:"Largest country?", options:["Brazil","Argentina","Peru","Chile"], answer:"Brazil"},
-  {q:"Amazon rainforest mainly in?", options:["Brazil","Peru","Colombia","Bolivia"], answer:"Brazil"},
-  {q:"Machu Picchu is in?", options:["Peru","Chile","Brazil","Argentina"], answer:"Peru"},
-  {q:"Capital of Argentina?", options:["Buenos Aires","Cordoba","Rosario","Mendoza"], answer:"Buenos Aires"},
-  {q:"Longest mountain range?", options:["Andes","Rockies","Alps","Himalayas"], answer:"Andes"},
-  {q:"Angel Falls is in?", options:["Venezuela","Brazil","Chile","Peru"], answer:"Venezuela"},
-  {q:"Smallest country?", options:["Suriname","Uruguay","Paraguay","Guyana"], answer:"Suriname"},
-  {q:"Capital of Chile?", options:["Santiago","Lima","Bogota","Quito"], answer:"Santiago"},
-  {q:"Galápagos belong to?", options:["Ecuador","Peru","Chile","Brazil"], answer:"Ecuador"},
-  {q:"Largest river?", options:["Amazon","Paraná","Orinoco","Magdalena"], answer:"Amazon"}
-],
-    Australia: [
-  {q:"Capital of Australia?", options:["Canberra","Sydney","Melbourne","Perth"], answer:"Canberra"},
-  {q:"Largest reef?", options:["Great Barrier Reef","Coral Sea Reef","Ningaloo Reef","Barrier Bay"], answer:"Great Barrier Reef"},
-  {q:"Native animal?", options:["Kangaroo","Lion","Tiger","Panda"], answer:"Kangaroo"},
-  {q:"Which bird cannot fly?", options:["Kiwi","Eagle","Crow","Parrot"], answer:"Kiwi"},
-  {q:"New Zealand capital?", options:["Wellington","Auckland","Christchurch","Hamilton"], answer:"Wellington"},
-  {q:"Largest desert?", options:["Great Victoria Desert","Sahara","Gobi","Kalahari"], answer:"Great Victoria Desert"},
-  {q:"Tasmania belongs to?", options:["Australia","New Zealand","Fiji","Papua"], answer:"Australia"},
-  {q:"Sydney Opera House is in?", options:["Sydney","Melbourne","Perth","Adelaide"], answer:"Sydney"},
-  {q:"How many countries in Oceania?", options:["14","24","34","44"], answer:"14"},
-  {q:"Famous rock landmark?", options:["Uluru","Everest","K2","Table Mountain"], answer:"Uluru"}
-],
-    Antarctica: [
-  {q:"Coldest place on Earth?", options:["Antarctica","Arctic","Siberia","Greenland"], answer:"Antarctica"},
-  {q:"Permanent population?", options:["0","100","1000","5000"], answer:"0"},
-  {q:"Main animal?", options:["Penguin","Tiger","Lion","Elephant"], answer:"Penguin"},
-  {q:"Largest ice sheet?", options:["Antarctica","Greenland","Arctic","Siberia"], answer:"Antarctica"},
-  {q:"South Pole is here?", options:["Yes","No"], answer:"Yes"},
-  {q:"Warmest season?", options:["Summer","Winter","Spring","Fall"], answer:"Summer"},
-  {q:"Surrounded by?", options:["Southern Ocean","Atlantic","Pacific","Indian"], answer:"Southern Ocean"},
-  {q:"Any countries own it?", options:["No","Yes"], answer:"No"},
-  {q:"Largest land predator?", options:["None","Polar Bear","Wolf","Seal"], answer:"None"},
-  {q:"Main job of visitors?", options:["Research","Farming","Tourism","Mining"], answer:"Research"}
-]
-};
-let currentQuiz = [];
-let continentCurrentQuestion = 0;
-let continentScore = 0;
-
-let continentQuizzesProgress = {
-  asia:0,
-  africa:0,
-  europe:0,
-  northamerica:0,
-  southamerica:0,
-  australia:0,
-  antarctica:0
-};
-
-function startContinentQuiz(name){
-  // Safety check - make sure we have quiz data for this continent
-  if (!continentQuizzes[name] || continentQuizzes[name].length === 0) {
-    console.error("No quiz data found for continent:", name);
-    alert("Sorry, quiz for " + name + " is not available right now.");
-    closeModal("continentPageModal");
-    return;
-  }
-
-  currentQuiz = continentQuizzes[name];
-  continentCurrentQuestion = 0;
-  continentScore = 0;
-
-  closeModal("continentPageModal");
-  document.getElementById("continentQuizModal").classList.remove("hidden");
-
-  // Set a nice title in the quiz modal
-  const quizTitleEl = document.getElementById("quizTitle");
-  if (quizTitleEl) quizTitleEl.textContent = name + " Quiz";
-
-  // Clear any old result text
-  const resultEl = document.getElementById("continentQuizResult");
-  if (resultEl) resultEl.innerHTML = "";
-
-  loadContinentQuestion(name);
-}
-
-function loadContinentQuestion(name){
-  // Defensive check
-  if (!currentQuiz || continentCurrentQuestion >= currentQuiz.length) {
-    console.error("Invalid quiz state in loadContinentQuestion");
-    return;
-  }
-
-  const q = currentQuiz[continentCurrentQuestion];
-  if (!q) {
-    console.error("Question not found at index", continentCurrentQuestion);
-    return;
-  }
-
-  document.getElementById("continentQuizQuestion").textContent = q.q;
-
-  document.getElementById("continentQuizOptions").innerHTML = 
-    q.options.map(option => 
-      `<button onclick="checkQuizAnswer('${option}','${name}')" 
-         class="w-full bg-slate-700 py-3 rounded-xl mb-2 hover:bg-slate-600 transition">
-        ${option}
-      </button>`
-    ).join("");
-
-  // Update the main page progress bar (visual only during this quiz)
-  let progress = Math.round(((continentCurrentQuestion) / currentQuiz.length) * 100);
-  const progressBar = document.getElementById("continentProgressBar");
-  if(progressBar) progressBar.style.width = progress + "%";
-}
-
-function checkQuizAnswer(answer, name){
-  if (!currentQuiz || continentCurrentQuestion >= currentQuiz.length) return;
-
-  const correct = currentQuiz[continentCurrentQuestion].answer;
-
-  if(answer === correct){
-    continentScore++;
-  }
-
-  document.getElementById("continentQuizResult").innerHTML = 
-    answer === correct ? 
-    `<span class="text-green-400 text-xl">✅ Correct!</span>` : 
-    `<span class="text-red-400 text-xl">❌ Wrong! Correct: ${correct}</span>`;
-
-  continentCurrentQuestion++;
-
-  if(continentCurrentQuestion < currentQuiz.length){
-    setTimeout(() => {
-      document.getElementById("continentQuizResult").innerHTML = "";
-      loadContinentQuestion(name);
-    }, 1100);
-  } else {
-    let key = name.toLowerCase().replace(" ", "");
-    if(continentScore > (continentQuizzesProgress[key] || 0)){
-      continentQuizzesProgress[key] = continentScore;
-    }
-
-    document.getElementById("continentQuizQuestion").innerHTML = 
-      `🎉 Quiz Complete!<br><br>Your Score: <span class="text-3xl font-bold text-yellow-400">${continentScore}/10</span>`;
-
-    document.getElementById("continentQuizOptions").innerHTML = "";
-    
-    // Fix progress bar
-    const progressBar = document.getElementById("continentProgressBar");
-    if(progressBar) progressBar.style.width = "100%";
-  }
-}
-/* Question of the Day */
-const questions = {
-  0:"🌿 Sunday: What countries does the Amazon run through?",
-  1:"🪨 Monday: Which country owns Gibraltar?",
-  2:"🦘 Tuesday: What is the capital of Australia?",
-  3:"❄️ Wednesday: What countries does the Bering Strait separate?",
-  4:"🏛️ Thursday: Where is Petra located?",
-  5:"🌍 Friday: What country is inside South Africa?",
-  6:"🌮 Saturday: Why does Mexico speak Spanish?"
-};
-
-const answers = {
-  0: "🌿 The Amazon River flows through Brazil, Peru, Colombia, Bolivia, Ecuador, Venezuela, and Guyana. It is the largest river by water volume and produces around 20% of the world’s freshwater entering the oceans.",
-
-  1: "🪨 Gibraltar is a British Overseas Territory at the southern tip of Spain. It controls access between the Atlantic Ocean and the Mediterranean Sea, making it strategically important for trade and military history.",
-
-  2: "🦘 Canberra became Australia’s capital in 1913 as a compromise between Sydney and Melbourne. It was purposely built to be the nation’s political center.",
-
-  3: "❄️ The Bering Strait separates Russia and Alaska by only 82 km (51 miles). During the Ice Age, a land bridge here allowed humans to migrate into North America.",
-
-  4: "🏛️ Petra in Jordan is over 2,000 years old and was carved directly into rose-colored rock. It was once a major trading hub connecting Arabia, Egypt, and the Mediterranean.",
-
-  5: "🌍 Lesotho is completely surrounded by South Africa, making it an enclave. It is called the ‘Kingdom in the Sky’ because its entire land sits over 1,000 meters above sea level.",
-
-  6: "🌮 Mexico speaks Spanish because Spain conquered the Aztec Empire in 1521. Today, Mexico has the largest Spanish-speaking population in the world — over 125 million people."
-};
-let todayCountry = null;
-const countryList = [
-{name:"Afghanistan",flag:"🇦🇫",capital:"Kabul",population:"41M",region:"Asia",fact:"Known for the Hindu Kush mountains."},
-{name:"Albania",flag:"🇦🇱",capital:"Tirana",population:"2.8M",region:"Europe",fact:"Has over 450 km of coastline."},
-{name:"Algeria",flag:"🇩🇿",capital:"Algiers",population:"45M",region:"Africa",fact:"Largest country in Africa."},
-{name:"Andorra",flag:"🇦🇩",capital:"Andorra la Vella",population:"80K",region:"Europe",fact:"One of Europe’s smallest countries."},
-{name:"Angola",flag:"🇦🇴",capital:"Luanda",population:"35M",region:"Africa",fact:"Rich in oil and diamonds."},
-{name:"Antigua and Barbuda",flag:"🇦🇬",capital:"Saint John's",population:"93K",region:"Caribbean",fact:"Has 365 beaches."},
-{name:"Argentina",flag:"🇦🇷",capital:"Buenos Aires",population:"46M",region:"South America",fact:"Home to Patagonia."},
-{name:"Armenia",flag:"🇦🇲",capital:"Yerevan",population:"2.8M",region:"Asia",fact:"First nation to adopt Christianity."},
-{name:"Australia",flag:"🇦🇺",capital:"Canberra",population:"26M",region:"Oceania",fact:"Wider than the moon."},
-{name:"Austria",flag:"🇦🇹",capital:"Vienna",population:"9M",region:"Europe",fact:"Birthplace of Mozart."},
-{name:"Azerbaijan",flag:"🇦🇿",capital:"Baku",population:"10M",region:"Asia",fact:"Known as the Land of Fire."},
-
-{name:"Bahamas",flag:"🇧🇸",capital:"Nassau",population:"400K",region:"North America",fact:"Over 700 islands."},
-{name:"Bahrain",flag:"🇧🇭",capital:"Manama",population:"1.8M",region:"Asia",fact:"Island nation in the Persian Gulf."},
-{name:"Bangladesh",flag:"🇧🇩",capital:"Dhaka",population:"171M",region:"Asia",fact:"One of the most densely populated countries."},
-{name:"Barbados",flag:"🇧🇧",capital:"Bridgetown",population:"280K",region:"Caribbean",fact:"Birthplace of Rihanna."},
-{name:"Belarus",flag:"🇧🇾",capital:"Minsk",population:"9M",region:"Europe",fact:"Known for forests."},
-{name:"Belgium",flag:"🇧🇪",capital:"Brussels",population:"11M",region:"Europe",fact:"Famous for waffles and chocolate."},
-{name:"Belize",flag:"🇧🇿",capital:"Belmopan",population:"420K",region:"North America",fact:"Home to the Great Blue Hole."},
-{name:"Benin",flag:"🇧🇯",capital:"Porto-Novo",population:"13M",region:"Africa",fact:"Birthplace of Vodun."},
-{name:"Bhutan",flag:"🇧🇹",capital:"Thimphu",population:"780K",region:"Asia",fact:"Measures success by happiness."},
-{name:"Bolivia",flag:"🇧🇴",capital:"Sucre",population:"12M",region:"South America",fact:"Has two capitals."},
-{name:"Bosnia and Herzegovina",flag:"🇧🇦",capital:"Sarajevo",population:"3.2M",region:"Europe",fact:"Hosted 1984 Winter Olympics."},
-{name:"Botswana",flag:"🇧🇼",capital:"Gaborone",population:"2.5M",region:"Africa",fact:"Home to the Okavango Delta."},
-{name:"Brazil",flag:"🇧🇷",capital:"Brasília",population:"203M",region:"South America",fact:"Covers nearly half South America."},
-{name:"Brunei",flag:"🇧🇳",capital:"Bandar Seri Begawan",population:"450K",region:"Asia",fact:"One of the richest countries per capita."},
-{name:"Bulgaria",flag:"🇧🇬",capital:"Sofia",population:"6.8M",region:"Europe",fact:"One of Europe’s oldest states."},
-{name:"Burkina Faso",flag:"🇧🇫",capital:"Ouagadougou",population:"22M",region:"Africa",fact:"Known for gold reserves."},
-{name:"Burundi",flag:"🇧🇮",capital:"Gitega",population:"13M",region:"Africa",fact:"One of the world’s poorest countries."},
-
-{name:"Cabo Verde",flag:"🇨🇻",capital:"Praia",population:"590K",region:"Africa",fact:"Island nation of volcanic origin."},
-{name:"Cambodia",flag:"🇰🇭",capital:"Phnom Penh",population:"17M",region:"Asia",fact:"Home to Angkor Wat."},
-{name:"Cameroon",flag:"🇨🇲",capital:"Yaoundé",population:"28M",region:"Africa",fact:"Called Africa in miniature."},
-{name:"Canada",flag:"🇨🇦",capital:"Ottawa",population:"40M",region:"North America",fact:"Has more lakes than any country."},
-{name:"Central African Republic",flag:"🇨🇫",capital:"Bangui",population:"5M",region:"Africa",fact:"Rich in diamonds and gold."},
-{name:"Chad",flag:"🇹🇩",capital:"N'Djamena",population:"18M",region:"Africa",fact:"Named after Lake Chad."},
-{name:"Chile",flag:"🇨🇱",capital:"Santiago",population:"19M",region:"South America",fact:"Longest north-south country."},
-{name:"China",flag:"🇨🇳",capital:"Beijing",population:"1.4B",region:"Asia",fact:"World’s largest population."},
-{name:"Colombia",flag:"🇨🇴",capital:"Bogotá",population:"52M",region:"South America",fact:"Major coffee exporter."},
-{name:"Comoros",flag:"🇰🇲",capital:"Moroni",population:"850K",region:"Africa",fact:"Volcanic islands."},
-{name:"Congo",flag:"🇨🇬",capital:"Brazzaville",population:"6M",region:"Africa",fact:"Named after the Congo River."},
-{name:"Costa Rica",flag:"🇨🇷",capital:"San José",population:"5M",region:"North America",fact:"No standing army."},
-{name:"Côte d'Ivoire",flag:"🇨🇮",capital:"Yamoussoukro",population:"29M",region:"Africa",fact:"Largest cocoa producer."},
-{name:"Croatia",flag:"🇭🇷",capital:"Zagreb",population:"3.8M",region:"Europe",fact:"Known for the Dalmatian Coast."},
-{name:"Cuba",flag:"🇨🇺",capital:"Havana",population:"11M",region:"Caribbean",fact:"Largest Caribbean island."},
-{name:"Cyprus",flag:"🇨🇾",capital:"Nicosia",population:"1.2M",region:"Europe",fact:"Divided island nation."},
-{name:"Czech Republic",flag:"🇨🇿",capital:"Prague",population:"10.7M",region:"Europe",fact:"Prague has 100 spires."},
-
-{name:"Democratic Republic of the Congo",flag:"🇨🇩",capital:"Kinshasa",population:"111M",region:"Africa",fact:"Second largest country in Africa."},
-{name:"Denmark",flag:"🇩🇰",capital:"Copenhagen",population:"5.9M",region:"Europe",fact:"Home of LEGO."},
-{name:"Djibouti",flag:"🇩🇯",capital:"Djibouti",population:"1M",region:"Africa",fact:"Strategic Red Sea location."},
-{name:"Dominica",flag:"🇩🇲",capital:"Roseau",population:"72K",region:"Caribbean",fact:"Known as Nature Island."},
-{name:"Dominican Republic",flag:"🇩🇴",capital:"Santo Domingo",population:"11M",region:"Caribbean",fact:"Shares Hispaniola with Haiti."},
-
-{name:"East Timor",flag:"🇹🇱",capital:"Dili",population:"1.4M",region:"Asia",fact:"One of Asia’s newest countries."},
-{name:"Ecuador",flag:"🇪🇨",capital:"Quito",population:"18M",region:"South America",fact:"Named after the equator."},
-{name:"Egypt",flag:"🇪🇬",capital:"Cairo",population:"111M",region:"Africa",fact:"Home of the pyramids."},
-{name:"El Salvador",flag:"🇸🇻",capital:"San Salvador",population:"6.3M",region:"North America",fact:"Smallest Central American country."},
-{name:"Equatorial Guinea",flag:"🇬🇶",capital:"Malabo",population:"1.7M",region:"Africa",fact:"Only Spanish-speaking African country."},
-{name:"Eritrea",flag:"🇪🇷",capital:"Asmara",population:"3.7M",region:"Africa",fact:"Borders the Red Sea."},
-{name:"Estonia",flag:"🇪🇪",capital:"Tallinn",population:"1.3M",region:"Europe",fact:"Highly digital society."},
-{name:"Eswatini",flag:"🇸🇿",capital:"Mbabane",population:"1.2M",region:"Africa",fact:"Formerly Swaziland."},
-{name:"Ethiopia",flag:"🇪🇹",capital:"Addis Ababa",population:"126M",region:"Africa",fact:"Never fully colonized."},
-
-{name:"Fiji",flag:"🇫🇯",capital:"Suva",population:"930K",region:"Oceania",fact:"Made up of over 300 islands."},
-{name:"Finland",flag:"🇫🇮",capital:"Helsinki",population:"5.6M",region:"Europe",fact:"Land of a thousand lakes."},
-{name:"France",flag:"🇫🇷",capital:"Paris",population:"68M",region:"Europe",fact:"Has the most time zones in the world."},
-{name:"Gabon",flag:"🇬🇦",capital:"Libreville",population:"2.4M",region:"Africa",fact:"Over 80% rainforest."},
-{name:"Gambia",flag:"🇬🇲",capital:"Banjul",population:"2.7M",region:"Africa",fact:"Smallest mainland African country."},
-{name:"Georgia",flag:"🇬🇪",capital:"Tbilisi",population:"3.7M",region:"Asia",fact:"Birthplace of wine."},
-{name:"Germany",flag:"🇩🇪",capital:"Berlin",population:"84M",region:"Europe",fact:"Largest economy in Europe."},
-{name:"Ghana",flag:"🇬🇭",capital:"Accra",population:"34M",region:"Africa",fact:"First African colony to gain independence."},
-{name:"Greece",flag:"🇬🇷",capital:"Athens",population:"10M",region:"Europe",fact:"Birthplace of democracy."},
-{name:"Grenada",flag:"🇬🇩",capital:"St. George's",population:"125K",region:"Caribbean",fact:"Known as the Spice Isle."},
-{name:"Guatemala",flag:"🇬🇹",capital:"Guatemala City",population:"18M",region:"North America",fact:"Heart of ancient Maya civilization."},
-{name:"Guinea",flag:"🇬🇳",capital:"Conakry",population:"14M",region:"Africa",fact:"Rich in bauxite reserves."},
-{name:"Guinea-Bissau",flag:"🇬🇼",capital:"Bissau",population:"2.1M",region:"Africa",fact:"Known for cashew exports."},
-{name:"Guyana",flag:"🇬🇾",capital:"Georgetown",population:"800K",region:"South America",fact:"Only English-speaking country in South America."},
-
-{name:"Haiti",flag:"🇭🇹",capital:"Port-au-Prince",population:"11M",region:"Caribbean",fact:"Shares Hispaniola with the Dominican Republic."},
-{name:"Honduras",flag:"🇭🇳",capital:"Tegucigalpa",population:"10M",region:"North America",fact:"Known for coral reefs."},
-{name:"Hungary",flag:"🇭🇺",capital:"Budapest",population:"9.6M",region:"Europe",fact:"Budapest is split by the Danube."},
-
-{name:"Iceland",flag:"🇮🇸",capital:"Reykjavík",population:"390K",region:"Europe",fact:"Runs mostly on geothermal energy."},
-{name:"India",flag:"🇮🇳",capital:"New Delhi",population:"1.43B",region:"Asia",fact:"World’s most populous country."},
-{name:"Indonesia",flag:"🇮🇩",capital:"Jakarta",population:"277M",region:"Asia",fact:"Over 17,000 islands."},
-{name:"Iran",flag:"🇮🇷",capital:"Tehran",population:"89M",region:"Asia",fact:"Home to ancient Persia."},
-{name:"Iraq",flag:"🇮🇶",capital:"Baghdad",population:"44M",region:"Asia",fact:"Contains ancient Mesopotamia."},
-{name:"Ireland",flag:"🇮🇪",capital:"Dublin",population:"5.3M",region:"Europe",fact:"Known as the Emerald Isle."},
-{name:"Israel",flag:"🇮🇱",capital:"Jerusalem",population:"9.8M",region:"Asia",fact:"Holy land for three religions."},
-{name:"Italy",flag:"🇮🇹",capital:"Rome",population:"59M",region:"Europe",fact:"Home of the Roman Empire."},
-
-{name:"Jamaica",flag:"🇯🇲",capital:"Kingston",population:"2.8M",region:"Caribbean",fact:"Birthplace of reggae."},
-{name:"Japan",flag:"🇯🇵",capital:"Tokyo",population:"124M",region:"Asia",fact:"Over 6,800 islands."},
-{name:"Jordan",flag:"🇯🇴",capital:"Amman",population:"11M",region:"Asia",fact:"Home to Petra."},
-
-{name:"Kazakhstan",flag:"🇰🇿",capital:"Astana",population:"20M",region:"Asia",fact:"Largest landlocked country."},
-{name:"Kenya",flag:"🇰🇪",capital:"Nairobi",population:"55M",region:"Africa",fact:"Known for safari tourism."},
-{name:"Kiribati",flag:"🇰🇮",capital:"Tarawa",population:"130K",region:"Oceania",fact:"First country to see the new day."},
-{name:"Kuwait",flag:"🇰🇼",capital:"Kuwait City",population:"4.3M",region:"Asia",fact:"Rich in oil."},
-{name:"Kyrgyzstan",flag:"🇰🇬",capital:"Bishkek",population:"7M",region:"Asia",fact:"Mostly mountainous."},
-
-{name:"Laos",flag:"🇱🇦",capital:"Vientiane",population:"7.5M",region:"Asia",fact:"Landlocked Southeast Asian country."},
-{name:"Latvia",flag:"🇱🇻",capital:"Riga",population:"1.8M",region:"Europe",fact:"Known for forests and lakes."},
-{name:"Lebanon",flag:"🇱🇧",capital:"Beirut",population:"5.5M",region:"Asia",fact:"Famous for cedar trees."},
-{name:"Lesotho",flag:"🇱🇸",capital:"Maseru",population:"2.3M",region:"Africa",fact:"Entirely surrounded by South Africa."},
-{name:"Liberia",flag:"🇱🇷",capital:"Monrovia",population:"5.4M",region:"Africa",fact:"Founded by freed American slaves."},
-{name:"Libya",flag:"🇱🇾",capital:"Tripoli",population:"7M",region:"Africa",fact:"Mostly desert."},
-{name:"Liechtenstein",flag:"🇱🇮",capital:"Vaduz",population:"40K",region:"Europe",fact:"One of the smallest countries."},
-{name:"Lithuania",flag:"🇱🇹",capital:"Vilnius",population:"2.8M",region:"Europe",fact:"Largest Baltic state."},
-{name:"Luxembourg",flag:"🇱🇺",capital:"Luxembourg City",population:"660K",region:"Europe",fact:"One of the richest countries."},
-
-{name:"Madagascar",flag:"🇲🇬",capital:"Antananarivo",population:"30M",region:"Africa",fact:"90% of wildlife is unique."},
-{name:"Malawi",flag:"🇲🇼",capital:"Lilongwe",population:"20M",region:"Africa",fact:"Known as the Warm Heart of Africa."},
-{name:"Malaysia",flag:"🇲🇾",capital:"Kuala Lumpur",population:"34M",region:"Asia",fact:"Split between mainland and Borneo."},
-{name:"Maldives",flag:"🇲🇻",capital:"Malé",population:"520K",region:"Asia",fact:"Lowest-lying country on Earth."},
-{name:"Mali",flag:"🇲🇱",capital:"Bamako",population:"23M",region:"Africa",fact:"Home of Timbuktu."},
-{name:"Malta",flag:"🇲🇹",capital:"Valletta",population:"540K",region:"Europe",fact:"Mediterranean island nation."},
-{name:"Marshall Islands",flag:"🇲🇭",capital:"Majuro",population:"42K",region:"Oceania",fact:"Made up of coral atolls."},
-{name:"Mauritania",flag:"🇲🇷",capital:"Nouakchott",population:"4.9M",region:"Africa",fact:"Mostly Sahara desert."},
-{name:"Mauritius",flag:"🇲🇺",capital:"Port Louis",population:"1.3M",region:"Africa",fact:"Dodo bird once lived here."},
-{name:"Mexico",flag:"🇲🇽",capital:"Mexico City",population:"129M",region:"North America",fact:"Largest Spanish-speaking country."},
-{name:"Micronesia",flag:"🇫🇲",capital:"Palikir",population:"115K",region:"Oceania",fact:"Spread across hundreds of islands."},
-{name:"Moldova",flag:"🇲🇩",capital:"Chișinău",population:"2.5M",region:"Europe",fact:"Known for wine production."},
-{name:"Monaco",flag:"🇲🇨",capital:"Monaco",population:"39K",region:"Europe",fact:"Second smallest country in the world."},
-{name:"Mongolia",flag:"🇲🇳",capital:"Ulaanbaatar",population:"3.4M",region:"Asia",fact:"Least densely populated country."},
-{name:"Montenegro",flag:"🇲🇪",capital:"Podgorica",population:"620K",region:"Europe",fact:"Adriatic coastline."},
-{name:"Morocco",flag:"🇲🇦",capital:"Rabat",population:"38M",region:"Africa",fact:"Gateway between Africa and Europe."},
-{name:"Mozambique",flag:"🇲🇿",capital:"Maputo",population:"34M",region:"Africa",fact:"Long Indian Ocean coastline."},
-{name:"Myanmar",flag:"🇲🇲",capital:"Naypyidaw",population:"55M",region:"Asia",fact:"Formerly Burma."},
-  
-{name:"Namibia",flag:"🇳🇦",capital:"Windhoek",population:"2.6M",region:"Africa",fact:"Home to the Namib Desert."},
-{name:"Nauru",flag:"🇳🇷",capital:"Yaren",population:"12K",region:"Oceania",fact:"Smallest island republic in the world."},
-{name:"Nepal",flag:"🇳🇵",capital:"Kathmandu",population:"30M",region:"Asia",fact:"Home to Mount Everest."},
-{name:"Netherlands",flag:"🇳🇱",capital:"Amsterdam",population:"18M",region:"Europe",fact:"Famous for canals and windmills."},
-{name:"New Zealand",flag:"🇳🇿",capital:"Wellington",population:"5.2M",region:"Oceania",fact:"First country to grant women voting rights."},
-{name:"Nicaragua",flag:"🇳🇮",capital:"Managua",population:"7M",region:"North America",fact:"Has the largest lake in Central America."},
-{name:"Niger",flag:"🇳🇪",capital:"Niamey",population:"27M",region:"Africa",fact:"Named after the Niger River."},
-{name:"Nigeria",flag:"🇳🇬",capital:"Abuja",population:"227M",region:"Africa",fact:"Most populous African country."},
-{name:"North Korea",flag:"🇰🇵",capital:"Pyongyang",population:"26M",region:"Asia",fact:"One of the most isolated countries."},
-{name:"North Macedonia",flag:"🇲🇰",capital:"Skopje",population:"1.8M",region:"Europe",fact:"Formerly part of Yugoslavia."},
-{name:"Norway",flag:"🇳🇴",capital:"Oslo",population:"5.5M",region:"Europe",fact:"Known for fjords."},
-
-{name:"Oman",flag:"🇴🇲",capital:"Muscat",population:"4.6M",region:"Asia",fact:"Controls part of the Strait of Hormuz."},
-
-{name:"Pakistan",flag:"🇵🇰",capital:"Islamabad",population:"241M",region:"Asia",fact:"Home to K2."},
-{name:"Palau",flag:"🇵🇼",capital:"Ngerulmud",population:"18K",region:"Oceania",fact:"Known for Jellyfish Lake."},
-{name:"Panama",flag:"🇵🇦",capital:"Panama City",population:"4.5M",region:"North America",fact:"Panama Canal links two oceans."},
-{name:"Papua New Guinea",flag:"🇵🇬",capital:"Port Moresby",population:"10M",region:"Oceania",fact:"Over 800 languages spoken."},
-{name:"Paraguay",flag:"🇵🇾",capital:"Asunción",population:"7M",region:"South America",fact:"Landlocked country."},
-{name:"Peru",flag:"🇵🇪",capital:"Lima",population:"34M",region:"South America",fact:"Home to Machu Picchu."},
-{name:"Philippines",flag:"🇵🇭",capital:"Manila",population:"117M",region:"Asia",fact:"Over 7,600 islands."},
-{name:"Poland",flag:"🇵🇱",capital:"Warsaw",population:"38M",region:"Europe",fact:"Home of Copernicus."},
-{name:"Portugal",flag:"🇵🇹",capital:"Lisbon",population:"10M",region:"Europe",fact:"Oldest nation-state in Europe."},
-
-{name:"Qatar",flag:"🇶🇦",capital:"Doha",population:"2.9M",region:"Asia",fact:"One of the richest countries per capita."},
-
-{name:"Romania",flag:"🇷🇴",capital:"Bucharest",population:"19M",region:"Europe",fact:"Home of Transylvania."},
-{name:"Russia",flag:"🇷🇺",capital:"Moscow",population:"144M",region:"Europe/Asia",fact:"Largest country in the world."},
-{name:"Rwanda",flag:"🇷🇼",capital:"Kigali",population:"14M",region:"Africa",fact:"Land of a Thousand Hills."},
-
-{name:"Saint Kitts and Nevis",flag:"🇰🇳",capital:"Basseterre",population:"47K",region:"Caribbean",fact:"Smallest country in the Americas."},
-{name:"Saint Lucia",flag:"🇱🇨",capital:"Castries",population:"180K",region:"Caribbean",fact:"Known for the Pitons."},
-{name:"Saint Vincent and the Grenadines",flag:"🇻🇨",capital:"Kingstown",population:"103K",region:"Caribbean",fact:"Made up of 32 islands."},
-{name:"Samoa",flag:"🇼🇸",capital:"Apia",population:"225K",region:"Oceania",fact:"One of the first countries to see each day."},
-{name:"San Marino",flag:"🇸🇲",capital:"San Marino",population:"34K",region:"Europe",fact:"One of the oldest republics."},
-{name:"São Tomé and Príncipe",flag:"🇸🇹",capital:"São Tomé",population:"231K",region:"Africa",fact:"Africa’s second-smallest country."},
-{name:"Saudi Arabia",flag:"🇸🇦",capital:"Riyadh",population:"36M",region:"Asia",fact:"Largest country in the Middle East."},
-{name:"Senegal",flag:"🇸🇳",capital:"Dakar",population:"18M",region:"Africa",fact:"Westernmost point of Africa."},
-{name:"Serbia",flag:"🇷🇸",capital:"Belgrade",population:"6.6M",region:"Europe",fact:"One of Europe’s oldest cities."},
-{name:"Seychelles",flag:"🇸🇨",capital:"Victoria",population:"107K",region:"Africa",fact:"Archipelago of 115 islands."},
-{name:"Sierra Leone",flag:"🇸🇱",capital:"Freetown",population:"8.8M",region:"Africa",fact:"Named after lion mountains."},
-{name:"Singapore",flag:"🇸🇬",capital:"Singapore",population:"5.9M",region:"Asia",fact:"One of the cleanest cities in the world."},
-{name:"Slovakia",flag:"🇸🇰",capital:"Bratislava",population:"5.4M",region:"Europe",fact:"Has many castles."},
-{name:"Slovenia",flag:"🇸🇮",capital:"Ljubljana",population:"2.1M",region:"Europe",fact:"Over half forest."},
-{name:"Solomon Islands",flag:"🇸🇧",capital:"Honiara",population:"740K",region:"Oceania",fact:"Major WWII battle site."},
-{name:"Somalia",flag:"🇸🇴",capital:"Mogadishu",population:"18M",region:"Africa",fact:"Longest mainland African coastline."},
-{name:"South Africa",flag:"🇿🇦",capital:"Pretoria",population:"60M",region:"Africa",fact:"Has 3 capitals."},
-{name:"South Korea",flag:"🇰🇷",capital:"Seoul",population:"52M",region:"Asia",fact:"Global leader in tech exports."},
-{name:"South Sudan",flag:"🇸🇸",capital:"Juba",population:"12M",region:"Africa",fact:"World’s newest country."},
-{name:"Spain",flag:"🇪🇸",capital:"Madrid",population:"48M",region:"Europe",fact:"Home to La Sagrada Familia."},
-{name:"Sri Lanka",flag:"🇱🇰",capital:"Sri Jayawardenepura Kotte",population:"22M",region:"Asia",fact:"Pearl of the Indian Ocean."},
-{name:"Sudan",flag:"🇸🇩",capital:"Khartoum",population:"48M",region:"Africa",fact:"Where the Blue and White Nile meet."},
-{name:"Suriname",flag:"🇸🇷",capital:"Paramaribo",population:"630K",region:"South America",fact:"Smallest South American country."},
-{name:"Sweden",flag:"🇸🇪",capital:"Stockholm",population:"10.5M",region:"Europe",fact:"Invented Spotify."},
-{name:"Switzerland",flag:"🇨🇭",capital:"Bern",population:"8.9M",region:"Europe",fact:"Has 4 official languages."},
-{name:"Syria",flag:"🇸🇾",capital:"Damascus",population:"23M",region:"Asia",fact:"One of the oldest cities in the world."},
-  
-{name:"Tajikistan",flag:"🇹🇯",capital:"Dushanbe",population:"10M",region:"Asia",fact:"93% mountainous."},
-{name:"Tanzania",flag:"🇹🇿",capital:"Dodoma",population:"67M",region:"Africa",fact:"Home to Mount Kilimanjaro."},
-{name:"Thailand",flag:"🇹🇭",capital:"Bangkok",population:"71M",region:"Asia",fact:"Never colonized by Europeans."},
-{name:"Togo",flag:"🇹🇬",capital:"Lomé",population:"9M",region:"Africa",fact:"One of Africa’s narrowest countries."},
-{name:"Tonga",flag:"🇹🇴",capital:"Nuku'alofa",population:"106K",region:"Oceania",fact:"Only Pacific kingdom."},
-{name:"Trinidad and Tobago",flag:"🇹🇹",capital:"Port of Spain",population:"1.5M",region:"Caribbean",fact:"Known for Carnival."},
-{name:"Tunisia",flag:"🇹🇳",capital:"Tunis",population:"12M",region:"Africa",fact:"Northernmost country in Africa."},
-{name:"Turkey",flag:"🇹🇷",capital:"Ankara",population:"86M",region:"Europe/Asia",fact:"Straddles two continents."},
-{name:"Turkmenistan",flag:"🇹🇲",capital:"Ashgabat",population:"6.4M",region:"Asia",fact:"Has the Door to Hell gas crater."},
-{name:"Tuvalu",flag:"🇹🇻",capital:"Funafuti",population:"11K",region:"Oceania",fact:"One of the lowest-lying countries."},
-
-{name:"Uganda",flag:"🇺🇬",capital:"Kampala",population:"50M",region:"Africa",fact:"Source of the Nile River."},
-{name:"Ukraine",flag:"🇺🇦",capital:"Kyiv",population:"37M",region:"Europe",fact:"Largest country fully in Europe."},
-{name:"United Arab Emirates",flag:"🇦🇪",capital:"Abu Dhabi",population:"10M",region:"Asia",fact:"Home to Burj Khalifa."},
-{name:"United Kingdom",flag:"🇬🇧",capital:"London",population:"68M",region:"Europe",fact:"Made up of four countries."},
-{name:"United States",flag:"🇺🇸",capital:"Washington D.C.",population:"340M",region:"North America",fact:"Has 50 states."},
-{name:"Uruguay",flag:"🇺🇾",capital:"Montevideo",population:"3.4M",region:"South America",fact:"First country to legalize cannabis."},
-{name:"Uzbekistan",flag:"🇺🇿",capital:"Tashkent",population:"36M",region:"Asia",fact:"Ancient Silk Road nation."},
-
-{name:"Vanuatu",flag:"🇻🇺",capital:"Port Vila",population:"330K",region:"Oceania",fact:"Has active volcanoes."},
-{name:"Vatican City",flag:"🇻🇦",capital:"Vatican City",population:"800",region:"Europe",fact:"Smallest country in the world."},
-{name:"Venezuela",flag:"🇻🇪",capital:"Caracas",population:"28M",region:"South America",fact:"Home to Angel Falls."},
-{name:"Vietnam",flag:"🇻🇳",capital:"Hanoi",population:"100M",region:"Asia",fact:"Second-largest coffee producer."},
-
-{name:"Yemen",flag:"🇾🇪",capital:"Sana'a",population:"34M",region:"Asia",fact:"One of the oldest inhabited places."},
-
-{name:"Zambia",flag:"🇿🇲",capital:"Lusaka",population:"21M",region:"Africa",fact:"Home to Victoria Falls."},
-{name:"Zimbabwe",flag:"🇿🇼",capital:"Harare",population:"16M",region:"Africa",fact:"Home to Great Zimbabwe ruins."}
-];
-    function loadCountryOfDay(){
-  try {
-    const today = new Date().getDate();
-    todayCountry = countryList[today % countryList.length];
-
-    document.getElementById("countryOfDay").innerHTML = `
-      <div class="flex items-center gap-4 mt-3">
-        <div class="text-4xl">${todayCountry.flag}</div>
-        <div>
- <p class="font-bold text-lg sm:text-xl break-words">${todayCountry.name}</p>
+    <!-- Continent Detail -->
+    <div id="continentDetailModal" class="hidden fixed inset-0 bg-black/80 flex items-center justify-center p-4 z-50">
+        <div class="bg-slate-900 rounded-3xl max-w-2xl w-full p-6">
+            <h2 id="continentDetailTitle" class="text-3xl font-bold mb-4"></h2>
+            <div id="continentDetailContent" class="mb-6 text-lg"></div>
+            <button id="startContinentQuizBtn" class="w-full bg-indigo-500 py-3 rounded-2xl mb-3">Start 10-Question Quiz</button>
+            <button onclick="closeModal('continentDetailModal')" class="w-full bg-red-500 py-3 rounded-2xl">Close</button>
         </div>
-      </div>
-    `;
-  } catch(error){
-    console.log(error);
-  }
-}
+    </div>
 
-function openCountryModal(){
-  if(!todayCountry) return;
+    <!-- World Map Explorer -->
+    <div id="worldExplorerModal" class="hidden fixed inset-0 bg-black/80 flex items-center justify-center p-4 z-50">
+        <div class="bg-slate-900 rounded-3xl max-w-5xl w-full p-6 max-h-[92vh] overflow-y-auto">
+            <div class="flex justify-between items-center mb-4">
+                <h2 class="text-3xl font-bold">🗺️ World Map Explorer</h2>
+                <div class="flex gap-2">
+                    <button onclick="surpriseMe()" class="bg-yellow-500 px-4 py-2 rounded-xl text-sm">🎲 Surprise Me</button>
+                    <button onclick="showRandomFact()" class="bg-purple-500 px-4 py-2 rounded-xl text-sm">💡 Fun Fact</button>
+                </div>
+            </div>
 
-  document.getElementById("countryModal").classList.remove("hidden");
+            <div class="bg-slate-800 p-4 rounded-2xl mb-4 flex justify-between items-center">
+                <div>
+                    <span class="text-sm text-slate-400">Your Progress:</span>
+                    <span class="font-bold text-xl ml-2"><span id="visitedCount">0</span> / <span id="totalPlaces">20</span> places visited</span>
+                </div>
+                <button onclick="resetVisited()" class="text-xs px-3 py-1 bg-slate-700 rounded-lg">Reset</button>
+            </div>
 
-  document.getElementById("countryTitle").textContent =
-todayCountry.name;
+            <div class="flex gap-2 mb-4">
+                <input id="explorerSearch" type="text" placeholder="Search places..." class="flex-1 p-3 rounded-xl text-black" onkeyup="filterExplorer()">
+                <select id="explorerTypeFilter" onchange="filterExplorer()" class="p-3 rounded-xl text-black bg-white">
+                    <option value="All">All</option>
+                    <option value="City">Cities</option>
+                    <option value="Landmark">Landmarks</option>
+                </select>
+            </div>
 
-  document.getElementById("countryInfo").innerHTML = `
-    <p><strong>• Capital:</strong> ${todayCountry.capital ? todayCountry.capital : "N/A"}</p>
-  <p><strong>• Population:</strong> ${todayCountry.population}</p>
-  
-    <p><strong>• Region:</strong> ${todayCountry.region}</p>
-    <p><strong>• Fact:</strong> ${todayCountry.fact}</p>
-  `;
-}
-window.onload = function(){
-  loadCountryOfDay();
+            <div class="flex flex-wrap gap-2 mb-4">
+                <button onclick="filterExplorerByContinent('All')" class="px-3 py-1 bg-slate-700 rounded-full text-sm">All</button>
+                <button onclick="filterExplorerByContinent('Asia')" class="px-3 py-1 bg-slate-700 rounded-full text-sm">Asia</button>
+                <button onclick="filterExplorerByContinent('Europe')" class="px-3 py-1 bg-slate-700 rounded-full text-sm">Europe</button>
+                <button onclick="filterExplorerByContinent('Africa')" class="px-3 py-1 bg-slate-700 rounded-full text-sm">Africa</button>
+                <button onclick="filterExplorerByContinent('Americas')" class="px-3 py-1 bg-slate-700 rounded-full text-sm">Americas</button>
+                <button onclick="filterExplorerByContinent('Oceania')" class="px-3 py-1 bg-slate-700 rounded-full text-sm">Oceania</button>
+            </div>
 
-  const today = new Date().getDay();
-
-  document.getElementById("dailyQuestion").textContent = questions[today];
-
-  document.getElementById("bestEasy").textContent =
-    "Easy: " + bestScores.easy + "/10";
-
-  document.getElementById("bestMedium").textContent =
-    "Medium: " + bestScores.medium + "/10";
-
-  document.getElementById("bestHard").textContent =
-    "Hard: " + bestScores.hard + "/10";
-};
-
-function openQuestionModal(){
-  const today = new Date().getDay();
-
-  document.getElementById("questionModal").classList.remove("hidden");
-  document.getElementById("questionTitle").textContent = questions[today];
-  document.getElementById("questionAnswer").textContent = answers[today];
-}
-
-/* Flag */
-let allCountries = [];
-let currentFlag = null;
-
- function openFlagModal(){
-  document.getElementById("flagModal").classList.remove("hidden");
-
-  allCountries = countryList;
-
-  newFlag();
-}
-function newFlag(){
-  if (!allCountries || allCountries.length === 0) {
-    document.getElementById("flagDisplay").innerHTML = "No countries loaded";
-    return;
-  }
-
-  const rand = Math.floor(Math.random() * allCountries.length);
-  currentFlag = allCountries[rand];
-if (!currentFlag.flag) {
-  newFlag();
-  return;
-}
-  console.log("Loaded:", currentFlag);
-document.getElementById("flagDisplay").textContent =
-  currentFlag.flag;
-
-  document.getElementById("flagInput").value = "";
-  document.getElementById("flagResult").textContent = "";
-
-}
-  
-function checkFlagAnswer(showAnswer = false){
-  if(!currentFlag) return;
-
-  const guess = document.getElementById("flagInput").value
-    .trim()
-    .toLowerCase();
-
-  if(showAnswer){
-    document.getElementById("flagResult").innerHTML = `
-    <div class="flex flex-col sm:flex-row items-center gap-3 mt-4 bg-slate-800 p-4 rounded-2xl">
-        <div class="text-4xl">${currentFlag.flag}</div>
-        <div>
-          <p class="text-xl font-bold">${currentFlag.name}</p>
-          <p class="text-sm text-gray-300">
-            Capital: ${currentFlag.capital} • ${currentFlag.fact}
-          </p>
+            <div id="explorerList" class="grid grid-cols-1 md:grid-cols-2 gap-3 max-h-[52vh] overflow-y-auto"></div>
+            <button onclick="closeModal('worldExplorerModal')" class="mt-6 w-full bg-red-500 py-3 rounded-2xl">Close</button>
         </div>
-      </div>
-    `;
-    return;
-  }
+    </div>
 
-  if(guess === currentFlag.name.toLowerCase()){
-    document.getElementById("flagResult").innerHTML = `
-      <div class="flex items-center gap-3 mt-4 bg-green-900 p-4 rounded-2xl">
-        <div class="text-4xl">${currentFlag.flag}</div>
-        <div>
-          <p class="text-xl font-bold">✅ ${currentFlag.name}</p>
-          <p class="text-sm text-gray-300">
-            Capital: ${currentFlag.capital} • ${currentFlag.fact}
-          </p>
+    <!-- Famous Landmarks -->
+    <div id="landmarksModal" class="hidden fixed inset-0 bg-black/80 flex items-center justify-center p-4 z-50">
+        <div class="bg-slate-900 rounded-3xl max-w-5xl w-full p-6">
+            <h2 class="text-3xl font-bold mb-4">🗼 Famous Landmarks</h2>
+            <div id="landmarksList" class="grid grid-cols-1 md:grid-cols-2 gap-3 max-h-[65vh] overflow-y-auto"></div>
+            <button onclick="closeModal('landmarksModal')" class="mt-6 w-full bg-red-500 py-3 rounded-2xl">Close</button>
         </div>
-      </div>
-    `;
-  } else {
-    document.getElementById("flagResult").innerHTML = `
-      <div class="flex items-center gap-3 mt-4 bg-red-900 p-4 rounded-2xl">
-        <div class="text-4xl">${currentFlag.flag}</div>
-        <div>
-          <p class="text-xl font-bold">❌ ${currentFlag.name}</p>
-          <p class="text-sm text-gray-300">
-            Capital: ${currentFlag.capital} • ${currentFlag.fact}
-          </p>
+    </div>
+
+    <!-- Landmark Detail Modal -->
+    <div id="landmarkDetailModal" class="hidden fixed inset-0 bg-black/80 flex items-center justify-center p-4 z-50">
+        <div class="bg-slate-900 rounded-3xl max-w-2xl w-full p-6">
+            <h2 id="landmarkDetailTitle" class="text-3xl font-bold mb-2"></h2>
+            <p id="landmarkDetailLocation" class="text-blue-400 mb-4"></p>
+            <div class="bg-slate-800 p-4 rounded-2xl mb-4">
+                <p class="font-semibold text-sm text-slate-400 mb-1">WHY IT'S FAMOUS</p>
+                <p id="landmarkDetailFact" class="text-lg"></p>
+            </div>
+            <div class="bg-blue-900/30 border border-blue-700 p-4 rounded-2xl mb-6">
+                <p class="font-semibold text-sm text-blue-300 mb-1">📚 TEACHING NOTE</p>
+                <p id="landmarkDetailTeaching" class="text-sm"></p>
+            </div>
+            <button onclick="closeModal('landmarkDetailModal')" class="w-full bg-red-500 py-3 rounded-2xl">Close</button>
         </div>
-      </div>
-    `;
-  }
-}
-/* Quiz */
-const allQuizQuestions = {
-easy: [
-{question:"Capital of Australia?",options:["Sydney","Melbourne","Canberra","Brisbane"],answer:"Canberra"},
-{question:"How many continents?",options:["5","6","7","8"],answer:"7"},
-{question:"Largest ocean?",options:["Atlantic","Indian","Pacific","Arctic"],answer:"Pacific"},
-{question:"Capital of Canada?",options:["Toronto","Ottawa","Vancouver","Montreal"],answer:"Ottawa"},
-{question:"Capital of Japan?",options:["Tokyo","Kyoto","Osaka","Nagoya"],answer:"Tokyo"},
-{question:"Eiffel Tower country?",options:["Italy","Germany","France","Spain"],answer:"France"},
-{question:"Egypt is in?",options:["Africa","Asia","Europe","South America"],answer:"Africa"},
-{question:"Biggest desert?",options:["Sahara","Gobi","Kalahari","Arabian"],answer:"Sahara"},
-{question:"Capital of Brazil?",options:["Rio","Brasilia","Salvador","Manaus"],answer:"Brasilia"},
-{question:"How many oceans?",options:["3","4","5","6"],answer:"5"}
-],
+    </div>
 
-medium: [
-{question:"Longest river?",options:["Amazon","Nile","Yangtze","Mississippi"],answer:"Nile"},
-{question:"Petra is in?",options:["Egypt","Jordan","Turkey","Greece"],answer:"Jordan"},
-{question:"Tallest mountain?",options:["Everest","K2","Denali","Fuji"],answer:"Everest"},
-{question:"Greenland belongs to?",options:["Canada","Denmark","USA","Norway"],answer:"Denmark"},
-{question:"Capital of Argentina?",options:["Cordoba","Buenos Aires","Rosario","Mendoza"],answer:"Buenos Aires"},
-{question:"Country inside South Africa?",options:["Lesotho","Botswana","Namibia","Eswatini"],answer:"Lesotho"},
-{question:"Sea between Europe and Africa?",options:["Mediterranean","Red Sea","Baltic","Black Sea"],answer:"Mediterranean"},
-{question:"Russia and Alaska separated by?",options:["Bering","Hormuz","Bosporus","Malacca"],answer:"Bering"},
-{question:"Amazon mainly in?",options:["Brazil","Peru","Colombia","Bolivia"],answer:"Brazil"},
-{question:"Capital of Iceland?",options:["Oslo","Reykjavik","Stockholm","Helsinki"],answer:"Reykjavik"}
-],
+    <!-- Countries of the World -->
+    <div id="countriesModal" class="hidden fixed inset-0 bg-black/80 flex items-center justify-center p-4 z-50">
+        <div class="bg-slate-900 rounded-3xl max-w-5xl w-full p-6">
+            <h2 class="text-3xl font-bold mb-4">🌐 Countries of the World</h2>
+            <input id="countrySearch" type="text" placeholder="Search countries..." class="w-full p-3 rounded-xl text-black mb-4" onkeyup="filterCountries()">
+            <div id="countriesList" class="grid grid-cols-1 md:grid-cols-2 gap-3 max-h-[60vh] overflow-y-auto"></div>
+            <button onclick="closeModal('countriesModal')" class="mt-6 w-full bg-red-500 py-3 rounded-2xl">Close</button>
+        </div>
+    </div>
 
-hard: [
-{question:"Largest tectonic plate?",options:["Pacific","African","Eurasian","Antarctic"],answer:"Pacific"},
-{question:"Most time zones?",options:["USA","Russia","France","China"],answer:"France"},
-{question:"Owns Gibraltar?",options:["Spain","UK","Portugal","France"],answer:"UK"},
-{question:"Smallest country?",options:["Monaco","Vatican City","San Marino","Liechtenstein"],answer:"Vatican City"},
-{question:"Deepest trench?",options:["Mariana","Java","Tonga","Puerto Rico"],answer:"Mariana"},
-{question:"Largest African lake?",options:["Victoria","Tanganyika","Malawi","Turkana"],answer:"Victoria"},
-{question:"Borders most countries?",options:["China","Russia","Brazil","Germany"],answer:"China"},
-{question:"Capital of Kazakhstan?",options:["Astana","Almaty","Tashkent","Bishkek"],answer:"Astana"},
-{question:"River through Baghdad?",options:["Tigris","Euphrates","Nile","Danube"],answer:"Tigris"},
-{question:"Asia/North America strait?",options:["Bering Strait","Gibraltar","Hormuz","Bosporus"],answer:"Bering Strait"}
-]
-};
+    <!-- Flag Guesser -->
+    <div id="flagModal" class="hidden fixed inset-0 bg-black/80 flex items-center justify-center p-4 z-50">
+        <div class="bg-slate-900 rounded-3xl max-w-2xl w-full p-6">
+            <h2 class="text-2xl mb-4">🏳️ Guess the Flag</h2>
+            <div id="flagDisplay" class="text-8xl bg-slate-800 h-48 flex items-center justify-center rounded-2xl mb-4"></div>
+            <input id="flagInput" type="text" placeholder="Type country name" class="w-full p-3 rounded-xl text-black mb-3">
+            <button onclick="checkFlagAnswer()" class="w-full bg-indigo-500 py-3 rounded-2xl mb-2">Check Answer</button>
+            <button onclick="checkFlagAnswer(true)" class="w-full bg-yellow-500 py-3 rounded-2xl mb-2">Reveal Answer + Facts</button>
+            <div id="flagResult" class="mb-3"></div>
+            <button onclick="newFlag()" class="w-full bg-green-500 py-3 rounded-2xl mb-2">Next Flag →</button>
+            <button onclick="closeModal('flagModal')" class="w-full bg-red-500 py-3 rounded-2xl">Close</button>
+        </div>
+    </div>
 
-let currentQuestion = 0;
-let quizQuestions = allQuizQuestions.easy;
-let score = 0;
-let currentDifficulty = "easy";
-let savedScores = localStorage.getItem("geoScores");
+    <!-- Geography Quiz -->
+    <div id="quizModal" class="hidden fixed inset-0 bg-black/80 flex items-center justify-center p-4 z-50">
+        <div class="bg-slate-900 rounded-3xl max-w-2xl w-full p-6">
+            <h2 class="text-2xl mb-4">🧠 Geography Quiz</h2>
+            <div id="difficultyButtons" class="flex gap-3 mb-6">
+                <button onclick="setDifficulty('easy')" class="flex-1 bg-green-500 py-2 rounded-xl">Easy</button>
+                <button onclick="setDifficulty('medium')" class="flex-1 bg-yellow-500 py-2 rounded-xl">Medium</button>
+                <button onclick="setDifficulty('hard')" class="flex-1 bg-red-500 py-2 rounded-xl">Hard</button>
+            </div>
+            <div id="quizQuestion" class="text-lg mb-4"></div>
+            <div id="quizOptions" class="space-y-2"></div>
+            <div id="quizResult" class="mt-4 font-bold"></div>
+            <button onclick="closeModal('quizModal')" class="mt-6 w-full bg-red-500 py-3 rounded-2xl">Close</button>
+        </div>
+    </div>
 
-let bestScores = savedScores ? JSON.parse(savedScores) : {
-  easy: 0,
-  medium: 0,
-  hard: 0
-};
+    <!-- Question of the Day Modal -->
+    <div id="questionModal" class="hidden fixed inset-0 bg-black/80 flex items-center justify-center p-4 z-50">
+        <div class="bg-slate-900 rounded-3xl max-w-2xl w-full p-6">
+            <h2 class="text-2xl mb-4">🌍 Question of the Day</h2>
+            <p id="questionText" class="text-lg mb-6"></p>
+            <div class="bg-slate-800 p-4 rounded-2xl mb-6">
+                <p class="font-semibold text-sm text-slate-400 mb-1">ANSWER</p>
+                <p id="questionAnswerText" class="text-lg"></p>
+            </div>
+            <button onclick="closeModal('questionModal')" class="w-full bg-red-500 py-3 rounded-2xl">Close</button>
+        </div>
+    </div>
 
-function startQuiz(){
-  document.getElementById("quizModal").classList.remove("hidden");
+    <!-- Country of the Day Modal -->
+    <div id="countryModal" class="hidden fixed inset-0 bg-black/80 flex items-center justify-center p-4 z-50">
+        <div class="bg-slate-900 rounded-3xl max-w-2xl w-full p-6">
+            <h2 id="countryModalTitle" class="text-3xl font-bold mb-4"></h2>
+            <div id="countryModalContent" class="text-lg mb-6"></div>
+            <button onclick="closeModal('countryModal')" class="w-full bg-red-500 py-3 rounded-2xl">Close</button>
+        </div>
+    </div>
 
-  // show difficulty buttons again
-  document.getElementById("difficultyButtons").style.display = "flex";
+    <script>
+        function safeGet(key, fallback) { try { return JSON.parse(localStorage.getItem(key)) || fallback; } catch(e) { return fallback; } }
+        function safeSet(key, value) { try { localStorage.setItem(key, JSON.stringify(value)); } catch(e) {} }
+        function closeModal(id) { document.getElementById(id).classList.add("hidden"); }
 
-  // reset quiz screen
-  document.getElementById("quizQuestion").textContent =
-    "Choose your difficulty";
+        // ==================== DATA ====================
+        const continentData = {
+            Asia: {countries: 49, population: "4.7 billion", landmark: "Great Wall of China"},
+            Africa: {countries: 54, population: "1.4 billion", landmark: "Pyramids of Giza"},
+            Europe: {countries: 44, population: "750 million", landmark: "Eiffel Tower"},
+            "North America": {countries: 23, population: "600 million", landmark: "Grand Canyon"},
+            "South America": {countries: 12, population: "430 million", landmark: "Machu Picchu"},
+            Australia: {countries: 14, population: "45 million", landmark: "Sydney Opera House"},
+            Antarctica: {countries: 0, population: "0 permanent", landmark: "South Pole"}
+        };
 
-  document.getElementById("quizOptions").innerHTML = "";
-  document.getElementById("quizResult").textContent = "";
+        const explorerPlaces = [
+            {name: "Paris", continent: "Europe", type: "City", fact: "Home of the Eiffel Tower and Louvre."},
+            {name: "Tokyo", continent: "Asia", type: "City", fact: "Largest metropolitan area in the world."},
+            {name: "New York City", continent: "Americas", type: "City", fact: "Home of the Statue of Liberty."},
+            {name: "Sydney", continent: "Oceania", type: "City", fact: "Famous for its Opera House."},
+            {name: "Cairo", continent: "Africa", type: "City", fact: "Home to the ancient Pyramids of Giza."},
+            {name: "Rio de Janeiro", continent: "Americas", type: "City", fact: "Christ the Redeemer overlooks the city."},
+            {name: "Dubai", continent: "Asia", type: "City", fact: "Home to Burj Khalifa, the tallest building."},
+            {name: "Rome", continent: "Europe", type: "City", fact: "The Eternal City with the Colosseum."},
+            {name: "Machu Picchu", continent: "Americas", type: "Landmark", fact: "Ancient Inca citadel in the Andes."},
+            {name: "Great Wall of China", continent: "Asia", type: "Landmark", fact: "Over 13,000 miles long."},
+            {name: "Petra", continent: "Asia", type: "Landmark", fact: "City carved into rose-red cliffs."},
+            {name: "Victoria Falls", continent: "Africa", type: "Landmark", fact: "One of the largest waterfalls in the world."},
+            {name: "Grand Canyon", continent: "Americas", type: "Landmark", fact: "Massive canyon carved by the Colorado River."},
+            {name: "Eiffel Tower", continent: "Europe", type: "Landmark", fact: "Iconic iron lattice tower in Paris."},
+            {name: "Taj Mahal", continent: "Asia", type: "Landmark", fact: "Beautiful white marble mausoleum."},
+            {name: "Mount Everest", continent: "Asia", type: "Landmark", fact: "Highest mountain on Earth."},
+            {name: "Great Barrier Reef", continent: "Oceania", type: "Landmark", fact: "Largest coral reef system in the world."},
+            {name: "Pyramids of Giza", continent: "Africa", type: "Landmark", fact: "The only remaining ancient wonder."},
+            {name: "Angkor Wat", continent: "Asia", type: "Landmark", fact: "Largest religious monument in the world."},
+            {name: "Burj Khalifa", continent: "Asia", type: "Landmark", fact: "Tallest building in the world."}
+        ];
 
-  currentQuestion = 0;
-}
+        const landmarks = [
+            {name: "Eiffel Tower", location: "Paris, France", fact: "Built in 1889 for the World's Fair.", teaching: "Great example of 19th-century engineering and how temporary structures can become permanent icons."},
+            {name: "Great Wall of China", location: "China", fact: "Over 13,000 miles long.", teaching: "Excellent for teaching about ancient defense systems, trade routes, and the power of centralized empires."},
+            {name: "Machu Picchu", location: "Peru", fact: "15th-century Inca citadel in the Andes.", teaching: "Perfect for lessons on the Inca civilization, mountain agriculture, and lost cities."},
+            {name: "Taj Mahal", location: "Agra, India", fact: "Built by Emperor Shah Jahan for his wife Mumtaz Mahal.", teaching: "Wonderful case study of Mughal architecture, love stories in history, and symmetry in design."},
+            {name: "Colosseum", location: "Rome, Italy", fact: "Ancient amphitheater that held up to 80,000 spectators.", teaching: "Ideal for teaching Roman engineering, entertainment culture, and ancient architecture."},
+            {name: "Petra", location: "Jordan", fact: "Ancient Nabataean city carved into rose-red cliffs.", teaching: "Great for lessons on ancient trade routes, rock-cut architecture, and lost civilizations."},
+            {name: "Christ the Redeemer", location: "Rio de Janeiro, Brazil", fact: "98-foot tall Art Deco statue completed in 1931.", teaching: "Useful when discussing 20th-century art movements and national identity symbols."},
+            {name: "Sydney Opera House", location: "Sydney, Australia", fact: "Famous for its unique sail-like design.", teaching: "Excellent example of modern architecture and how bold design can define a city."},
+            {name: "Statue of Liberty", location: "New York, USA", fact: "Gift from France symbolizing freedom and democracy.", teaching: "Perfect for lessons on immigration, freedom, and international friendship."},
+            {name: "Grand Canyon", location: "Arizona, USA", fact: "Massive canyon carved by the Colorado River over millions of years.", teaching: "Outstanding for teaching geology, erosion, and the power of natural forces over time."},
+            {name: "Victoria Falls", location: "Zambia/Zimbabwe", fact: "One of the largest waterfalls in the world.", teaching: "Great for geography lessons on rivers, borders, and natural wonders of Africa."},
+            {name: "Mount Everest", location: "Nepal/China", fact: "Highest mountain on Earth (8,849 meters).", teaching: "Excellent for teaching plate tectonics, extreme environments, and human achievement."},
+            {name: "Great Barrier Reef", location: "Australia", fact: "Largest coral reef system in the world.", teaching: "Perfect for lessons on marine ecosystems, climate change, and conservation."},
+            {name: "Pyramids of Giza", location: "Egypt", fact: "The only remaining wonder of the ancient world.", teaching: "Ideal for ancient Egypt, mathematics, and early engineering achievements."},
+            {name: "Angkor Wat", location: "Cambodia", fact: "Largest religious monument in the world.", teaching: "Great for teaching about the Khmer Empire, religion in architecture, and Southeast Asian history."},
+            {name: "Burj Khalifa", location: "Dubai, UAE", fact: "Tallest building in the world (828 meters).", teaching: "Useful when discussing modern engineering, urban development, and record-breaking architecture."}
+        ];
 
-function setDifficulty(level) {
-  currentDifficulty = level;
-  quizQuestions = allQuizQuestions[level];
-  currentQuestion = 0;
-score = 0;
-  // hide difficulty buttons
-  document.getElementById("difficultyButtons").style.display = "none";
+        const countryList = [
+            {name:"Afghanistan",flag:"🇦🇫",capital:"Kabul",population:"41M",region:"Asia",fact:"Known for the Hindu Kush mountains."},
+            {name:"Albania",flag:"🇦🇱",capital:"Tirana",population:"2.8M",region:"Europe",fact:"Has over 450 km of coastline."},
+            {name:"Algeria",flag:"🇩🇿",capital:"Algiers",population:"45M",region:"Africa",fact:"Largest country in Africa."},
+            {name:"Andorra",flag:"🇦🇩",capital:"Andorra la Vella",population:"80K",region:"Europe",fact:"One of the smallest countries in Europe."},
+            {name:"Angola",flag:"🇦🇴",capital:"Luanda",population:"35M",region:"Africa",fact:"Rich in oil and diamonds."},
+            {name:"Argentina",flag:"🇦🇷",capital:"Buenos Aires",population:"46M",region:"South America",fact:"Home to Patagonia."},
+            {name:"Armenia",flag:"🇦🇲",capital:"Yerevan",population:"2.8M",region:"Asia",fact:"First nation to adopt Christianity."},
+            {name:"Australia",flag:"🇦🇺",capital:"Canberra",population:"26M",region:"Oceania",fact:"Wider than the moon."},
+            {name:"Austria",flag:"🇦🇹",capital:"Vienna",population:"9M",region:"Europe",fact:"Birthplace of Mozart."},
+            {name:"Azerbaijan",flag:"🇦🇿",capital:"Baku",population:"10M",region:"Asia",fact:"Known as the Land of Fire."},
+            {name:"Bahamas",flag:"🇧🇸",capital:"Nassau",population:"400K",region:"Caribbean",fact:"Known for beautiful beaches."},
+            {name:"Bahrain",flag:"🇧🇭",capital:"Manama",population:"1.5M",region:"Asia",fact:"Small island nation in the Persian Gulf."},
+            {name:"Bangladesh",flag:"🇧🇩",capital:"Dhaka",population:"171M",region:"Asia",fact:"One of the most densely populated countries."},
+            {name:"Barbados",flag:"🇧🇧",capital:"Bridgetown",population:"280K",region:"Caribbean",fact:"Known for rum and cricket."},
+            {name:"Belarus",flag:"🇧🇾",capital:"Minsk",population:"9M",region:"Europe",fact:"Known for forests."},
+            {name:"Belgium",flag:"🇧🇪",capital:"Brussels",population:"11M",region:"Europe",fact:"Famous for waffles and chocolate."},
+            {name:"Belize",flag:"🇧🇿",capital:"Belmopan",population:"400K",region:"North America",fact:"Known for the Great Blue Hole."},
+            {name:"Benin",flag:"🇧🇯",capital:"Porto-Novo",population:"13M",region:"Africa",fact:"Birthplace of voodoo."},
+            {name:"Bhutan",flag:"🇧🇹",capital:"Thimphu",population:"780K",region:"Asia",fact:"Measures Gross National Happiness."},
+            {name:"Bolivia",flag:"🇧🇴",capital:"Sucre",population:"12M",region:"South America",fact:"Has two capitals."},
+            {name:"Bosnia and Herzegovina",flag:"🇧🇦",capital:"Sarajevo",population:"3.2M",region:"Europe",fact:"Hosted 1984 Winter Olympics."},
+            {name:"Botswana",flag:"🇧🇼",capital:"Gaborone",population:"2.6M",region:"Africa",fact:"Known for diamond mining."},
+            {name:"Brazil",flag:"🇧🇷",capital:"Brasília",population:"203M",region:"South America",fact:"Covers nearly half South America."},
+            {name:"Brunei",flag:"🇧🇳",capital:"Bandar Seri Begawan",population:"450K",region:"Asia",fact:"Very rich from oil."},
+            {name:"Bulgaria",flag:"🇧🇬",capital:"Sofia",population:"6.8M",region:"Europe",fact:"One of Europe’s oldest states."},
+            {name:"Burkina Faso",flag:"🇧🇫",capital:"Ouagadougou",population:"23M",region:"Africa",fact:"Known for its vibrant culture."},
+            {name:"Burundi",flag:"🇧🇮",capital:"Gitega",population:"13M",region:"Africa",fact:"One of the most densely populated countries in Africa."},
+            {name:"Cambodia",flag:"🇰🇭",capital:"Phnom Penh",population:"17M",region:"Asia",fact:"Home to Angkor Wat."},
+            {name:"Cameroon",flag:"🇨🇲",capital:"Yaoundé",population:"28M",region:"Africa",fact:"Known for its diverse landscapes."},
+            {name:"Canada",flag:"🇨🇦",capital:"Ottawa",population:"40M",region:"North America",fact:"Has more lakes than any country."},
+            {name:"Cape Verde",flag:"🇨🇻",capital:"Praia",population:"560K",region:"Africa",fact:"Archipelago nation off West Africa."},
+            {name:"Central African Republic",flag:"🇨🇫",capital:"Bangui",population:"5.7M",region:"Africa",fact:"Rich in natural resources."},
+            {name:"Chad",flag:"🇹🇩",capital:"N'Djamena",population:"18M",region:"Africa",fact:"One of the poorest countries."},
+            {name:"Chile",flag:"🇨🇱",capital:"Santiago",population:"19M",region:"South America",fact:"Longest north-south country."},
+            {name:"China",flag:"🇨🇳",capital:"Beijing",population:"1.4B",region:"Asia",fact:"World’s largest population."},
+            {name:"Colombia",flag:"🇨🇴",capital:"Bogotá",population:"52M",region:"South America",fact:"Major coffee exporter."},
+            {name:"Comoros",flag:"🇰🇲",capital:"Moroni",population:"870K",region:"Africa",fact:"Island nation in the Indian Ocean."},
+            {name:"Congo (Democratic Republic)",flag:"🇨🇩",capital:"Kinshasa",population:"102M",region:"Africa",fact:"Rich in minerals."},
+            {name:"Congo (Republic)",flag:"🇨🇬",capital:"Brazzaville",population:"6M",region:"Africa",fact:"Known for rainforests."},
+            {name:"Costa Rica",flag:"🇨🇷",capital:"San José",population:"5M",region:"North America",fact:"No standing army."},
+            {name:"Croatia",flag:"🇭🇷",capital:"Zagreb",population:"3.8M",region:"Europe",fact:"Known for the Dalmatian Coast."},
+            {name:"Cuba",flag:"🇨🇺",capital:"Havana",population:"11M",region:"Caribbean",fact:"Largest Caribbean island."},
+            {name:"Cyprus",flag:"🇨🇾",capital:"Nicosia",population:"1.2M",region:"Europe",fact:"Island nation in the Mediterranean."},
+            {name:"Czech Republic",flag:"🇨🇿",capital:"Prague",population:"10.7M",region:"Europe",fact:"Prague has 100 spires."},
+            {name:"Denmark",flag:"🇩🇰",capital:"Copenhagen",population:"5.9M",region:"Europe",fact:"Home of LEGO."},
+            {name:"Djibouti",flag:"🇩🇯",capital:"Djibouti City",population:"1.1M",region:"Africa",fact:"Strategic location near the Red Sea."},
+            {name:"Dominica",flag:"🇩🇲",capital:"Roseau",population:"72K",region:"Caribbean",fact:"Known as the Nature Island."},
+            {name:"Dominican Republic",flag:"🇩🇴",capital:"Santo Domingo",population:"11M",region:"Caribbean",fact:"Shares Hispaniola with Haiti."},
+            {name:"Ecuador",flag:"🇪🇨",capital:"Quito",population:"18M",region:"South America",fact:"Named after the equator."},
+            {name:"Egypt",flag:"🇪🇬",capital:"Cairo",population:"111M",region:"Africa",fact:"Home of the pyramids."},
+            {name:"El Salvador",flag:"🇸🇻",capital:"San Salvador",population:"6.3M",region:"North America",fact:"Smallest Central American country."},
+            {name:"Equatorial Guinea",flag:"🇬🇶",capital:"Malabo",population:"1.7M",region:"Africa",fact:"One of the richest countries in Africa per capita."},
+            {name:"Eritrea",flag:"🇪🇷",capital:"Asmara",population:"3.6M",region:"Africa",fact:"Known for its Italian colonial architecture."},
+            {name:"Estonia",flag:"🇪🇪",capital:"Tallinn",population:"1.3M",region:"Europe",fact:"Highly digital society."},
+            {name:"Eswatini",flag:"🇸🇿",capital:"Mbabane",population:"1.2M",region:"Africa",fact:"Formerly Swaziland."},
+            {name:"Ethiopia",flag:"🇪🇹",capital:"Addis Ababa",population:"126M",region:"Africa",fact:"Never fully colonized."},
+            {name:"Fiji",flag:"🇫🇯",capital:"Suva",population:"920K",region:"Oceania",fact:"Over 300 islands."},
+            {name:"Finland",flag:"🇫🇮",capital:"Helsinki",population:"5.6M",region:"Europe",fact:"Land of a thousand lakes."},
+            {name:"France",flag:"🇫🇷",capital:"Paris",population:"68M",region:"Europe",fact:"Has the most time zones in the world."},
+            {name:"Gabon",flag:"🇬🇦",capital:"Libreville",population:"2.3M",region:"Africa",fact:"Rich in oil and forests."},
+            {name:"Gambia",flag:"🇬🇲",capital:"Banjul",population:"2.7M",region:"Africa",fact:"Smallest country in mainland Africa."},
+            {name:"Georgia",flag:"🇬🇪",capital:"Tbilisi",population:"3.7M",region:"Asia",fact:"Birthplace of wine."},
+            {name:"Germany",flag:"🇩🇪",capital:"Berlin",population:"84M",region:"Europe",fact:"Largest economy in Europe."},
+            {name:"Ghana",flag:"🇬🇭",capital:"Accra",population:"34M",region:"Africa",fact:"First African colony to gain independence."},
+            {name:"Greece",flag:"🇬🇷",capital:"Athens",population:"10M",region:"Europe",fact:"Birthplace of democracy."},
+            {name:"Grenada",flag:"🇬🇩",capital:"St. George's",population:"125K",region:"Caribbean",fact:"Known as the Spice Isle."},
+            {name:"Guatemala",flag:"🇬🇹",capital:"Guatemala City",population:"18M",region:"North America",fact:"Heart of ancient Maya civilization."},
+            {name:"Guinea",flag:"🇬🇳",capital:"Conakry",population:"14M",region:"Africa",fact:"Rich in minerals."},
+            {name:"Guinea-Bissau",flag:"🇬🇼",capital:"Bissau",population:"2.1M",region:"Africa",fact:"One of the poorest countries."},
+            {name:"Guyana",flag:"🇬🇾",capital:"Georgetown",population:"800K",region:"South America",fact:"Only English-speaking country in South America."},
+            {name:"Haiti",flag:"🇭🇹",capital:"Port-au-Prince",population:"11M",region:"Caribbean",fact:"Shares Hispaniola with the Dominican Republic."},
+            {name:"Honduras",flag:"🇭🇳",capital:"Tegucigalpa",population:"10M",region:"North America",fact:"Known for coral reefs."},
+            {name:"Hungary",flag:"🇭🇺",capital:"Budapest",population:"9.6M",region:"Europe",fact:"Budapest is split by the Danube."},
+            {name:"Iceland",flag:"🇮🇸",capital:"Reykjavík",population:"390K",region:"Europe",fact:"Runs mostly on geothermal energy."},
+            {name:"India",flag:"🇮🇳",capital:"New Delhi",population:"1.43B",region:"Asia",fact:"World’s most populous country."},
+            {name:"Indonesia",flag:"🇮🇩",capital:"Jakarta",population:"277M",region:"Asia",fact:"Over 17,000 islands."},
+            {name:"Iran",flag:"🇮🇷",capital:"Tehran",population:"89M",region:"Asia",fact:"Home to ancient Persia."},
+            {name:"Iraq",flag:"🇮🇶",capital:"Baghdad",population:"44M",region:"Asia",fact:"Contains ancient Mesopotamia."},
+            {name:"Ireland",flag:"🇮🇪",capital:"Dublin",population:"5.3M",region:"Europe",fact:"Known as the Emerald Isle."},
+            {name:"Israel",flag:"🇮🇱",capital:"Jerusalem",population:"9.8M",region:"Asia",fact:"Holy land for three religions."},
+            {name:"Italy",flag:"🇮🇹",capital:"Rome",population:"59M",region:"Europe",fact:"Home of the Roman Empire."},
+            {name:"Jamaica",flag:"🇯🇲",capital:"Kingston",population:"2.8M",region:"Caribbean",fact:"Birthplace of reggae."},
+            {name:"Japan",flag:"🇯🇵",capital:"Tokyo",population:"124M",region:"Asia",fact:"Over 6,800 islands."},
+            {name:"Jordan",flag:"🇯🇴",capital:"Amman",population:"11M",region:"Asia",fact:"Home to Petra."},
+            {name:"Kazakhstan",flag:"🇰🇿",capital:"Astana",population:"20M",region:"Asia",fact:"Largest landlocked country."},
+            {name:"Kenya",flag:"🇰🇪",capital:"Nairobi",population:"55M",region:"Africa",fact:"Known for safari tourism."},
+            {name:"Kiribati",flag:"🇰🇮",capital:"South Tarawa",population:"130K",region:"Oceania",fact:"Crosses the International Date Line."},
+            {name:"Kuwait",flag:"🇰🇼",capital:"Kuwait City",population:"4.3M",region:"Asia",fact:"Rich in oil."},
+            {name:"Kyrgyzstan",flag:"🇰🇬",capital:"Bishkek",population:"6.7M",region:"Asia",fact:"Known for its mountainous terrain."},
+            {name:"Laos",flag:"🇱🇦",capital:"Vientiane",population:"7.5M",region:"Asia",fact:"Landlocked country in Southeast Asia."},
+            {name:"Latvia",flag:"🇱🇻",capital:"Riga",population:"1.8M",region:"Europe",fact:"Known for its Art Nouveau architecture."},
+            {name:"Lebanon",flag:"🇱🇧",capital:"Beirut",population:"5.5M",region:"Asia",fact:"Famous for cedar trees."},
+            {name:"Lesotho",flag:"🇱🇸",capital:"Maseru",population:"2.2M",region:"Africa",fact:"Completely surrounded by South Africa."},
+            {name:"Liberia",flag:"🇱🇷",capital:"Monrovia",population:"5.4M",region:"Africa",fact:"Founded by freed American slaves."},
+            {name:"Libya",flag:"🇱🇾",capital:"Tripoli",population:"7M",region:"Africa",fact:"Mostly desert."},
+            {name:"Liechtenstein",flag:"🇱🇮",capital:"Vaduz",population:"40K",region:"Europe",fact:"One of the smallest countries in the world."},
+            {name:"Lithuania",flag:"🇱🇹",capital:"Vilnius",population:"2.8M",region:"Europe",fact:"Largest Baltic state."},
+            {name:"Luxembourg",flag:"🇱🇺",capital:"Luxembourg City",population:"650K",region:"Europe",fact:"One of the richest countries per capita."},
+            {name:"Madagascar",flag:"🇲🇬",capital:"Antananarivo",population:"30M",region:"Africa",fact:"Home to lemurs."},
+            {name:"Malawi",flag:"🇲🇼",capital:"Lilongwe",population:"20M",region:"Africa",fact:"Known as the Warm Heart of Africa."},
+            {name:"Malaysia",flag:"🇲🇾",capital:"Kuala Lumpur",population:"34M",region:"Asia",fact:"Split between mainland and Borneo."},
+            {name:"Maldives",flag:"🇲🇻",capital:"Malé",population:"540K",region:"Asia",fact:"Lowest country in the world."},
+            {name:"Mali",flag:"🇲🇱",capital:"Bamako",population:"23M",region:"Africa",fact:"Home to Timbuktu."},
+            {name:"Malta",flag:"🇲🇹",capital:"Valletta",population:"520K",region:"Europe",fact:"Smallest country in the EU."},
+            {name:"Marshall Islands",flag:"🇲🇭",capital:"Majuro",population:"42K",region:"Oceania",fact:"Island nation in the Pacific."},
+            {name:"Mauritania",flag:"🇲🇷",capital:"Nouakchott",population:"4.8M",region:"Africa",fact:"Mostly desert."},
+            {name:"Mauritius",flag:"🇲🇺",capital:"Port Louis",population:"1.3M",region:"Africa",fact:"Known for its beaches."},
+            {name:"Mexico",flag:"🇲🇽",capital:"Mexico City",population:"129M",region:"North America",fact:"Largest Spanish-speaking country."},
+            {name:"Micronesia",flag:"🇫🇲",capital:"Palikir",population:"115K",region:"Oceania",fact:"Island nation in the Pacific."},
+            {name:"Moldova",flag:"🇲🇩",capital:"Chișinău",population:"2.5M",region:"Europe",fact:"Known for its wine."},
+            {name:"Monaco",flag:"🇲🇨",capital:"Monaco",population:"39K",region:"Europe",fact:"Second smallest country in the world."},
+            {name:"Mongolia",flag:"🇲🇳",capital:"Ulaanbaatar",population:"3.4M",region:"Asia",fact:"Least densely populated country."},
+            {name:"Montenegro",flag:"🇲🇪",capital:"Podgorica",population:"620K",region:"Europe",fact:"Known for its beautiful coast."},
+            {name:"Morocco",flag:"🇲🇦",capital:"Rabat",population:"38M",region:"Africa",fact:"Gateway between Africa and Europe."},
+            {name:"Mozambique",flag:"🇲🇿",capital:"Maputo",population:"33M",region:"Africa",fact:"Long coastline on the Indian Ocean."},
+            {name:"Myanmar",flag:"🇲🇲",capital:"Naypyidaw",population:"55M",region:"Asia",fact:"Formerly Burma."},
+            {name:"Namibia",flag:"🇳🇦",capital:"Windhoek",population:"2.6M",region:"Africa",fact:"Known for its deserts."},
+            {name:"Nauru",flag:"🇳🇷",capital:"Yaren",population:"12K",region:"Oceania",fact:"Smallest island nation in the world."},
+            {name:"Nepal",flag:"🇳🇵",capital:"Kathmandu",population:"30M",region:"Asia",fact:"Home to Mount Everest."},
+            {name:"Netherlands",flag:"🇳🇱",capital:"Amsterdam",population:"18M",region:"Europe",fact:"Famous for canals and windmills."},
+            {name:"New Zealand",flag:"🇳🇿",capital:"Wellington",population:"5.2M",region:"Oceania",fact:"First country to grant women voting rights."},
+            {name:"Nicaragua",flag:"🇳🇮",capital:"Managua",population:"7M",region:"North America",fact:"Has the largest lake in Central America."},
+            {name:"Niger",flag:"🇳🇪",capital:"Niamey",population:"27M",region:"Africa",fact:"One of the hottest countries in the world."},
+            {name:"Nigeria",flag:"🇳🇬",capital:"Abuja",population:"227M",region:"Africa",fact:"Most populous African country."},
+            {name:"North Korea",flag:"🇰🇵",capital:"Pyongyang",population:"26M",region:"Asia",fact:"Known for its isolation."},
+            {name:"North Macedonia",flag:"🇲🇰",capital:"Skopje",population:"2.1M",region:"Europe",fact:"Known for its lakes."},
+            {name:"Norway",flag:"🇳🇴",capital:"Oslo",population:"5.5M",region:"Europe",fact:"Known for fjords."},
+            {name:"Oman",flag:"🇴🇲",capital:"Muscat",population:"5.3M",region:"Asia",fact:"Known for its frankincense."},
+            {name:"Pakistan",flag:"🇵🇰",capital:"Islamabad",population:"241M",region:"Asia",fact:"Home to K2."},
+            {name:"Palau",flag:"🇵🇼",capital:"Ngerulmud",population:"18K",region:"Oceania",fact:"Island nation in the Pacific."},
+            {name:"Panama",flag:"🇵🇦",capital:"Panama City",population:"4.5M",region:"North America",fact:"Panama Canal links two oceans."},
+            {name:"Papua New Guinea",flag:"🇵🇬",capital:"Port Moresby",population:"10M",region:"Oceania",fact:"Over 800 languages spoken."},
+            {name:"Paraguay",flag:"🇵🇾",capital:"Asunción",population:"7M",region:"South America",fact:"Landlocked country."},
+            {name:"Peru",flag:"🇵🇪",capital:"Lima",population:"34M",region:"South America",fact:"Home to Machu Picchu."},
+            {name:"Philippines",flag:"🇵🇭",capital:"Manila",population:"117M",region:"Asia",fact:"Over 7,600 islands."},
+            {name:"Poland",flag:"🇵🇱",capital:"Warsaw",population:"38M",region:"Europe",fact:"Home of Copernicus."},
+            {name:"Portugal",flag:"🇵🇹",capital:"Lisbon",population:"10M",region:"Europe",fact:"Oldest nation-state in Europe."},
+            {name:"Qatar",flag:"🇶🇦",capital:"Doha",population:"2.9M",region:"Asia",fact:"One of the richest countries per capita."},
+            {name:"Romania",flag:"🇷🇴",capital:"Bucharest",population:"19M",region:"Europe",fact:"Home of Transylvania."},
+            {name:"Russia",flag:"🇷🇺",capital:"Moscow",population:"144M",region:"Europe/Asia",fact:"Largest country in the world."},
+            {name:"Rwanda",flag:"🇷🇼",capital:"Kigali",population:"14M",region:"Africa",fact:"Known as the Land of a Thousand Hills."},
+            {name:"Saint Kitts and Nevis",flag:"🇰🇳",capital:"Basseterre",population:"48K",region:"Caribbean",fact:"Smallest country in the Western Hemisphere."},
+            {name:"Saint Lucia",flag:"🇱🇨",capital:"Castries",population:"180K",region:"Caribbean",fact:"Known for its beaches."},
+            {name:"Saint Vincent and the Grenadines",flag:"🇻🇨",capital:"Kingstown",population:"104K",region:"Caribbean",fact:"Island nation in the Caribbean."},
+            {name:"Samoa",flag:"🇼🇸",capital:"Apia",population:"200K",region:"Oceania",fact:"Known for its traditional culture."},
+            {name:"San Marino",flag:"🇸🇲",capital:"San Marino",population:"34K",region:"Europe",fact:"One of the smallest countries in the world."},
+            {name:"Saudi Arabia",flag:"🇸🇦",capital:"Riyadh",population:"36M",region:"Asia",fact:"Largest country in the Middle East."},
+            {name:"Senegal",flag:"🇸🇳",capital:"Dakar",population:"18M",region:"Africa",fact:"Known for its music and culture."},
+            {name:"Serbia",flag:"🇷🇸",capital:"Belgrade",population:"6.6M",region:"Europe",fact:"One of Europe’s oldest cities."},
+            {name:"Seychelles",flag:"🇸🇨",capital:"Victoria",population:"100K",region:"Africa",fact:"Island nation in the Indian Ocean."},
+            {name:"Sierra Leone",flag:"🇸🇱",capital:"Freetown",population:"8.6M",region:"Africa",fact:"Known for its diamonds."},
+            {name:"Singapore",flag:"🇸🇬",capital:"Singapore",population:"5.9M",region:"Asia",fact:"One of the cleanest cities in the world."},
+            {name:"Slovakia",flag:"🇸🇰",capital:"Bratislava",population:"5.4M",region:"Europe",fact:"Has many castles."},
+            {name:"Slovenia",flag:"🇸🇮",capital:"Ljubljana",population:"2.1M",region:"Europe",fact:"Over half forest."},
+            {name:"Solomon Islands",flag:"🇸🇧",capital:"Honiara",population:"740K",region:"Oceania",fact:"Island nation in the Pacific."},
+            {name:"Somalia",flag:"🇸🇴",capital:"Mogadishu",population:"18M",region:"Africa",fact:"Long coastline on the Indian Ocean."},
+            {name:"South Africa",flag:"🇿🇦",capital:"Pretoria",population:"60M",region:"Africa",fact:"Has 3 capitals."},
+            {name:"South Korea",flag:"🇰🇷",capital:"Seoul",population:"52M",region:"Asia",fact:"Global leader in tech exports."},
+            {name:"South Sudan",flag:"🇸🇸",capital:"Juba",population:"11M",region:"Africa",fact:"Youngest country in the world."},
+            {name:"Spain",flag:"🇪🇸",capital:"Madrid",population:"48M",region:"Europe",fact:"Home to La Sagrada Familia."},
+            {name:"Sri Lanka",flag:"🇱🇰",capital:"Sri Jayawardenepura Kotte",population:"22M",region:"Asia",fact:"Pearl of the Indian Ocean."},
+            {name:"Sudan",flag:"🇸🇩",capital:"Khartoum",population:"45M",region:"Africa",fact:"Largest country in Africa before South Sudan split."},
+            {name:"Suriname",flag:"🇸🇷",capital:"Paramaribo",population:"600K",region:"South America",fact:"Smallest country in South America."},
+            {name:"Sweden",flag:"🇸🇪",capital:"Stockholm",population:"10.5M",region:"Europe",fact:"Invented Spotify."},
+            {name:"Switzerland",flag:"🇨🇭",capital:"Bern",population:"8.9M",region:"Europe",fact:"Has 4 official languages."},
+            {name:"Syria",flag:"🇸🇾",capital:"Damascus",population:"23M",region:"Asia",fact:"One of the oldest cities in the world."},
+            {name:"Taiwan",flag:"🇹🇼",capital:"Taipei",population:"23M",region:"Asia",fact:"Known for technology and democracy."},
+            {name:"Tajikistan",flag:"🇹🇯",capital:"Dushanbe",population:"10M",region:"Asia",fact:"Known for its mountains."},
+            {name:"Tanzania",flag:"🇹🇿",capital:"Dodoma",population:"67M",region:"Africa",fact:"Home to Mount Kilimanjaro."},
+            {name:"Thailand",flag:"🇹🇭",capital:"Bangkok",population:"71M",region:"Asia",fact:"Never colonized by Europeans."},
+            {name:"Timor-Leste",flag:"🇹🇱",capital:"Dili",population:"1.4M",region:"Asia",fact:"Youngest country in Asia."},
+            {name:"Togo",flag:"🇹🇬",capital:"Lomé",population:"9M",region:"Africa",fact:"Known for its beaches."},
+            {name:"Tonga",flag:"🇹🇴",capital:"Nuku'alofa",population:"107K",region:"Oceania",fact:"Only remaining monarchy in the Pacific."},
+            {name:"Trinidad and Tobago",flag:"🇹🇹",capital:"Port of Spain",population:"1.5M",region:"Caribbean",fact:"Known for Carnival."},
+            {name:"Tunisia",flag:"🇹🇳",capital:"Tunis",population:"12M",region:"Africa",fact:"Known for its Roman ruins."},
+            {name:"Turkey",flag:"🇹🇷",capital:"Ankara",population:"86M",region:"Europe/Asia",fact:"Straddles two continents."},
+            {name:"Turkmenistan",flag:"🇹🇲",capital:"Ashgabat",population:"6.5M",region:"Asia",fact:"Known for its gas reserves."},
+            {name:"Tuvalu",flag:"🇹🇻",capital:"Funafuti",population:"11K",region:"Oceania",fact:"One of the smallest countries in the world."},
+            {name:"Uganda",flag:"🇺🇬",capital:"Kampala",population:"49M",region:"Africa",fact:"Known as the Pearl of Africa."},
+            {name:"Ukraine",flag:"🇺🇦",capital:"Kyiv",population:"37M",region:"Europe",fact:"Largest country fully in Europe."},
+            {name:"United Arab Emirates",flag:"🇦🇪",capital:"Abu Dhabi",population:"10M",region:"Asia",fact:"Home to Burj Khalifa."},
+            {name:"United Kingdom",flag:"🇬🇧",capital:"London",population:"68M",region:"Europe",fact:"Made up of four countries."},
+            {name:"United States",flag:"🇺🇸",capital:"Washington D.C.",population:"340M",region:"North America",fact:"Has 50 states."},
+            {name:"Uruguay",flag:"🇺🇾",capital:"Montevideo",population:"3.4M",region:"South America",fact:"First country to legalize cannabis."},
+            {name:"Uzbekistan",flag:"🇺🇿",capital:"Tashkent",population:"36M",region:"Asia",fact:"Ancient Silk Road nation."},
+            {name:"Vanuatu",flag:"🇻🇺",capital:"Port Vila",population:"320K",region:"Oceania",fact:"Island nation in the Pacific."},
+            {name:"Vatican City",flag:"🇻🇦",capital:"Vatican City",population:"800",region:"Europe",fact:"Smallest country in the world."},
+            {name:"Venezuela",flag:"🇻🇪",capital:"Caracas",population:"28M",region:"South America",fact:"Home to Angel Falls."},
+            {name:"Vietnam",flag:"🇻🇳",capital:"Hanoi",population:"100M",region:"Asia",fact:"Second-largest coffee producer."},
+            {name:"Yemen",flag:"🇾🇪",capital:"Sana'a",population:"34M",region:"Asia",fact:"One of the oldest inhabited places."},
+            {name:"Zambia",flag:"🇿🇲",capital:"Lusaka",population:"21M",region:"Africa",fact:"Home to Victoria Falls."},
+            {name:"Zimbabwe",flag:"🇿🇼",capital:"Harare",population:"16M",region:"Africa",fact:"Home to Great Zimbabwe ruins."},
+            {name:"Kosovo",flag:"🇽🇰",capital:"Pristina",population:"1.8M",region:"Europe",fact:"Declared independence in 2008."},
+            {name:"Palestine",flag:"🇵🇸",capital:"Ramallah",population:"5.5M",region:"Asia",fact:"Located in the Middle East."},
+            {name:"Western Sahara",flag:"🇪🇭",capital:"Laayoune",population:"600K",region:"Africa",fact:"Disputed territory in North Africa."}
+        ];
 
-  loadQuestion();
-}
+        // Full 10-question continent quizzes
+        const continentQuizzes = {
+            Asia: [
+                {q: "What is the largest country in Asia?", options: ["China", "India", "Russia", "Japan"], answer: "Russia"},
+                {q: "Capital of Japan?", options: ["Tokyo", "Kyoto", "Osaka", "Seoul"], answer: "Tokyo"},
+                {q: "Where is Mount Fuji?", options: ["Japan", "China", "Nepal", "India"], answer: "Japan"},
+                {q: "Which desert is in Asia?", options: ["Gobi", "Sahara", "Mojave", "Kalahari"], answer: "Gobi"},
+                {q: "Which country has the Taj Mahal?", options: ["India", "Pakistan", "Nepal", "Iran"], answer: "India"},
+                {q: "Largest population country in Asia?", options: ["India", "China", "Indonesia", "Japan"], answer: "India"},
+                {q: "What sea borders China?", options: ["South China Sea", "Black Sea", "Red Sea", "Baltic"], answer: "South China Sea"},
+                {q: "Which animal lives in Asia?", options: ["Panda", "Tiger", "Snow Leopard", "All of the above"], answer: "All of the above"},
+                {q: "Longest river in Asia?", options: ["Yangtze", "Amazon", "Nile", "Danube"], answer: "Yangtze"},
+                {q: "Which country has Mount Everest?", options: ["Nepal", "India", "China", "Bhutan"], answer: "Nepal"}
+            ],
+            Africa: [
+                {q: "How many countries are in Africa?", options: ["54", "44", "34", "24"], answer: "54"},
+                {q: "Which river is the longest?", options: ["Nile", "Amazon", "Congo", "Niger"], answer: "Nile"},
+                {q: "Where are the pyramids?", options: ["Egypt", "Morocco", "Sudan", "Kenya"], answer: "Egypt"},
+                {q: "Largest desert in Africa?", options: ["Sahara", "Kalahari", "Namib", "Gobi"], answer: "Sahara"},
+                {q: "Which animal is native to Africa?", options: ["Lion", "Tiger", "Panda", "Polar Bear"], answer: "Lion"},
+                {q: "Most populous country in Africa?", options: ["Nigeria", "Egypt", "Ethiopia", "Kenya"], answer: "Nigeria"},
+                {q: "Mount Kilimanjaro is in which country?", options: ["Tanzania", "Kenya", "Uganda", "South Africa"], answer: "Tanzania"},
+                {q: "South Africa has how many capitals?", options: ["1", "2", "3", "4"], answer: "3"},
+                {q: "Madagascar is famous for which animal?", options: ["Lemurs", "Penguins", "Bears", "Wolves"], answer: "Lemurs"},
+                {q: "Victoria Falls is in which country?", options: ["Zambia", "Egypt", "Nigeria", "Libya"], answer: "Zambia"}
+            ],
+            Europe: [
+                {q: "Capital of France?", options: ["Paris", "Rome", "Berlin", "Madrid"], answer: "Paris"},
+                {q: "Eiffel Tower is in which country?", options: ["France", "Italy", "Germany", "Spain"], answer: "France"},
+                {q: "Largest country in Europe?", options: ["Russia", "Germany", "France", "Ukraine"], answer: "Russia"},
+                {q: "Which mountain range is in Europe?", options: ["Alps", "Andes", "Rockies", "Himalayas"], answer: "Alps"},
+                {q: "Capital of Italy?", options: ["Rome", "Milan", "Venice", "Naples"], answer: "Rome"},
+                {q: "River through Budapest?", options: ["Danube", "Nile", "Seine", "Rhine"], answer: "Danube"},
+                {q: "Big Ben is in which country?", options: ["UK", "France", "Germany", "Belgium"], answer: "UK"},
+                {q: "Which country is famous for fjords?", options: ["Norway", "Spain", "Italy", "Poland"], answer: "Norway"},
+                {q: "Smallest country in Europe?", options: ["Vatican City", "Monaco", "Luxembourg", "Malta"], answer: "Vatican City"},
+                {q: "Capital of Greece?", options: ["Athens", "Sparta", "Crete", "Thessaloniki"], answer: "Athens"}
+            ],
+            "North America": [
+                {q: "Capital of Canada?", options: ["Ottawa", "Toronto", "Vancouver", "Montreal"], answer: "Ottawa"},
+                {q: "Largest country in North America?", options: ["Canada", "USA", "Mexico", "Greenland"], answer: "Canada"},
+                {q: "Grand Canyon is in which country?", options: ["USA", "Canada", "Mexico", "Cuba"], answer: "USA"},
+                {q: "Mexico speaks which language?", options: ["Spanish", "English", "French", "Portuguese"], answer: "Spanish"},
+                {q: "Panama Canal connects which two oceans?", options: ["Atlantic and Pacific", "Indian and Atlantic", "Pacific and Arctic", "Arctic and Atlantic"], answer: "Atlantic and Pacific"},
+                {q: "Greenland belongs to which country?", options: ["Denmark", "Canada", "USA", "Iceland"], answer: "Denmark"},
+                {q: "Largest US state?", options: ["Alaska", "Texas", "California", "Florida"], answer: "Alaska"},
+                {q: "Mount Denali is in which country?", options: ["USA", "Canada", "Mexico", "Greenland"], answer: "USA"},
+                {q: "Capital of USA?", options: ["Washington D.C.", "New York", "Los Angeles", "Chicago"], answer: "Washington D.C."},
+                {q: "Poutine is from which country?", options: ["Canada", "USA", "Mexico", "Jamaica"], answer: "Canada"}
+            ],
+            "South America": [
+                {q: "Largest country in South America?", options: ["Brazil", "Argentina", "Peru", "Chile"], answer: "Brazil"},
+                {q: "Amazon rainforest mainly in which country?", options: ["Brazil", "Peru", "Colombia", "Bolivia"], answer: "Brazil"},
+                {q: "Machu Picchu is in which country?", options: ["Peru", "Chile", "Brazil", "Argentina"], answer: "Peru"},
+                {q: "Capital of Argentina?", options: ["Buenos Aires", "Cordoba", "Rosario", "Mendoza"], answer: "Buenos Aires"},
+                {q: "Longest mountain range in South America?", options: ["Andes", "Rockies", "Alps", "Himalayas"], answer: "Andes"},
+                {q: "Angel Falls is in which country?", options: ["Venezuela", "Brazil", "Chile", "Peru"], answer: "Venezuela"},
+                {q: "Smallest country in South America?", options: ["Suriname", "Uruguay", "Paraguay", "Guyana"], answer: "Suriname"},
+                {q: "Capital of Chile?", options: ["Santiago", "Lima", "Bogota", "Quito"], answer: "Santiago"},
+                {q: "Galápagos Islands belong to which country?", options: ["Ecuador", "Peru", "Chile", "Brazil"], answer: "Ecuador"},
+                {q: "Largest river in South America?", options: ["Amazon", "Paraná", "Orinoco", "Magdalena"], answer: "Amazon"}
+            ],
+            Australia: [
+                {q: "Capital of Australia?", options: ["Canberra", "Sydney", "Melbourne", "Perth"], answer: "Canberra"},
+                {q: "Largest reef in the world?", options: ["Great Barrier Reef", "Coral Sea Reef", "Ningaloo Reef", "Barrier Bay"], answer: "Great Barrier Reef"},
+                {q: "Native animal of Australia?", options: ["Kangaroo", "Lion", "Tiger", "Panda"], answer: "Kangaroo"},
+                {q: "Which bird cannot fly?", options: ["Kiwi", "Eagle", "Crow", "Parrot"], answer: "Kiwi"},
+                {q: "Capital of New Zealand?", options: ["Wellington", "Auckland", "Christchurch", "Hamilton"], answer: "Wellington"},
+                {q: "Largest desert in Australia?", options: ["Great Victoria Desert", "Sahara", "Gobi", "Kalahari"], answer: "Great Victoria Desert"},
+                {q: "Tasmania belongs to which country?", options: ["Australia", "New Zealand", "Fiji", "Papua"], answer: "Australia"},
+                {q: "Sydney Opera House is in which city?", options: ["Sydney", "Melbourne", "Perth", "Adelaide"], answer: "Sydney"},
+                {q: "How many countries in Oceania?", options: ["14", "24", "34", "44"], answer: "14"},
+                {q: "Famous rock landmark in Australia?", options: ["Uluru", "Everest", "K2", "Table Mountain"], answer: "Uluru"}
+            ],
+            Antarctica: [
+                {q: "Coldest place on Earth?", options: ["Antarctica", "Arctic", "Siberia", "Greenland"], answer: "Antarctica"},
+                {q: "Permanent population of Antarctica?", options: ["0", "100", "1000", "5000"], answer: "0"},
+                {q: "Main animal in Antarctica?", options: ["Penguin", "Tiger", "Lion", "Elephant"], answer: "Penguin"},
+                {q: "Largest ice sheet?", options: ["Antarctica", "Greenland", "Arctic", "Siberia"], answer: "Antarctica"},
+                {q: "Is the South Pole in Antarctica?", options: ["Yes", "No"], answer: "Yes"},
+                {q: "Warmest season in Antarctica?", options: ["Summer", "Winter", "Spring", "Fall"], answer: "Summer"},
+                {q: "Antarctica is surrounded by which ocean?", options: ["Southern Ocean", "Atlantic", "Pacific", "Indian"], answer: "Southern Ocean"},
+                {q: "Does any country own Antarctica?", options: ["No", "Yes"], answer: "No"},
+                {q: "Largest land predator in Antarctica?", options: ["None", "Polar Bear", "Wolf", "Seal"], answer: "None"},
+                {q: "Main job of visitors to Antarctica?", options: ["Research", "Farming", "Tourism", "Mining"], answer: "Research"}
+            ]
+        };
 
-function loadQuestion(){
-  const q = quizQuestions[currentQuestion];
-  document.getElementById("quizQuestion").textContent = q.question;
+        const questions = {
+            0: "🌿 What countries does the Amazon run through?",
+            1: "🪨 Which country owns Gibraltar?",
+            2: "🦘 What is the capital of Australia?",
+            3: "❄️ What countries does the Bering Strait separate?",
+            4: "🏛️ Where is Petra located?",
+            5: "🌍 What country is completely inside South Africa?",
+            6: "🌮 Why does Mexico speak Spanish?"
+        };
 
-  let html = "";
-  q.options.forEach(option=>{
-    html += `<button onclick="checkAnswer('${option}')" class="w-full bg-slate-800 p-3 rounded-xl hover:bg-indigo-500 mb-2">${option}</button>`;
-  });
+        const answers = {
+            0: "The Amazon River flows through Brazil, Peru, Colombia, Bolivia, Ecuador, Venezuela, and Guyana. It produces around 20% of the world’s freshwater entering the oceans.",
+            1: "Gibraltar is a British Overseas Territory at the southern tip of Spain. It controls access between the Atlantic Ocean and the Mediterranean Sea.",
+            2: "Canberra became Australia’s capital in 1913 as a compromise between Sydney and Melbourne. It was purposely built to be the nation’s political center.",
+            3: "The Bering Strait separates Russia and Alaska by only 82 km (51 miles). During the Ice Age, a land bridge here allowed humans to migrate into North America.",
+            4: "Petra in Jordan is over 2,000 years old and was carved directly into rose-colored rock. It was once a major trading hub connecting Arabia, Egypt, and the Mediterranean.",
+            5: "Lesotho is completely surrounded by South Africa, making it an enclave. It is called the ‘Kingdom in the Sky’ because its entire land sits over 1,000 meters above sea level.",
+            6: "Mexico speaks Spanish because Spain conquered the Aztec Empire in 1521. Today, Mexico has the largest Spanish-speaking population in the world — over 125 million people."
+        };
 
-  document.getElementById("quizOptions").innerHTML = html;
-  document.getElementById("quizResult").textContent = "";
-}
+        let visitedPlaces = safeGet("visitedPlaces", []);
+        let bestScores = safeGet("geoScores", {easy: 0, medium: 0, hard: 0});
+        let continentProgress = safeGet("continentProgress", {asia:0, africa:0, europe:0, northamerica:0, southamerica:0, australia:0, antarctica:0});
 
-function checkAnswer(selected){
-  const correct = quizQuestions[currentQuestion].answer;
-  const buttons = document.querySelectorAll("#quizOptions button");
+        let currentQuiz = [];
+        let currentQuestionIndex = 0;
+        let currentScore = 0;
+        let currentDifficulty = "easy";
+        let currentContinent = "";
 
-  // lock buttons
-  buttons.forEach(btn => btn.disabled = true);
+        // Shuffle helper
+        function shuffleArray(array) {
+            let arr = [...array];
+            for (let i = arr.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [arr[i], arr[j]] = [arr[j], arr[i]];
+            }
+            return arr;
+        }
 
-  if(selected === correct){
-    score++;
+        // Init
+        window.onload = function() {
+            updateProgressUI();
+            loadDailyContent();
+        };
 
-    // save high score instantly
-    if(score > bestScores[currentDifficulty]){
-      bestScores[currentDifficulty] = score;
+        function updateProgressUI() {
+            document.getElementById("bestEasy").textContent = `Easy: ${bestScores.easy}/10`;
+            document.getElementById("bestMedium").textContent = `Medium: ${bestScores.medium}/10`;
+            document.getElementById("bestHard").textContent = `Hard: ${bestScores.hard}/10`;
+            
+            document.getElementById("asiaScore").textContent = `Asia: ${continentProgress.asia}/10`;
+            document.getElementById("africaScore").textContent = `Africa: ${continentProgress.africa}/10`;
+            document.getElementById("europeScore").textContent = `Europe: ${continentProgress.europe}/10`;
+            document.getElementById("northAmericaScore").textContent = `North America: ${continentProgress.northamerica}/10`;
+            document.getElementById("southAmericaScore").textContent = `South America: ${continentProgress.southamerica}/10`;
+            document.getElementById("australiaScore").textContent = `Australia: ${continentProgress.australia}/10`;
+            document.getElementById("antarcticaScore").textContent = `Antarctica: ${continentProgress.antarctica}/10`;
 
-      localStorage.setItem(
-        "geoScores",
-        JSON.stringify(bestScores)
-      );
+            const total = Object.values(continentProgress).reduce((a, b) => a + b, 0);
+            const percent = Math.round((total / 70) * 100);
+            const bar = document.getElementById("continentProgressBar");
+            if (bar) bar.style.width = percent + "%";
 
-      document.getElementById("bestEasy").textContent =
-        "Easy: " + bestScores.easy + "/10";
+            // Update percentage text
+            const percentText = document.getElementById("continentPercent");
+            if (percentText) percentText.textContent = percent + "%";
+        }
 
-      document.getElementById("bestMedium").textContent =
-        "Medium: " + bestScores.medium + "/10";
+        function loadDailyContent() {
+            const day = new Date().getDay();
+            document.getElementById("dailyQuestion").textContent = questions[day] || "Tap to see today's question!";
+            const todayCountry = countryList[day % countryList.length];
+            document.getElementById("countryOfDay").innerHTML = `<p class="font-bold">${todayCountry.flag} ${todayCountry.name}</p>`;
+        }
 
-      document.getElementById("bestHard").textContent =
-        "Hard: " + bestScores.hard + "/10";
-    }
+        // Seven Continents
+        function openContinentsModal() {
+            const modal = document.getElementById("continentsModal");
+            const list = document.getElementById("continentsList");
+            list.innerHTML = "";
+            
+            const continents = ["Asia", "Africa", "Europe", "North America", "South America", "Australia", "Antarctica"];
+            
+            continents.forEach(name => {
+                const div = document.createElement("div");
+                div.className = "bg-slate-800 p-4 rounded-xl cursor-pointer hover:bg-slate-700";
+                div.innerHTML = `<span class="text-xl">${name}</span>`;
+                div.onclick = () => showContinentDetail(name);
+                list.appendChild(div);
+            });
+            
+            modal.classList.remove("hidden");
+        }
 
-    document.getElementById("quizResult").textContent = "✅ Correct!";
+        function showContinentDetail(name) {
+            closeModal("continentsModal");
+            
+            const data = continentData[name];
+            document.getElementById("continentDetailTitle").textContent = name;
+            document.getElementById("continentDetailContent").innerHTML = `
+                <p><strong>🗺️ Countries:</strong> ${data.countries}</p>
+                <p><strong>👥 Population:</strong> ${data.population}</p>
+                <p><strong>🏔️ Famous Landmark:</strong> ${data.landmark}</p>
+            `;
+            
+            const btn = document.getElementById("startContinentQuizBtn");
+            btn.onclick = () => startContinentQuiz(name);
+            
+            document.getElementById("continentDetailModal").classList.remove("hidden");
+        }
 
-    // force sound replay
-    const correctSound = document.getElementById("correctSound");
-    correctSound.currentTime = 0;
-    correctSound.play().catch(() => {});
+        function startContinentQuiz(name) {
+            closeModal("continentDetailModal");
+            currentContinent = name;
+            currentQuiz = continentQuizzes[name] || [];
+            currentQuestionIndex = 0;
+            currentScore = 0;
+            
+            if (currentQuiz.length === 0) {
+                alert("Quiz for this continent coming soon!");
+                return;
+            }
+            
+            document.getElementById("quizModal").classList.remove("hidden");
+            document.getElementById("difficultyButtons").style.display = "none";
+            loadContinentQuestion();
+        }
 
-  } else {
-    document.getElementById("quizResult").textContent =
-      "❌ Wrong! Correct: " + correct;
+        function loadContinentQuestion() {
+            if (currentQuestionIndex >= currentQuiz.length) {
+                finishContinentQuiz();
+                return;
+            }
+            
+            const q = currentQuiz[currentQuestionIndex];
+            document.getElementById("quizQuestion").textContent = q.q;
 
-    // force sound replay
-    const wrongSound = document.getElementById("wrongSound");
-    wrongSound.currentTime = 0;
-    wrongSound.play().catch(() => {});
-  }
+            // Shuffle answers
+            const shuffledOptions = shuffleArray(q.options);
 
-  // auto next
-  setTimeout(() => {
-    nextQuestion();
-  }, 1500);
-}
+            let html = "";
+            shuffledOptions.forEach(opt => {
+                html += `<button onclick="checkContinentAnswer('${opt}')" class="w-full bg-slate-800 p-3 rounded-xl hover:bg-indigo-500 mb-2">${opt}</button>`;
+            });
+            document.getElementById("quizOptions").innerHTML = html;
+            document.getElementById("quizResult").textContent = "";
+        }
 
-function nextQuestion(){
-  currentQuestion++;
+        function checkContinentAnswer(selected) {
+            const correct = currentQuiz[currentQuestionIndex].answer;
+            document.querySelectorAll("#quizOptions button").forEach(b => b.disabled = true);
 
-  if(currentQuestion >= quizQuestions.length){
+            if (selected === correct) {
+                currentScore++;
+                document.getElementById("quizResult").innerHTML = `<span class="text-green-400">✅ Correct!</span>`;
+            } else {
+                document.getElementById("quizResult").innerHTML = `<span class="text-red-400">❌ Wrong! Correct: ${correct}</span>`;
+            }
 
-    // update best score
-    if(score > bestScores[currentDifficulty]){
-      bestScores[currentDifficulty] = score;
-    }
+            setTimeout(() => {
+                currentQuestionIndex++;
+                if (currentQuestionIndex < currentQuiz.length) {
+                    loadContinentQuestion();
+                } else {
+                    finishContinentQuiz();
+                }
+            }, 1300);
+        }
 
-    // save scores permanently
-    localStorage.setItem("geoScores", JSON.stringify(bestScores));
+        function finishContinentQuiz() {
+            const key = currentContinent.toLowerCase().replace(" ", "");
+            if (currentScore > (continentProgress[key] || 0)) {
+                continentProgress[key] = currentScore;
+                safeSet("continentProgress", continentProgress);
+                updateProgressUI();
+            }
 
-    // update score display
-    document.getElementById("bestEasy").textContent =
-      "Easy: " + bestScores.easy + "/10";
+            document.getElementById("quizQuestion").innerHTML = `🎉 ${currentContinent} Quiz Complete!<br>Your Score: <span class="text-yellow-400 text-2xl">${currentScore}/${currentQuiz.length}</span>`;
+            document.getElementById("quizOptions").innerHTML = `
+                <button onclick="closeModal('quizModal')" class="w-full bg-red-500 py-3 rounded-2xl">Close</button>
+            `;
+            document.getElementById("quizResult").textContent = "";
+        }
 
-    document.getElementById("bestMedium").textContent =
-      "Medium: " + bestScores.medium + "/10";
+        function restartContinentQuiz() {
+            currentQuestionIndex = 0;
+            currentScore = 0;
+            loadContinentQuestion();
+        }
 
-    document.getElementById("bestHard").textContent =
-      "Hard: " + bestScores.hard + "/10";
+        // World Map Explorer
+        function openWorldExplorerModal() {
+            document.getElementById("worldExplorerModal").classList.remove("hidden");
+            renderExplorerList(explorerPlaces);
+            updateVisitedCount();
+        }
 
-    // clear old question + options
-    document.getElementById("quizQuestion").textContent =
-      "🏆 Quiz Complete!";
+        function renderExplorerList(list) {
+            const container = document.getElementById("explorerList");
+            container.innerHTML = list.map(p => {
+                const isVisited = visitedPlaces.includes(p.name);
+                return `
+                    <div class="bg-slate-800 p-4 rounded-2xl">
+                        <div class="flex justify-between items-start">
+                            <div>
+                                <p class="font-bold text-xl">${p.name}</p>
+                                <p class="text-sm text-blue-400">${p.continent} • ${p.type}</p>
+                            </div>
+                            <button onclick="toggleVisited('${p.name}', this)" 
+                                    class="px-4 py-1 text-sm rounded-full transition font-medium ${isVisited ? 'bg-green-600' : 'bg-slate-700 hover:bg-slate-600'}">
+                                ${isVisited ? '✓ Visited' : 'Mark Visited'}
+                            </button>
+                        </div>
+                        <p class="mt-2 text-sm text-slate-300">${p.fact}</p>
+                    </div>
+                `;
+            }).join("");
+        }
 
-    document.getElementById("quizOptions").innerHTML = "";
+        function toggleVisited(name, buttonElement) {
+            if (visitedPlaces.includes(name)) {
+                visitedPlaces = visitedPlaces.filter(n => n !== name);
+                buttonElement.textContent = "Mark Visited";
+                buttonElement.classList.remove("bg-green-600");
+                buttonElement.classList.add("bg-slate-700", "hover:bg-slate-600");
+            } else {
+                visitedPlaces.push(name);
+                buttonElement.textContent = "✓ Visited";
+                buttonElement.classList.add("bg-green-600");
+                buttonElement.classList.remove("bg-slate-700", "hover:bg-slate-600");
+            }
+            safeSet("visitedPlaces", visitedPlaces);
+            updateVisitedCount();
+        }
 
-    // show score
-    document.getElementById("quizResult").textContent =
-      "Your score: " + score + "/" + quizQuestions.length;
+        function updateVisitedCount() {
+            document.getElementById("visitedCount").textContent = visitedPlaces.length;
+            document.getElementById("totalPlaces").textContent = explorerPlaces.length;
+        }
 
-    // reset after 2 seconds
-    setTimeout(function(){
-      document.getElementById("difficultyButtons").style.display = "flex";
-      document.getElementById("quizQuestion").textContent =
-        "Choose your difficulty";
-      document.getElementById("quizResult").textContent = "";
+        function resetVisited() {
+            if (confirm("Reset all visited places?")) {
+                visitedPlaces = [];
+                safeSet("visitedPlaces", visitedPlaces);
+                renderExplorerList(explorerPlaces);
+                updateVisitedCount();
+            }
+        }
 
-      currentQuestion = 0;
-      score = 0;
-    }, 2000);
+        function filterExplorer() {
+            const term = document.getElementById("explorerSearch").value.toLowerCase();
+            const type = document.getElementById("explorerTypeFilter").value;
+            let filtered = explorerPlaces;
+            if (term) filtered = filtered.filter(p => p.name.toLowerCase().includes(term) || p.fact.toLowerCase().includes(term));
+            if (type !== "All") filtered = filtered.filter(p => p.type === type);
+            renderExplorerList(filtered);
+        }
 
-    return;
-  }
+        function filterExplorerByContinent(continent) {
+            const term = document.getElementById("explorerSearch").value.toLowerCase();
+            const type = document.getElementById("explorerTypeFilter").value;
+            let filtered = explorerPlaces;
+            if (continent !== "All") {
+                if (continent === "Americas") {
+                    filtered = filtered.filter(p => p.continent === "Americas" || p.continent === "North America" || p.continent === "South America");
+                } else {
+                    filtered = filtered.filter(p => p.continent === continent);
+                }
+            }
+            if (term) filtered = filtered.filter(p => p.name.toLowerCase().includes(term) || p.fact.toLowerCase().includes(term));
+            if (type !== "All") filtered = filtered.filter(p => p.type === type);
+            renderExplorerList(filtered);
+        }
 
-  
+        function surpriseMe() {
+            const random = explorerPlaces[Math.floor(Math.random() * explorerPlaces.length)];
+            document.getElementById("explorerList").innerHTML = `
+                <div class="bg-yellow-600 p-5 rounded-2xl">
+                    <p class="text-sm">🎲 Random Destination</p>
+                    <p class="font-bold text-2xl">${random.name}</p>
+                    <p class="text-sm">${random.continent} • ${random.type}</p>
+                    <p class="mt-2">${random.fact}</p>
+                </div>
+            `;
+        }
 
-  loadQuestion();
-}
-</script>
-<script>
-function closeModal(id){
-  document.getElementById(id).classList.add("hidden");
-}
+        function showRandomFact() {
+            const facts = [
+                "Mount Everest grows about 4mm taller every year.",
+                "The Great Barrier Reef is visible from outer space.",
+                "Russia has 11 time zones.",
+                "The Sahara is almost as big as the United States."
+            ];
+            const fact = facts[Math.floor(Math.random() * facts.length)];
+            
+            const popup = document.createElement("div");
+            popup.className = "fixed inset-0 bg-black/80 flex items-center justify-center z-[100]";
+            popup.innerHTML = `
+                <div class="bg-slate-900 rounded-3xl max-w-md w-full mx-4 p-6">
+                    <div class="flex items-center gap-3 mb-4">
+                        <span class="text-3xl">💡</span>
+                        <h3 class="text-xl font-bold">Fun Geography Fact</h3>
+                    </div>
+                    <p class="text-lg">${fact}</p>
+                    <button class="mt-6 w-full bg-purple-500 py-3 rounded-2xl">Got it!</button>
+                </div>
+            `;
+            document.body.appendChild(popup);
+            popup.querySelector("button").onclick = () => popup.remove();
+        }
 
-function startQuiz(){
-  document.getElementById("quizModal").classList.remove("hidden");
-}
-</script>
+        // Famous Landmarks
+        function openLandmarksModal() {
+            document.getElementById("landmarksModal").classList.remove("hidden");
+            const container = document.getElementById("landmarksList");
+            container.innerHTML = landmarks.map((l, index) => `
+                <div onclick="showLandmarkDetail(${index})" class="bg-slate-800 p-5 rounded-2xl hover:bg-slate-700 cursor-pointer">
+                    <h3 class="font-bold text-xl">${l.name}</h3>
+                    <p class="text-blue-400 text-sm">${l.location}</p>
+                    <p class="mt-2 text-sm">${l.fact}</p>
+                </div>
+            `).join("");
+        }
+
+        function showLandmarkDetail(index) {
+            const l = landmarks[index];
+            document.getElementById("landmarkDetailTitle").textContent = l.name;
+            document.getElementById("landmarkDetailLocation").textContent = l.location;
+            document.getElementById("landmarkDetailFact").textContent = l.fact;
+            document.getElementById("landmarkDetailTeaching").textContent = l.teaching;
+            closeModal("landmarksModal");
+            document.getElementById("landmarkDetailModal").classList.remove("hidden");
+        }
+
+        // Countries of the World
+        function openCountriesModal() {
+            document.getElementById("countriesModal").classList.remove("hidden");
+            renderCountriesList(countryList);
+        }
+
+        function renderCountriesList(list) {
+            const container = document.getElementById("countriesList");
+            container.innerHTML = list.map(c => `
+                <div class="bg-slate-800 p-4 rounded-2xl">
+                    <div class="flex items-center gap-3">
+                        <span class="text-4xl">${c.flag}</span>
+                        <div>
+                            <p class="font-bold">${c.name}</p>
+                            <p class="text-sm text-slate-400">Capital: ${c.capital} • ${c.region}</p>
+                        </div>
+                    </div>
+                </div>
+            `).join("");
+        }
+
+        function filterCountries() {
+            const term = document.getElementById("countrySearch").value.toLowerCase();
+            const filtered = countryList.filter(c => c.name.toLowerCase().includes(term));
+            renderCountriesList(filtered);
+        }
+
+        // Flag Guesser
+        let currentFlag = null;
+
+        function openFlagModal() {
+            document.getElementById("flagModal").classList.remove("hidden");
+            newFlag();
+        }
+
+        function newFlag() {
+            currentFlag = countryList[Math.floor(Math.random() * countryList.length)];
+            document.getElementById("flagDisplay").textContent = currentFlag.flag;
+            document.getElementById("flagInput").value = "";
+            document.getElementById("flagResult").innerHTML = "";
+        }
+
+        function checkFlagAnswer(showAnswer = false) {
+            const guess = document.getElementById("flagInput").value.trim().toLowerCase();
+            const resultDiv = document.getElementById("flagResult");
+
+            if (showAnswer || guess === currentFlag.name.toLowerCase()) {
+                // CORRECT
+                resultDiv.innerHTML = `
+                    <div class="bg-green-600/20 border border-green-500 p-5 rounded-2xl">
+                        <div class="flex items-center gap-3 mb-3">
+                            <span class="text-4xl">✅</span>
+                            <p class="text-2xl font-bold text-green-400">Correct!</p>
+                        </div>
+                        <div class="bg-slate-800 p-4 rounded-xl">
+                            <p class="text-3xl mb-2">${currentFlag.flag} <span class="font-bold">${currentFlag.name}</span></p>
+                            <p class="text-sm text-slate-300"><strong>Capital:</strong> ${currentFlag.capital}</p>
+                            <p class="text-sm text-slate-300 mt-1">${currentFlag.fact}</p>
+                        </div>
+                    </div>
+                `;
+            } else {
+                // WRONG - Show clear feedback + correct answer
+                resultDiv.innerHTML = `
+                    <div class="bg-red-600/20 border border-red-500 p-5 rounded-2xl">
+                        <div class="flex items-center gap-3 mb-3">
+                            <span class="text-4xl">❌</span>
+                            <p class="text-2xl font-bold text-red-400">Not quite...</p>
+                        </div>
+                        
+                        <div class="bg-slate-800 p-4 rounded-xl mb-4">
+                            <p class="text-sm text-slate-400 mb-1">You guessed:</p>
+                            <p class="text-xl">${guess || "(nothing)"}</p>
+                        </div>
+                        
+                        <div class="bg-green-600/20 border border-green-500 p-4 rounded-xl">
+                            <p class="text-sm text-green-300 mb-1">Correct answer:</p>
+                            <p class="text-3xl mb-2">${currentFlag.flag} <span class="font-bold">${currentFlag.name}</span></p>
+                            <p class="text-sm text-slate-300"><strong>Capital:</strong> ${currentFlag.capital}</p>
+                            <p class="text-sm text-slate-300 mt-1">${currentFlag.fact}</p>
+                        </div>
+                    </div>
+                `;
+            }
+        }
+
+        // Geography Quiz
+        function startQuiz() {
+            document.getElementById("quizModal").classList.remove("hidden");
+            document.getElementById("difficultyButtons").style.display = "flex";
+            document.getElementById("quizQuestion").textContent = "Choose your difficulty";
+            document.getElementById("quizOptions").innerHTML = "";
+            document.getElementById("quizResult").textContent = "";
+            currentQuestionIndex = 0;
+            currentScore = 0;
+        }
+
+        function setDifficulty(level) {
+            currentDifficulty = level;
+            currentQuiz = quizData[level];
+            currentQuestionIndex = 0;
+            currentScore = 0;
+            document.getElementById("difficultyButtons").style.display = "none";
+            loadQuizQuestion();
+        }
+
+        function loadQuizQuestion() {
+            if (currentQuestionIndex >= currentQuiz.length) {
+                finishQuiz();
+                return;
+            }
+            const q = currentQuiz[currentQuestionIndex];
+            document.getElementById("quizQuestion").textContent = q.question;
+
+            // Shuffle answers
+            const shuffledOptions = shuffleArray(q.options);
+
+            let html = "";
+            shuffledOptions.forEach(opt => {
+                html += `<button onclick="checkQuizAnswer('${opt}')" class="w-full bg-slate-800 p-3 rounded-xl hover:bg-indigo-500 mb-2">${opt}</button>`;
+            });
+            document.getElementById("quizOptions").innerHTML = html;
+            document.getElementById("quizResult").textContent = "";
+        }
+
+        function checkQuizAnswer(selected) {
+            const correct = currentQuiz[currentQuestionIndex].answer;
+            document.querySelectorAll("#quizOptions button").forEach(b => b.disabled = true);
+
+            if (selected === correct) {
+                currentScore++;
+                document.getElementById("quizResult").innerHTML = `<span class="text-green-400">✅ Correct!</span>`;
+            } else {
+                document.getElementById("quizResult").innerHTML = `<span class="text-red-400">❌ Wrong! Correct: ${correct}</span>`;
+            }
+
+            setTimeout(() => {
+                currentQuestionIndex++;
+                if (currentQuestionIndex < currentQuiz.length) {
+                    loadQuizQuestion();
+                } else {
+                    finishQuiz();
+                }
+            }, 1300);
+        }
+
+        function finishQuiz() {
+            if (currentScore > bestScores[currentDifficulty]) {
+                bestScores[currentDifficulty] = currentScore;
+                safeSet("geoScores", bestScores);
+                updateProgressUI();
+            }
+
+            document.getElementById("quizQuestion").innerHTML = `🎉 Quiz Complete!<br>Your Score: <span class="text-yellow-400 text-2xl">${currentScore}/${currentQuiz.length}</span>`;
+            document.getElementById("quizOptions").innerHTML = `
+                <button onclick="restartMainQuiz()" class="w-full bg-green-500 py-3 rounded-2xl mb-3">Play Again</button>
+                <button onclick="closeModal('quizModal')" class="w-full bg-red-500 py-3 rounded-2xl">Close</button>
+            `;
+            document.getElementById("quizResult").textContent = "";
+        }
+
+        function restartMainQuiz() {
+            currentQuestionIndex = 0;
+            currentScore = 0;
+            loadQuizQuestion();
+        }
+
+        // Question of the Day
+        function openQuestionModal() {
+            const day = new Date().getDay();
+            document.getElementById("questionText").textContent = questions[day];
+            document.getElementById("questionAnswerText").textContent = answers[day];
+            document.getElementById("questionModal").classList.remove("hidden");
+        }
+
+        // Country of the Day
+        function openCountryModal() {
+            const day = new Date().getDay();
+            const country = countryList[day % countryList.length];
+            
+            document.getElementById("countryModalTitle").innerHTML = `${country.flag} ${country.name}`;
+            document.getElementById("countryModalContent").innerHTML = `
+                <p><strong>Capital:</strong> ${country.capital}</p>
+                <p><strong>Population:</strong> ${country.population}</p>
+                <p><strong>Region:</strong> ${country.region}</p>
+                <p class="mt-3"><strong>Interesting Fact:</strong> ${country.fact}</p>
+            `;
+            document.getElementById("countryModal").classList.remove("hidden");
+        }
+    </script>
 </body>
 </html>
