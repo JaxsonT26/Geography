@@ -633,7 +633,7 @@
                 { question: "What is the capital of Australia?", options: ["Sydney", "Melbourne", "Canberra", "Perth"], answer: "Canberra" },
                 { question: "Which is the largest desert in the world?", options: ["Sahara", "Gobi", "Kalahari", "Antarctic"], answer: "Antarctic" },
                 { question: "Mount Kilimanjaro is in which country?", options: ["Kenya", "Tanzania", "Uganda", "Ethiopia"], answer: "Tanzania" },
-                { question: "Which country has the most islands?", options: ["Indonesia", "Philippines", "Japan", "Sweden"], answer: "Indonesia" },
+                { question: "Which country has the most islands?", options: ["Indonesia", "Philippines", "Japan", "Sweden"], answer: "Sweden" },
                 { question: "What is the capital of Canada?", options: ["Toronto", "Ottawa", "Vancouver", "Montreal"], answer: "Ottawa" },
                 { question: "The Great Barrier Reef is located in which country?", options: ["New Zealand", "Australia", "Indonesia", "Papua New Guinea"], answer: "Australia" }
             ],
@@ -828,9 +828,7 @@
             }
 
             document.getElementById("quizQuestion").innerHTML = `🎉 ${currentContinent} Quiz Complete!<br>Your Score: <span class="text-yellow-400 text-2xl">${currentScore}/${currentQuiz.length}</span>`;
-            document.getElementById("quizOptions").innerHTML = `
-                <button onclick="closeModal('quizModal')" class="w-full bg-red-500 py-3 rounded-2xl">Close</button>
-            `;
+            document.getElementById("quizOptions").innerHTML = ``;
             document.getElementById("quizResult").textContent = "";
         }
 
@@ -1023,8 +1021,25 @@
         function checkFlagAnswer(showAnswer = false) {
             const guess = document.getElementById("flagInput").value.trim().toLowerCase();
             const resultDiv = document.getElementById("flagResult");
+            const isCorrectGuess = guess === currentFlag.name.toLowerCase();
 
-            if (showAnswer || guess === currentFlag.name.toLowerCase()) {
+            if (showAnswer) {
+                // Reveal button clicked: neutral gray box with answer + facts (no "Correct!" claim)
+                resultDiv.innerHTML = `
+                    <div class="bg-slate-700 border border-slate-500 p-5 rounded-2xl">
+                        <div class="flex items-center gap-3 mb-3">
+                            <span class="text-4xl">ℹ️</span>
+                            <p class="text-2xl font-bold text-slate-300">Answer Revealed</p>
+                        </div>
+                        <div class="bg-slate-800 p-4 rounded-xl">
+                            <p class="text-3xl mb-2">${currentFlag.flag} <span class="font-bold">${currentFlag.name}</span></p>
+                            <p class="text-sm text-slate-300"><strong>Capital:</strong> ${currentFlag.capital}</p>
+                            <p class="text-sm text-slate-300 mt-1">${currentFlag.fact}</p>
+                        </div>
+                    </div>
+                `;
+            } else if (isCorrectGuess) {
+                // Check Answer button + correct guess: green success
                 resultDiv.innerHTML = `
                     <div class="bg-green-600/20 border border-green-500 p-5 rounded-2xl">
                         <div class="flex items-center gap-3 mb-3">
@@ -1039,6 +1054,7 @@
                     </div>
                 `;
             } else {
+                // Check Answer button + wrong guess: red with your guess + correct info
                 resultDiv.innerHTML = `
                     <div class="bg-red-600/20 border border-red-500 p-5 rounded-2xl">
                         <div class="flex items-center gap-3 mb-3">
@@ -1130,8 +1146,7 @@
 
             document.getElementById("quizQuestion").innerHTML = `🎉 Quiz Complete!<br>Your Score: <span class="text-yellow-400 text-2xl">${currentScore}/${currentQuiz.length}</span>`;
             document.getElementById("quizOptions").innerHTML = `
-                <button onclick="restartMainQuiz()" class="w-full bg-green-500 py-3 rounded-2xl mb-3">Play Again</button>
-                <button onclick="closeModal('quizModal')" class="w-full bg-red-500 py-3 rounded-2xl">Close</button>
+                <button onclick="restartMainQuiz()" class="w-full bg-green-500 py-3 rounded-2xl">Play Again</button>
             `;
             document.getElementById("quizResult").textContent = "";
         }
