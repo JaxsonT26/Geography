@@ -611,6 +611,46 @@
             ]
         };
 
+        // ==================== FIXED: Added missing quizData ====================
+        const quizData = {
+            easy: [
+                { question: "What is the capital of Australia?", options: ["Sydney", "Melbourne", "Canberra", "Brisbane"], answer: "Canberra" },
+                { question: "How many continents are there?", options: ["5", "6", "7", "8"], answer: "7" },
+                { question: "Which is the largest ocean?", options: ["Atlantic", "Indian", "Pacific", "Arctic"], answer: "Pacific" },
+                { question: "Capital of Canada?", options: ["Toronto", "Ottawa", "Vancouver", "Montreal"], answer: "Ottawa" },
+                { question: "The Eiffel Tower is in which country?", options: ["Italy", "Germany", "France", "Spain"], answer: "France" },
+                { question: "Which country has the most time zones?", options: ["USA", "Russia", "France", "China"], answer: "France" },
+                { question: "What is the capital of Japan?", options: ["Kyoto", "Osaka", "Tokyo", "Seoul"], answer: "Tokyo" },
+                { question: "Which river is the longest?", options: ["Amazon", "Nile", "Yangtze", "Mississippi"], answer: "Nile" },
+                { question: "Greenland belongs to which country?", options: ["Canada", "Denmark", "USA", "Norway"], answer: "Denmark" },
+                { question: "What is the capital of Brazil?", options: ["Rio de Janeiro", "São Paulo", "Brasília", "Salvador"], answer: "Brasília" }
+            ],
+            medium: [
+                { question: "What is the longest river in the world?", options: ["Amazon", "Nile", "Yangtze", "Mississippi"], answer: "Nile" },
+                { question: "Petra is located in which country?", options: ["Egypt", "Jordan", "Turkey", "Greece"], answer: "Jordan" },
+                { question: "What is the tallest mountain in the world?", options: ["Everest", "K2", "Denali", "Fuji"], answer: "Everest" },
+                { question: "Which country is completely inside South Africa?", options: ["Lesotho", "Botswana", "Namibia", "Eswatini"], answer: "Lesotho" },
+                { question: "What is the capital of Australia?", options: ["Sydney", "Melbourne", "Canberra", "Perth"], answer: "Canberra" },
+                { question: "Which is the largest desert in the world?", options: ["Sahara", "Gobi", "Kalahari", "Antarctic"], answer: "Antarctic" },
+                { question: "Mount Kilimanjaro is in which country?", options: ["Kenya", "Tanzania", "Uganda", "Ethiopia"], answer: "Tanzania" },
+                { question: "Which country has the most islands?", options: ["Indonesia", "Philippines", "Japan", "Sweden"], answer: "Indonesia" },
+                { question: "What is the capital of Canada?", options: ["Toronto", "Ottawa", "Vancouver", "Montreal"], answer: "Ottawa" },
+                { question: "The Great Barrier Reef is located in which country?", options: ["New Zealand", "Australia", "Indonesia", "Papua New Guinea"], answer: "Australia" }
+            ],
+            hard: [
+                { question: "Which is the largest tectonic plate?", options: ["Pacific", "African", "Eurasian", "Antarctic"], answer: "Pacific" },
+                { question: "Which country has the most time zones?", options: ["USA", "Russia", "France", "China"], answer: "France" },
+                { question: "What is the smallest country in the world?", options: ["Monaco", "Vatican City", "San Marino", "Liechtenstein"], answer: "Vatican City" },
+                { question: "What is the deepest trench in the world?", options: ["Mariana", "Java", "Tonga", "Puerto Rico"], answer: "Mariana" },
+                { question: "Which country borders the most other countries?", options: ["China", "Russia", "Brazil", "Germany"], answer: "China" },
+                { question: "What is the capital of Lesotho?", options: ["Maseru", "Pretoria", "Gaborone", "Windhoek"], answer: "Maseru" },
+                { question: "Which country has the longest coastline?", options: ["Canada", "Russia", "Indonesia", "Australia"], answer: "Canada" },
+                { question: "What is the highest capital city in the world?", options: ["La Paz", "Quito", "Thimphu", "Addis Ababa"], answer: "La Paz" },
+                { question: "Which river flows through the most countries?", options: ["Danube", "Nile", "Amazon", "Rhine"], answer: "Danube" },
+                { question: "What is the largest island in the world?", options: ["Greenland", "New Guinea", "Borneo", "Madagascar"], answer: "Greenland" }
+            ]
+        };
+
         const questions = {
             0: "🌿 What countries does the Amazon run through?",
             1: "🪨 Which country owns Gibraltar?",
@@ -675,7 +715,6 @@
             const bar = document.getElementById("continentProgressBar");
             if (bar) bar.style.width = percent + "%";
 
-            // Update percentage text
             const percentText = document.getElementById("continentPercent");
             if (percentText) percentText.textContent = percent + "%";
         }
@@ -749,7 +788,6 @@
             const q = currentQuiz[currentQuestionIndex];
             document.getElementById("quizQuestion").textContent = q.q;
 
-            // Shuffle answers
             const shuffledOptions = shuffleArray(q.options);
 
             let html = "";
@@ -794,12 +832,6 @@
                 <button onclick="closeModal('quizModal')" class="w-full bg-red-500 py-3 rounded-2xl">Close</button>
             `;
             document.getElementById("quizResult").textContent = "";
-        }
-
-        function restartContinentQuiz() {
-            currentQuestionIndex = 0;
-            currentScore = 0;
-            loadContinentQuestion();
         }
 
         // World Map Explorer
@@ -993,7 +1025,6 @@
             const resultDiv = document.getElementById("flagResult");
 
             if (showAnswer || guess === currentFlag.name.toLowerCase()) {
-                // CORRECT
                 resultDiv.innerHTML = `
                     <div class="bg-green-600/20 border border-green-500 p-5 rounded-2xl">
                         <div class="flex items-center gap-3 mb-3">
@@ -1008,7 +1039,6 @@
                     </div>
                 `;
             } else {
-                // WRONG - Show clear feedback + correct answer
                 resultDiv.innerHTML = `
                     <div class="bg-red-600/20 border border-red-500 p-5 rounded-2xl">
                         <div class="flex items-center gap-3 mb-3">
@@ -1032,7 +1062,7 @@
             }
         }
 
-        // Geography Quiz
+        // Geography Quiz (FIXED)
         function startQuiz() {
             document.getElementById("quizModal").classList.remove("hidden");
             document.getElementById("difficultyButtons").style.display = "flex";
@@ -1060,7 +1090,6 @@
             const q = currentQuiz[currentQuestionIndex];
             document.getElementById("quizQuestion").textContent = q.question;
 
-            // Shuffle answers
             const shuffledOptions = shuffleArray(q.options);
 
             let html = "";
