@@ -1,0 +1,1 @@
+The main site entry file is index.html and should use the rebuilt interactive version.
