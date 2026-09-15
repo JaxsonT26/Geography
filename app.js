@@ -10,6 +10,8 @@
   const questions = $$('.quiz-card[data-answer]');
   if (questions.length) {
     let score=0, answered=0;
+    const scoreEl=$('#score'); if(scoreEl) scoreEl.textContent=`0/${questions.length}`;
+    const p=$('#progress'); if(p)p.style.width='0%';
     questions.forEach(card => {
       const answer = card.dataset.answer;
       $$('.choice', card).forEach(btn => btn.addEventListener('click', () => {
@@ -19,9 +21,9 @@
         if(ok){score++;btn.classList.add('correct');sound(true);toast('Correct! Great job 🌟');}
         else {btn.classList.add('wrong'); $(`.choice[data-value="${CSS.escape(answer)}"]`,card)?.classList.add('correct'); sound(false); toast('Not quite — check the green answer.');}
         const note=$('.answer-note',card); if(note){note.classList.remove('hide');note.textContent=ok?'✅ Correct!':'💡 The correct answer is highlighted.';}
-        const scoreEl=$('#score'); if(scoreEl) scoreEl.textContent=`${score}/${questions.length}`;
-        const p=$('#progress'); if(p)p.style.width=`${Math.round(answered/questions.length*100)}%`;
-        if(answered===questions.length){const result=$('#quiz-result');if(result)result.textContent=`Final score: ${score}/${questions.length} — ${score===questions.length?'Perfect! 🏆':score>=8?'Excellent work! 🌍':score>=5?'Nice effort! Keep exploring.':'Keep practicing — every explorer starts somewhere!'}`;}
+        if(scoreEl) scoreEl.textContent=`${score}/${questions.length}`;
+        if(p)p.style.width=`${Math.round(answered/questions.length*100)}%`;
+        if(answered===questions.length){const result=$('#quiz-result');if(result)result.textContent=`Final score: ${score}/${questions.length} — ${score===questions.length?'Perfect! 🏆':score>=Math.ceil(questions.length*.8)?'Excellent work! 🌍':score>=Math.ceil(questions.length*.5)?'Nice effort! Keep exploring.':'Keep practicing — every explorer starts somewhere!'}`;}
       }));
     });
   }
