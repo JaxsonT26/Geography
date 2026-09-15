@@ -1,0 +1,38 @@
+name: Repair interactive JavaScript
+
+on:
+  push:
+    branches: [main]
+
+permissions:
+  contents: write
+
+jobs:
+  repair:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Remove accidental template-literal escaping
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          p = Path('index.html')
+          s = p.read_text(encoding='utf-8')
+          s2 = s.replace('\\`', '`')
+          if s2 != s:
+              p.write_text(s2, encoding='utf-8')
+              print('Repaired escaped backticks')
+          else:
+              print('No escaped backticks found')
+          PY
+      - name: Commit repair
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add index.html
+          if git diff --cached --quiet; then
+            echo 'No changes needed'
+          else
+            git commit -m 'Fix interactive JavaScript syntax'
+            git push
+          fi
