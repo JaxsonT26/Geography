@@ -1,21 +1,89 @@
 <!doctype html>
 <html lang="en">
-<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="description" content="GeoQuest Kids is a fun geography learning site for young explorers and teachers."><title>GeoQuest Kids | Explore the World</title><link rel="stylesheet" href="styles.css"></head>
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="GeoQuest Kids is a fun geography learning site for young explorers and teachers.">
+<title>GeoQuest Kids | Explore the World</title>
+<link rel="stylesheet" href="styles.css">
+</head>
 <body>
-<header class="site-nav"><div class="nav-inner"><a class="brand" href="index.html"><span class="brand-mark">🌍</span><span>GeoQuest Kids</span></a><button class="menu-toggle" aria-label="Open menu">☰</button><nav class="nav-links"><a class="active" href="index.html">Home</a><a href="quiz.html">Quizzes</a><a href="countries.html">Countries</a><a href="continents.html">Continents</a><a href="flags.html">Flag Challenge</a><a href="facts.html">World Wonder</a><a href="teacher.html">Teacher Corner</a></nav></div></header>
-<section class="hero"><div class="hero-inner"><div class="kicker">EXPLORE • DISCOVER • LEARN</div><h1>Big world. Big questions. Big fun.</h1><p>GeoQuest Kids turns geography into a friendly adventure. Learn places, test your knowledge, discover amazing facts, and challenge yourself.</p><div class="actions"><a class="btn btn-light" href="quiz.html">🧠 Start a quiz</a><a class="btn btn-light" href="countries.html">🌐 Explore 195 countries</a><a class="btn btn-dark" href="teacher.html">👩‍🏫 Teacher Corner</a></div></div></section>
+<header class="site-nav">
+  <div class="nav-inner">
+    <a class="brand" href="index.html"><span class="brand-mark">🌍</span><span>GeoQuest Kids</span></a>
+    <button class="menu-toggle" type="button" aria-label="Open menu">☰</button>
+    <nav class="nav-links" aria-label="Main navigation">
+      <a class="active" href="index.html">Home</a><a href="quiz.html">Quizzes</a><a href="countries.html">Countries</a><a href="continents.html">Continents</a><a href="flags.html">Flag Challenge</a><a href="facts.html">World Wonder</a><a href="teacher.html">Teacher Corner</a>
+    </nav>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="hero-inner">
+    <div>
+      <div class="kicker">🌎 EXPLORE • DISCOVER • LEARN</div>
+      <h1>Turn geography into an adventure.</h1>
+      <p>Learn amazing places, play quick challenges, and build your world knowledge one discovery at a time.</p>
+      <div class="actions">
+        <a class="btn btn-light" href="quiz.html">🧠 Start a quiz</a>
+        <a class="btn btn-light" href="countries.html">🌐 Explore countries</a>
+        <a class="btn btn-dark" href="teacher.html">👩‍🏫 Teacher Corner</a>
+      </div>
+    </div>
+    <div class="hero-panel" aria-label="Today's explorer dashboard">
+      <div class="hero-panel-top"><span class="hero-panel-title">🌟 Today's explorer mission</span><span class="mini-pill">Ready to play</span></div>
+      <div class="world-card">
+        <div class="world-sky"><div class="route"></div></div>
+        <h3>How far can you explore?</h3>
+        <p>Pick one mission now, then come back and try another.</p>
+        <div class="mission-grid">
+          <div class="mission"><strong>🧠 Quiz Lab</strong><span>30 questions</span></div>
+          <div class="mission"><strong>🚩 Flag Challenge</strong><span>20+ flags</span></div>
+          <div class="mission"><strong>🌐 Country Explorer</strong><span>195 countries</span></div>
+          <div class="mission"><strong>💡 World Wonder</strong><span>50 facts</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
 <main class="container">
-<section class="section"><div class="section-head"><div><div class="eyebrow">YOUR ADVENTURE</div><h2>Pick your next mission</h2><p class="section-lead">Everything is one click away, with simple activities made for curious students.</p></div></div><div class="grid">
-<a class="card card-link" href="quiz.html"><div class="card-icon">🧠</div><h3>Quiz Lab</h3><p>Three levels with 10 questions each. Hear a sound when you get an answer right or wrong.</p></a>
-<a class="card card-link" href="countries.html"><div class="card-icon">🌎</div><h3>Country Explorer</h3><p>Search and filter a complete directory of 195 countries by name or region.</p></a>
-<a class="card card-link" href="flags.html"><div class="card-icon">🚩</div><h3>Flag Challenge</h3><p>Identify flags, build a streak, and see your score as you play.</p></a>
-<a class="card card-link" href="continents.html"><div class="card-icon">🗺️</div><h3>Continents</h3><p>Learn about all seven continents and the places that make each one special.</p></a>
-<a class="card card-link" href="facts.html"><div class="card-icon">💡</div><h3>World Wonder</h3><p>Collect surprising geography facts and grab a random wonder whenever you need one.</p></a>
-<a class="card card-link" href="teacher.html"><div class="card-icon">👩‍🏫</div><h3>Teacher Corner</h3><p>Quick classroom prompts, activity ideas, and ready-to-use geography challenges.</p></a>
-</div></section>
-<section class="section"><div class="stat-row"><div class="stat"><strong>195</strong><span>countries</span></div><div class="stat"><strong>7</strong><span>continents</span></div><div class="stat"><strong>30</strong><span>quiz questions</span></div><div class="stat"><strong>20+</strong><span>flag challenges</span></div></div></section>
-<section class="section"><div class="callout"><div class="eyebrow">START HERE</div><h2>Can you beat the explorer challenge?</h2><p class="section-lead">Take the Easy quiz first. Once you reach 8/10, try Medium. Feeling brave? Hard mode is waiting.</p><div class="actions"><a class="btn btn-dark" href="quiz.html#easy">Easy →</a><a class="btn btn-outline" href="quiz.html#medium">Medium →</a><a class="btn btn-outline" href="quiz.html#hard">Hard →</a></div></div></section>
+  <section class="section">
+    <div class="section-head">
+      <div><div class="eyebrow">CHOOSE YOUR ADVENTURE</div><h2>What do you want to explore?</h2><p class="section-lead">Six simple ways to learn. Tap a card and jump straight into the activity.</p></div>
+    </div>
+    <div class="grid">
+      <a class="card card-link" href="quiz.html"><div class="card-icon">🧠</div><h3>Quiz Lab</h3><p>30 multiple-choice questions across Easy, Medium, and Hard. Get instant feedback as you play.</p></a>
+      <a class="card card-link" href="countries.html"><div class="card-icon">🌎</div><h3>Country Explorer</h3><p>Search all 195 countries and filter them by region.</p></a>
+      <a class="card card-link" href="flags.html"><div class="card-icon">🚩</div><h3>Flag Challenge</h3><p>Guess the country, build your score, and learn as you go.</p></a>
+      <a class="card card-link" href="continents.html"><div class="card-icon">🗺️</div><h3>Continents</h3><p>Meet the seven continents and discover what makes each one different.</p></a>
+      <a class="card card-link" href="facts.html"><div class="card-icon">💡</div><h3>World Wonder</h3><p>Collect surprising facts and grab a random geography wonder.</p></a>
+      <a class="card card-link" href="teacher.html"><div class="card-icon">👩‍🏫</div><h3>Teacher Corner</h3><p>Find classroom prompts, activity ideas, and geography challenges.</p></a>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="mission-cards">
+      <article class="mission-card blue"><div class="big">🧭</div><div><h3>Explorer Challenge</h3><p>Can you get 8/10 on Easy? Then move up to Medium.</p><div class="actions"><a class="btn btn-light" href="quiz.html#easy">Take Easy →</a></div></div></article>
+      <article class="mission-card green"><div class="big">🌐</div><div><h3>Find a country</h3><p>Search the complete country directory.</p><div class="actions"><a class="btn btn-light" href="countries.html">Explore →</a></div></div></article>
+      <article class="mission-card orange"><div class="big">🚩</div><div><h3>Flag streak</h3><p>How many can you identify in a row?</p><div class="actions"><a class="btn btn-light" href="flags.html">Play →</a></div></div></article>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="stat-row">
+      <div class="stat"><strong>195</strong><span>countries to explore</span></div>
+      <div class="stat"><strong>7</strong><span>continents to discover</span></div>
+      <div class="stat"><strong>30</strong><span>quiz questions</span></div>
+      <div class="stat"><strong>20+</strong><span>flag challenges</span></div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="callout"><div class="callout-row"><div><div class="eyebrow">FOR TEACHERS + FAMILIES</div><h2>Learn together, not just alone.</h2><p class="section-lead">Use the quick questions, country explorer, and classroom activity ideas to turn geography into a group challenge.</p></div><a class="btn btn-dark" href="teacher.html">Open Teacher Corner →</a></div></div>
+  </section>
 </main>
+
 <footer class="footer"><div class="footer-inner"><div><strong>🌍 GeoQuest Kids</strong><div>Make the world your classroom.</div></div><div><a href="teacher.html">For teachers</a> · <a href="countries.html">Country Explorer</a> · <a href="quiz.html">Quiz Lab</a></div></div></footer>
 <script src="app.js"></script>
-</body></html>
+</body>
+</html>
