@@ -1,0 +1,1 @@
+Temporary trigger for the JavaScript syntax repair workflow.
