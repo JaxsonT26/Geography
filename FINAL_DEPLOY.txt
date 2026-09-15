@@ -1,1 +1,0 @@
-The rebuilt site entry point will be index.html.

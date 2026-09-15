@@ -1,1 +1,0 @@
-Final interactive build is in index-v2.html and will become the main index.html entry point.
